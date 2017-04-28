@@ -9,6 +9,7 @@ void TaskQueue::add_task(const Task &task) {
     this->_task_que.push(task);
     this->_cond.notify_one();
 }
+
 Task TaskQueue::pop_task() {
     boost::unique_lock<boost::mutex> lock(this->_mutex);
     if (_task_que.empty()) {
@@ -18,6 +19,7 @@ Task TaskQueue::pop_task() {
     this->_task_que.pop();
     return task;
 }
+
 int TaskQueue::size() {
     return this->_task_que.size();
 }

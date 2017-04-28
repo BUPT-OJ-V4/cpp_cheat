@@ -30,6 +30,9 @@ include_directories("/usr/local/include")
 include_directories(SYSTEM "${Boost_INCLUDE_DIRS}")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 link_libraries(pthread)
+link_libraries(cpp_redis)
+link_libraries(tacopie)
+
 set(CHEAT_SOURCES
         src/CheatWorker.cpp
         )

@@ -1,23 +1,20 @@
 #include <iostream>
-#include <boost/thread.hpp>
 #include "CheatWorker.h"
-
+#include <cpp_redis/redis_subscriber.hpp>
+volatile std::atomic<bool> should_exit = ATOMIC_VAR_INIT(false);
 void calc(int i) {
     std::cout << i << "th task, the answer is: " << i * i << std::endl;
 }
 
 int main(int argc, char *argv[]) {
     std::cout << "Hello, World!" << std::endl;
-    CheatWorker ct(3);
-    ct.start();
-    for(int i = 0; i < 10; i ++) {
-        Task task = boost::bind(calc, i);
-        ct.add_task(task);
-    }
-    ct.close();
-    ct.wait();
-    std::cout << "task end" << std::endl;
-    ct.stop();
-    std::cout << "process end" << std::endl;
+    cpp_redis::redis_subscriber client;
+    client.connect("127.0.0.1", 6397, [](cpp_redis::redis_subscriber&) {
+        std::cout << "sub disconnected. " << std::endl;
+        should_exit = true;
+    });
+    client.subscribe("cheat", [](const std::string& chan, const std::string& msg) {
+        std::cout << "Message (" << msg << ") from channel " << chan << std:: endl;
+    });
     return 0;
 }
