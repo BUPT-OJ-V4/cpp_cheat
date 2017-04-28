@@ -8,7 +8,9 @@ find_package(Boost 1.64.0 REQUIRED COMPONENTS filesystem system thread thread-mt
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads)
 
+add_definitions(-D__KERNEL__=1)
 add_definitions(-O2 --std=c++11 -Wall -Wextra -Wno-deprecated-declarations -DNDEBUG)
+add_definitions(-DMYSQLCLIENT_STATIC_LINKING=1)
 #add_definitions(--std=c++11)
 
 
@@ -24,12 +26,14 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 link_directories("/usr/local/lib")
 include_directories("/usr/local/include")
+include_directories("/usr/local/mysql/connector-c++-2.0/include")
 
 include_directories(SYSTEM "${Boost_INCLUDE_DIRS}")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 link_libraries(pthread)
 link_libraries(cpp_redis)
 link_libraries(tacopie)
+link_libraries(mysqlcppconn2)
 
 set(CHEAT_SOURCES
         src/CheatWorker.cpp
@@ -42,5 +46,6 @@ add_executable(CheatServer src/cheat_server.cpp)
 target_link_libraries(CheatServer pthread)
 target_link_libraries(CheatServer tacopie)
 target_link_libraries(CheatServer cpp_redis)
+target_link_libraries(CheatServer mysqlcppconn2)
 target_link_libraries(CheatServer ${Boost_LIBRARIES})
 target_link_libraries(CheatServer cheatlib)
