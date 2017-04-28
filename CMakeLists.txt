@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.6)
 project(cheat)
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.64.0 REQUIRED COMPONENTS filesystem system)
+find_package(Boost 1.64.0 REQUIRED COMPONENTS filesystem system thread thread-mt)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads)
@@ -31,7 +31,6 @@ include_directories(SYSTEM "${Boost_INCLUDE_DIRS}")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 link_libraries(pthread)
 set(CHEAT_SOURCES
-        src/cheat_server.cpp
         src/CheatWorker.cpp
         )
 
