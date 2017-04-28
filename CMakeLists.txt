@@ -23,8 +23,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 link_directories("/usr/local/lib")
-#link_directories("/home/work/3rdparty/gflags/lib")
-#link_directories("/home/work/3rdparty/gtest/lib")
 include_directories("/usr/local/include")
 
 include_directories(SYSTEM "${Boost_INCLUDE_DIRS}")
@@ -42,5 +40,7 @@ add_library(cheatlib STATIC ${CHEAT_SOURCES})
 add_executable(CheatServer src/cheat_server.cpp)
 
 target_link_libraries(CheatServer pthread)
+target_link_libraries(CheatServer tacopie)
+target_link_libraries(CheatServer cpp_redis)
 target_link_libraries(CheatServer ${Boost_LIBRARIES})
 target_link_libraries(CheatServer cheatlib)
