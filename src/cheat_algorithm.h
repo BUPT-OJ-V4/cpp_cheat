@@ -15,19 +15,23 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <boost/regex.hpp>
 
+template <typename K, typename V>
+typedef std::map<K, V>::value_type map_pair;
+template <typename K, typename V>
+typedef std::set<std::pair<K, V>>::iterator pair_ite;
+template <typename K, typename V>
+typedef std::map<K, V>::iterator map_ite;
 namespace cheat{
-    typedef std::map<std::string, std::string>::value_type map_pair;
-    typedef std::set<std::pair<int, int>>::iterator pair_iterator;
-    static std::set<std::string> retain;
-    static std::map<std::string, std::string> params;
     static std::map<std::string, std::string> key_words;
-    static std::map<int, std::vector<std::string>> cache;
-    std::string get_brackets(const std::string &x);
-    int lcs(const std::string& a, const std::string &b);
-    double frequency_statistic(const std::string a, const std::string b);
-    void deal_code_file(const std::string &x);
+    static std::map<char, int> key_symbol;
+    static std::map<int, std::string> cache;
+    static std::map<int, std::string> brackets;
+    double lcs(const std::string& a, const std::string &b);
+    long long frequency_statistic(const std::string a, const std::string b);
+    void deal_code_file(const int& idx, const std::string &x);
     void init();
-    std::string get_param_name(const std::string &x);
     double cal_common_substring(const std::string &a, const std::string &b);
+    void clear();
 }

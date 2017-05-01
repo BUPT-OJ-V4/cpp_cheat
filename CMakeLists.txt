@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.6)
 project(cheat)
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.58.0 REQUIRED COMPONENTS filesystem system thread)
+find_package(Boost 1.58.0 REQUIRED COMPONENTS filesystem system thread regex)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads)

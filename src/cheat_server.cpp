@@ -15,12 +15,12 @@ void sigint_handler(int) {
 
 Res compare_code(const int & a, const int & b)
 {
-   return Res(std::make_pair(a, b), 0.5);
-}
-
-long long compare_code2(int a, int b)
-{
-    return 1LL;
+    double res = cheat::lcs(cheat::brackets[a], cheat::brackets[b]);
+    res += cheat::cal_common_substring(cheat::cache[a], cheat::cache[b]);
+    res *= 0.5;
+    long long third = cheat::frequency_statistic(cheat::cache[a], cheat::cache[b]);
+    if (third >= 98) return Res(std::make_pair(a, b), 100.0);
+    return Res(std::make_pair(a, b), res);
 }
 
 void connect_to_mysql(CheatWorker* cheatWorker, std::string problem_id) {
@@ -39,14 +39,12 @@ void connect_to_mysql(CheatWorker* cheatWorker, std::string problem_id) {
     int idx = 0;
     while (result->next()) {
         int id = result->getInt("sid");
-        cheat::deal_code_file(result->getString("code_file"));
+        cheat::deal_code_file(id, result->getString("code_file"));
         subs.push_back(id);
-        idx ++;
     }
     delete state;
     delete con;
     delete result;
-    /*
     std::sort(subs.begin(), subs.end());
     for(int i = 0; i < subs.size(); i ++) {
         for(int j = i + 1; j < subs.size(); j ++) {
@@ -54,7 +52,6 @@ void connect_to_mysql(CheatWorker* cheatWorker, std::string problem_id) {
             cheatWorker->add_task(t);
         }
     }
-    */
 }
 
 int main(int argc, char *argv[]) {
