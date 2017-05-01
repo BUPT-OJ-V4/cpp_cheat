@@ -1,0 +1,90 @@
+/*
+USER_ID: bupt#100136079030323
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:02:57
+*/
+#include<iostream>
+#include<cstdio>
+#include<stdio.h>
+#include<queue>
+#include<string.h>
+#include<vector>
+#include<algorithm>
+int uuu ;
+using namespace std ;
+int n ;
+char a[111111] ;
+char s[111111] ;
+char g[111111] ;
+int main()
+{
+    int T ;
+  
+        cin>>a ;
+        cin>>n ;
+        char ss[11] ;
+        s[0] = '\0' ;
+        for(int ll = 0;ll<n;ll++)
+        {
+             scanf("%s",ss) ;
+             if(ss[0] == 'P')
+             {
+                 int p ;   cin>>p ;
+                 
+                  int i ,j;
+                  for(i=p+1,j=0;i<strlen(a);i++,j++)
+                  {
+                      g[j] = a[i] ;
+                  }
+                  g[j] = '\0' ;
+                 
+                 for(i=p+1,j=0;j<strlen(s);j++,i++)
+                 {
+                     a[i] = s[j] ;
+                 }
+                 for(j=0;j<strlen(g);j++,i++)
+                 {
+                     a[i] = g[j] ;
+                 }
+                 a[i] = '\0' ;
+             }
+             else if(ss[0] == 'C' && ss[1] == 'O')  //copy
+             { 
+                  int p,l ;
+                  cin>>p>>l ;
+                  int i ,j;
+                  for(i=p,j=0;i<=l;i++,j++)
+                  {
+                      s[j] = a[i] ;
+                  }
+                 s[j] = '\0' ;
+             }
+             else   //cut
+             {
+                 int p,l ;
+                  cin>>p>>l ;
+                  int i ,j;
+                  for(i=p,j=0;i<=l;i++,j++)
+                  {
+                      s[j] = a[i] ;
+                  }
+                  s[j] = '\0' ;
+                  for(i=l+1,j=0;i<strlen(a);i++,j++)
+                  {
+                      g[j] = a[i] ;
+                  }
+                  g[j] = '\0' ;
+                  
+                  for(i=p,j=0;j<strlen(g);i++,j++)
+                  {
+                      a[i] = g[j] ;
+                  }
+                  a[i] = '\0' ;
+             }
+             cout<<a<<endl;
+           //  cout<<s<<endl;
+        }   
+
+  //  cin>>uuu ;
+    return 0 ;
+}

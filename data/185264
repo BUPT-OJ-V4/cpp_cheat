@@ -1,0 +1,29 @@
+/*
+USER_ID: bupt#100136111311362
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:22:37
+*/
+import java.util.Scanner;
+
+
+public class Main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Scanner scanner=new Scanner(System.in);
+		int T;
+		T=scanner.nextInt();
+		for(int t=0;t<T;t++){
+			String test=scanner.next();
+			String A="111110";
+			String B="11111";
+			String test2=test.replace(A, B);
+			System.out.println(test2);
+		}
+		scanner.close();
+
+	}
+
+}

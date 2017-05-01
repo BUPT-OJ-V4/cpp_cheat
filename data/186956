@@ -1,0 +1,66 @@
+/*
+USER_ID: bupt#100136144030686
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:32:05
+*/
+#include <stdio.h>
+#include <string.h>
+
+char str[201];
+char t[201];
+
+int main()
+{
+    scanf("%s",str);
+    int m;
+    scanf("%d",&m);
+    while(m--)
+    {
+        char op[20];
+        scanf("%s",op);
+        if(strcmp(op,"COPY")==0)
+        {
+            int l,r;
+            scanf("%d%d",&l,&r);
+            int len_t=0;
+            for(int i=l;i<=r;i++)
+                t[len_t++]=str[i];
+            t[len_t]=0;
+            printf("%s\n",str);
+        }
+        else if(strcmp(op,"CUT")==0)
+        {
+            int len=strlen(str);
+            int l,r;
+            scanf("%d%d",&l,&r);
+            int len_t=0;
+            for(int i=l;i<=r;i++)
+                t[len_t++]=str[i];
+            t[len_t]=0;
+            int length=r-l+1;
+            int i;
+            for(i=l;i<len-length;i++)
+                str[i]=str[i+length];
+            str[i]=0;
+            printf("%s\n",str);
+        }
+        else if(strcmp(op,"PASTE")==0)
+        {
+            int p;
+            scanf("%d",&p);
+            int len_str=strlen(str);
+            int len_t=strlen(t);
+            for(int i=len_str+len_t-1;i>p+len_t;i--)
+                str[i]=str[i-len_t];
+            for(int i=0;i<len_t;i++)
+            {
+                str[++p]=t[i];
+            }
+            str[len_t+len_str]=0;
+            printf("%s\n",str);
+
+        }
+
+    }
+    return 0;
+}

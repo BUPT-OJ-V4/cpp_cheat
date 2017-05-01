@@ -1,0 +1,39 @@
+/*
+USER_ID: bupt#100136111311254
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 15:28:26
+*/
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+	int t; 
+	char str[1010];
+	int a[1000], count;
+	scanf("%d", &t);
+	while(t--)
+	{
+		scanf("%s", str);
+		count = 0;
+		int i = strlen(str);
+		int flag = 0;
+		for(int p = 0; p < i; ++p)
+		{			
+			if(str[p] == '1')
+			flag++;
+			if(str[p] == '0')
+			flag = 0;
+			if(flag == 5)
+			a[count++] = p + 1;
+		}
+		for(int p = count - 1; p >= 0; --p)
+		{
+			for(int q = a[p]; q < i-1; ++q)
+			str[q] = str[q+1];
+			--i;
+		}
+		str[i] = '\0';
+		printf("%s\n", str);
+	}
+	return 0;
+}

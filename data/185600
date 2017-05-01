@@ -1,0 +1,36 @@
+/*
+USER_ID: bupt#100136111311076
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:36:09
+*/
+#include<stdio.h>
+//#include<stdlib.h>
+
+int main()
+{
+    int t,i=0,n;
+    scanf("%d",&t);
+    int result[t];
+    while(i<t)
+    {
+        int j=0,x=0,y=0,z=0;
+        result[i]=0;
+        scanf("%d",&n);
+        int buf[n];
+        while(j<n)
+        {
+            scanf("%d",&buf[j]);
+            j++;
+        }
+        for(int x=0;x<n;x++)
+            for(int y=0;y<n;y++)
+                for(int z=0;z<n;z++)
+                    if(buf[x]+buf[y]==buf[z])
+                        result[i]=result[i]+1;
+        i++;
+    }
+    for(i=0;i<t;i++)
+        printf("%d\n",result[i]);
+    //system("pause");
+    return 0;
+}

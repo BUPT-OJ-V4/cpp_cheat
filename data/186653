@@ -1,0 +1,45 @@
+/*
+USER_ID: bupt#100136111311173
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 15:19:09
+*/
+
+
+#include<iostream>
+#include<stdio.h>
+#include<stdlib.h>
+using namespace std;
+
+long long num[100][2];
+void make(int i)
+{
+    long long a = num[i][0];
+    long long b = num[i][1];
+    int res = 0;
+    int x;
+    for(x = 1;x<=a;x++)
+    {
+        if(b/x <=a&&b%x == 0)
+            res++;
+    }
+    cout<<res<<endl;
+}
+
+int main(){
+    int max_num = 0;
+    cin>>max_num;
+    int i = 0;
+    int j = 0;
+
+    for(i = 1;i<=max_num;i++)
+    {
+        cin>>num[i][0];
+        cin>>num[i][1];
+    }
+    for(i = 1;i<=max_num;i++)
+    {
+        make(i);
+    }
+
+    return 0;
+}

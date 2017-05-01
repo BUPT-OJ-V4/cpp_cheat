@@ -1,0 +1,82 @@
+/*
+USER_ID: bupt#100136111311019
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 14:42:09
+*/
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <set>
+#include <algorithm>
+#include <queue>
+#include <stack>
+using namespace std;
+
+const int imax_n = 100005;
+
+int a[imax_n];
+
+char s[imax_n];
+char t[imax_n];
+
+int n,m;
+
+char op[20];
+
+int main()
+{
+    scanf("%s",s);
+    strcpy(t,"");
+    int Q;
+    scanf("%d",&Q);
+    while (Q--)
+    {
+        scanf("%s",op);
+        if (op[0]=='C' && op[1]=='O')
+        {
+            int l,r;
+            int i;
+            scanf("%d%d",&l,&r);
+            for (i=0;i+l<=r;i++)
+                t[i]=s[i+l];
+            t[i]='\0';
+            printf("%s\n",s);
+            //printf("t=%s\n",t);
+        }
+        else if (op[0]=='C' && op[1]=='U')
+        {
+            int l,r;
+            scanf("%d%d",&l,&r);
+            int i;
+            for (i=0;i+l<=r;i++)
+            {
+                t[i]=s[i+l];
+            }
+            t[i]='\0';
+            int n=strlen(s);
+            for (int i=0;i+r+1<=n;i++)
+                s[i+l]=s[i+r+1];
+            printf("%s\n",s);
+            //printf("t=%s\n",t);
+        }
+        else if (op[0]=='P')
+        {
+            int p;
+            scanf("%d",&p);
+            int n1=strlen(t);
+            //printf("n1=%d\n",n1);
+            if (n1==0) continue;
+            int n=strlen(s);
+            //printf("n=%d\n",n);
+            for (int i=n;i>p;i--)
+                s[i+n1]=s[i];
+            //printf("ts=%s\n",s);
+            for (int i=0;i<n1;i++)
+                s[i+p+1]=t[i];
+            printf("%s\n",s);
+            //printf("t=%s\n",t);
+        }
+    }
+    return 0;
+}

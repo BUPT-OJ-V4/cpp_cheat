@@ -1,0 +1,49 @@
+/*
+USER_ID: bupt#100136111311115
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 15:40:57
+*/
+#include<stdio.h>
+#include<string.h>
+
+
+char s[ 1005 ];
+char result[ 1005 ];
+int main()
+{
+    int T;
+    scanf( "%d", &T );
+    while( T-- )
+    {
+           scanf( "%s", s );
+           int len = strlen( s );
+           int count = 0, pos = 0,flag = 0;
+           for( int i = 0; i < len; i++ )
+           {
+                    if( s[ i ] == '1' )
+                    {
+                        if( flag == 1 )
+                        count++;
+                        else
+                        count = 1;
+                        flag=1;
+                        if( count == 5 )
+                        {
+                            i++;
+                            count = 0;
+                            result[ pos++ ] = '1';
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        flag = 0;
+                        count = 0;
+                    }
+                    result[ pos++ ] = s[ i ];
+           }  
+           result[ pos ] = '\0';
+           printf( "%s\n", result );    
+    }
+    return 0;
+}

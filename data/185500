@@ -1,0 +1,44 @@
+/*
+USER_ID: bupt#100136096030427
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:32:24
+*/
+#include <stdio.h>
+#include <string.h>
+#include <string>
+using namespace std;
+
+int main(){
+    int n;
+    while(scanf("%d",&n)!=EOF){
+                         while(n--){
+                                char ans[1001];
+                                int tmp[1001];    
+                                   
+                         scanf("%s",ans);
+                                           
+                                         int size=0;  
+                                   int count=0;
+                                   int l1=strlen(ans);
+                                   for(int i=0;i<l1;i++){
+                                           if(ans[i]=='0'){
+                                                if(count>=5) {count=0; continue;}
+                                                    else {count=0;
+                                                         tmp[size++]=0;
+                                                         }          
+                                                                   
+                                                         }
+                                                 if(ans[i]=='1'){
+                                                        count++;
+                                                        tmp[size++]=1;       
+                                                               }        
+                                           }
+                                           for(int i=0;i<size;i++){
+                                                   printf("%d",tmp[i]);
+                                                   }
+                                    printf("\n");
+                                    }      
+                               
+                               
+                               }
+    }

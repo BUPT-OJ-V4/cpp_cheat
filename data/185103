@@ -1,0 +1,31 @@
+/*
+USER_ID: bupt#100136111311309
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:13:55
+*/
+#include<stdio.h>
+#include<stdlib.h>
+int main(){
+	int n,m;
+	int c[100];
+	while(~scanf("%d",&n)){
+		
+		for(int i=0;i<n;i++){
+			int counter=0;
+			scanf("%d",&m);
+			int a[m];
+			for(int j=0;j<m;j++){
+				scanf("%d",&a[j]);
+			}
+			int o,p,q;
+			for(o=0;o<m;o++)
+				for(p=0;p<m;p++)
+					for(q=0;q<m;q++){
+						if(a[o]+a[p]==a[q])counter++;
+					}
+			c[i]=counter;			
+		}
+		for(int i=0;i<n-1;i++)printf("%d\n",c[i]);
+		printf("%d",c[n-1]);
+	}
+}

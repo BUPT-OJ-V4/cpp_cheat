@@ -1,0 +1,43 @@
+/*
+USER_ID: bupt#100136111310859
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:12:00
+*/
+#include <iostream>
+using namespace std;
+
+int main(){
+    int t;
+    cin>>t;
+    
+    int n[20],num[20][50];
+    int res[20];
+    for(int i=0; i<t; i++){
+            cin>>n[i];
+            for(int j=0; j<n[i]; j++){
+                    cin>>num[i][j];
+            }
+    }
+    int temp=0,x,y,z;
+    for(int i=0; i<t; i++){
+            for(x=0; x<n[i]; x++){
+                     for(y=0; y<n[i]; y++){
+                              for(z=0; z<n[i]; z++){
+                                       if(num[i][x]+num[i][y]==num[i][z]){
+                                             temp++;
+                                       }
+                              }
+                     }
+            }
+            res[i]=temp;
+            temp=0;
+    }
+    for(int i=0; i<t; i++){
+            if(i!=t-1)
+                      cout<<res[i]<<endl;
+            else
+                      cout<<res[i];
+    }                      
+    
+    return 0;
+}

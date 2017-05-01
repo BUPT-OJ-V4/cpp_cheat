@@ -1,0 +1,42 @@
+/*
+USER_ID: bupt#100136136030561
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:20:33
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <algorithm>
+using namespace std;
+
+
+int main(){
+    //stem("pause");
+    int t;
+    while(scanf("%d",&t)!=EOF){
+                               for(int i=0;i<t;i++){
+                                       int n;
+                                       scanf("%d",&n);
+                                       int a[110];
+                                       for(int j=0;j<n;j++){
+                                               scanf("%d",&a[j]);
+                                               }
+                                       sort(a,a+n);
+                                       int count=0;
+                                       for(int x=0;x<n;x++){
+                                               for(int y=0;y<n;y++){
+                                                       int b=a[x]+a[y];
+                                                       for(int p=0;p<n;p++){
+                                                               if(b==a[p]){
+                                                                       count++;
+                                                                           }
+                                                               }
+                                                     //if(a[x]+a[y]
+                                                       }
+                                               }
+                                       printf("%d\n",count);
+                                       }
+                               }
+                               
+  
+    return 0;
+}

@@ -1,0 +1,49 @@
+/*
+USER_ID: bupt#100136137030641
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:26:36
+*/
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		int T = in.nextInt();
+		//System.out.println("111111");
+		in.nextLine();
+		//System.out.println("222222");
+		while (T-- > 0)
+		{
+			String s = in.nextLine();
+			//System.out.println(s);
+			int l = s.length();
+			int cnt = 0;
+			for (int i = 0; i < l; ++i)
+			{
+				//System.out.println("cnt"+cnt);
+				if (s.charAt(i) == '1')
+				{
+					cnt++;
+					System.out.print("1");
+				}
+				else
+				{
+					
+					if (cnt == 5)
+					{
+						cnt = 0;
+						continue;
+					}
+					else
+					{
+						System.out.print("0");
+						cnt = 0;
+					}
+					
+				}
+				
+			}
+			System.out.println("");
+		}
+	}
+}

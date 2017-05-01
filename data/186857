@@ -1,0 +1,34 @@
+/*
+USER_ID: bupt#100136117040131
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 15:27:04
+*/
+#include <stdio.h>
+main()
+{
+    int k,i,j,w;
+    int buf[101];
+
+    while (scanf("%d",&k)!=EOF)
+    {
+        int n,m;
+        int ans=0;
+        while (scanf("%d",&n)!=EOF)
+        {for(i=0;i<n;i++)
+            scanf("%d",&buf[i]);
+        for(i=0;i<n;i++)
+            for(j=0;j<n;j++)
+                for(w=0;w<n;w++)
+                    if(buf[i]+buf[j]==buf[w])
+                        ans+=1;
+                        else ans+=0;
+        printf("%d",ans);
+        printf("\n");
+        ans=0;
+        }
+
+
+
+    }
+    return 0;
+}

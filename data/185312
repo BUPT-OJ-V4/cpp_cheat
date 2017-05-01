@@ -1,0 +1,37 @@
+/*
+USER_ID: bupt#100136184030838
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:25:05
+*/
+#include<stdio.h>
+#include<string.h>
+int main(){
+    int n;
+    while(scanf("%d",&n)!=EOF){
+                while(n--){
+                           char buf[1001];
+                           scanf("%s",&buf);
+                           int L=strlen(buf);
+                           int idx;
+                           bool mark=true;
+                           for(int i=0;i<L;i++){
+                                   if(buf[i]=='1'){
+                                                   idx++;
+                                                   if(idx==5){
+                                                               mark=false;
+                                                               idx=0;
+                                                   }
+                                                   }
+                                   if(buf[i]=='0')   idx=0;
+                                   if(buf[i]=='0'&&mark==false) {
+                                                                mark=true;
+                                                                 continue;
+                                                                 }
+                                   printf("%c",buf[i]);
+                                   }
+                                   printf("\n");
+                           }
+                           
+                           }
+                return 0;
+                }

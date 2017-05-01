@@ -1,0 +1,40 @@
+/*
+USER_ID: bupt#100136111311073
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:35:48
+*/
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 55;
+
+int a[N];
+
+int main()
+{
+    int t, n, m;
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        for (int i = 0; i < n; ++i) cin >> a[i];
+        
+        sort (a, a + n);
+        
+        int ans = 0;
+        for (int x = 0; x < n; ++x) {
+            for (int y = 0; y < n; ++y) {
+                for (int z = 0; z < n; ++z) {
+                    if (a[x] + a[y] == a[z]) {
+                       ans++;
+                    }
+                }
+            }
+        }
+        cout << ans << endl;
+    }
+    return 0;    
+}

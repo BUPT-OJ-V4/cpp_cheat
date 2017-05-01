@@ -1,0 +1,40 @@
+/*
+USER_ID: bupt#100136278031004
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:28:17
+*/
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[])
+{
+    int i,j,k,l;
+    int n,m;
+   int a[102];
+    scanf("%d",&n);
+    for(l=0;l<n;l++)
+    {
+                    int count=0;
+                    scanf("%d",&m);
+                    //int a[m];
+                    for(j=0;j<m;j++)
+                    scanf("%d",&a[j]);
+                    for (i=0;i<m;i++)
+                    {
+                        for(j=0;j<m;j++)
+                        {
+                                       for(k=0;k<m;k++)
+                                       {
+                                       if (a[i]+a[j]==a[k])
+                                       count++;
+                                       }
+                        }
+                        
+                    }
+                    
+                  printf("%d\n",count);  
+                                          
+    }
+  //system("PAUSE");	
+  return 0;
+}

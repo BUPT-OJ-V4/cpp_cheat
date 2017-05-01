@@ -1,0 +1,28 @@
+/*
+USER_ID: bupt#100136111310883
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:11:48
+*/
+#include<stdio.h>
+
+int main(){
+    int T;
+    scanf("%d",&T);
+    for(int i = 0; i <= T-1; i++){
+            int count =0;
+            int n;
+            int a[50];
+            scanf("%d",&n);
+            for(int j = 0; j<= n-1; j++){
+                    scanf("%d",&a[j]);
+            }
+            for(int q= 0; q<= n-1; q++){
+                    for(int p = 0; p <= n-1; p++){
+                            for(int r = 0; r<= n-1; r++){
+                                 if(a[q]+a[p] == a[r]) count++;   
+                            }
+                    }
+            }
+            printf("%d\n", count);
+    }
+}

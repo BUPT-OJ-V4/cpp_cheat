@@ -1,0 +1,43 @@
+/*
+USER_ID: bupt#100136137030644
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:45:32
+*/
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+char a[1001];
+char b[1001];
+
+int main()
+{
+    int n;
+    int cnt;
+    int p;
+    int len;
+    int i,j,k,l;
+    scanf("%d",&n);
+    int m;
+    int sum;
+    for(p = 0; p < n; p++)
+    {
+        cnt = 0 ;
+        scanf("%d", &m);
+        for(i = 0; i < m; i++)
+            scanf("%d",&a[i]);
+        for(j = 0; j < m; j++)
+        {
+            for(k = 0; k < m; k++)
+            {
+                sum = a[j] + a[k];
+                for(l = 0; l < m; l++)
+                {
+                    if(a[l] == sum)
+                      cnt++;
+                }
+            }
+        }
+        printf("%d\n",cnt);
+    }
+}

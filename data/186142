@@ -1,0 +1,39 @@
+/*
+USER_ID: bupt#100136275030987
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:58:45
+*/
+#include<stdio.h>
+#include<stdlib.h>
+#include<string>
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+    string str;
+    while(scanf("%d",&n) != EOF)
+    {
+        for(int i=0;i<n;i++)
+        {
+            cin >> str;
+            for(int j=0;j<str.size();j++)
+            {
+                int startPos=0;
+                while(str.find("111110",startPos)!=string::npos)
+                {
+                    int p=str.find("111110",startPos);
+                    str.replace(p+5,1,"2");
+                }
+            }
+            for(int i=0;i<str.size();i++)
+            {
+                if(str[i]!='2')
+                    cout << str[i];
+            }
+            cout << endl;
+        }
+    }
+    return 0;
+}

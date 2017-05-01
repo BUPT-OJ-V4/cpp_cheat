@@ -1,0 +1,29 @@
+/*
+USER_ID: bupt#100136051030266
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:52:22
+*/
+#include<stdio.h>
+int main(){
+    int n,i,k,cnt;
+    char str1[1010],str2[1010];
+    scanf("%d",&n);
+    while(n--){
+            cnt=0;
+        scanf("%s",str1);
+        for(i=0,k=0;str1[i]!=0;){
+            if(str1[i]=='1')
+                cnt++;
+            else
+                cnt=0;\
+        str2[k++]=str1[i++];
+    if(cnt==5){
+        i++;
+        cnt=0;
+    }
+        }
+        str2[k]=0;
+        printf("%s\n",str2);
+    }
+    return 0;
+    }

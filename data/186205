@@ -1,0 +1,34 @@
+/*
+USER_ID: bupt#100136137030590
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 15:01:14
+*/
+#include<iostream>
+#include<cstdio>
+#include<cstdlib>
+#include<algorithm>
+#include<cmath>
+using namespace std;
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+              long long m,ans,n,i,j,count=0;
+              cin>>n;
+              cin>>m;
+              for(i=1;i<=n;i++)
+              {
+                                      if(m%i==0)
+                                      {
+                                                ans=m/i;
+                                                if(ans<=n)
+                                                count++;
+                                      }   
+              }
+              cout<<count<<endl;
+    }
+    //system("pause");
+    return 0;
+}

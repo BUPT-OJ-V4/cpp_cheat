@@ -1,0 +1,50 @@
+/*
+USER_ID: bupt#100136009030083
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 14:40:34
+*/
+#include<stdio.h>
+#include<string>
+#include<iostream>
+#include<vector>
+#include<map>
+#include<string.h>
+#include<cmath>
+#include<algorithm>
+using namespace std;
+char str1[301];
+int main()
+{
+
+    gets(str1);
+    int m;
+    scanf("%d",&m);
+    string s = str1;
+    string t;
+    while(m--)
+    {
+        char op[20];
+        scanf("%s",op);
+        if(strcmp(op,"CUT")==0)
+        {
+            int a,b;
+            scanf("%d %d",&a,&b);
+            t = s.substr(a,b-a+1);
+            s.erase(a,b-a+1);
+        }
+        else if(strcmp(op,"COPY")==0)
+        {
+            int a,b;
+            scanf("%d %d",&a,&b);
+            t = s.substr(a,b-a+1);
+        }
+        else if(strcmp(op,"PASTE")==0)
+        {
+            int a;
+            scanf("%d",&a);
+            s.insert(a+1,t);
+        }
+        printf("%s\n",s.c_str());
+    }
+    return 0;
+}

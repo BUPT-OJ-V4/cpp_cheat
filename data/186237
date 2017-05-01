@@ -1,0 +1,51 @@
+/*
+USER_ID: bupt#100136043030250
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 15:02:33
+*/
+#include<iostream>
+#include<string>
+#include<cstring>
+#include<math.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<map>
+using namespace std;
+int main(){
+    int t;
+    scanf("%d",&t); 
+    int ans[t];
+    map<int,string> aans;
+    for(int i=0;i<t;i++){
+            int num=0,len=0;
+            int temp,sum=0;
+            char str[1000],astr[1000];
+            scanf("%s",&str); 
+            for(int j=0;j<strlen(str);j++){
+                    if(str[j]=='0'){
+                                    num=0;
+                                    astr[len]='0'; 
+                                    len++;                  
+                    }
+                    if(str[j]=='1'){
+                                    num++;
+                                    if(num==5){
+                                               astr[len]='1';
+                                               len++;
+                                               num=0;
+                                               j++;
+                                    }
+                                    else{
+                                         astr[len]='1';
+                                         len++;
+                                    }
+                    }
+            }
+            astr[len]='\0';
+            aans[i]=astr;
+    }
+    for(int i=0;i<t;i++){
+            cout<<aans[i]<<endl;
+    }
+    return 0;
+}

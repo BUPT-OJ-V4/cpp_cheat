@@ -1,0 +1,48 @@
+/*
+USER_ID: bupt#100136111310847
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:56:47
+*/
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+   int i,t,j,k,len,p;
+   char str[1001];
+   char ch;
+   scanf("%d",&t);
+   for(i=0;i<t;i++)
+   {
+         scanf("%s",str);
+         len=strlen(str);
+         j=0;
+         while(j<len)
+         {
+                k=j;
+                if(len-j>=6)
+                {
+                if((str[k]=='1')&&(str[k+1]=='1')&&(str[k+2]=='1')&&(str[k+3]=='1')&&(str[k+4]=='1')&&(str[k+5]=='0'))
+                {
+                    printf("11111");
+                    j=j+6;
+                }
+                else
+                {
+                    printf("%c",str[j]);
+                    j++;
+                }
+            }
+                else  
+                {
+                    for(p=j;p<len;p++)
+                          printf("%c",str[p]);
+                    j=len;
+                        }
+                    }
+        printf("\n");
+    }
+   //system("pause");
+   return 0;             
+                  
+}

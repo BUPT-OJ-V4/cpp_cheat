@@ -1,0 +1,46 @@
+/*
+USER_ID: bupt#100136275030994
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 14:46:53
+*/
+import java.util.Scanner;
+
+
+public class Main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		String s,t="",cmd;
+		int n;
+		int start,end;
+		s = input.next();
+		n = input.nextInt();
+		for (int i = 0; i < n; i++) {
+			cmd = input.next();
+			if(cmd.equals("CUT")){
+				start = input.nextInt();
+				end = input.nextInt();
+				t = s.substring(start,end+1);
+				s = s.substring(0,start) + s.substring(end+1);
+				System.out.println(s);
+//				cut(s,t);
+			}else if(cmd.equals("PASTE")){
+				start = input.nextInt();
+				s = s.substring(0,start+1) + t + s.substring(start+1);
+				System.out.println(s);
+			}else{
+				start = input.nextInt();
+				end = input.nextInt();
+				t = s.substring(start, end+1);
+				System.out.println(s);
+			}
+		}
+		
+		input.close();
+
+	}
+
+}

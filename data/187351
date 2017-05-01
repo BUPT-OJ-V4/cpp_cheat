@@ -1,0 +1,79 @@
+/*
+USER_ID: bupt#100136111310936
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:47:59
+*/
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+    int n;
+    string s,t,temp,tempt,empy;
+    cin>>s;
+    cin>>n;
+    while(n--)
+    {
+        char act[5];
+        int a,b;
+        tempt=empy;
+        temp=empy;
+        cin>>act[0];
+        if(act[0]=='C')
+        {
+            cin>>act[1];
+            if(act[1]=='U')
+            {
+                cin>>act[2];
+                cin>>a>>b;
+                for(int i=0; i<s.length(); i++)
+                {
+                    if(i>=a&&i<=b)
+                    {
+                        tempt+=s[i];
+                        continue;
+                    }
+                    else
+                    {
+                        temp+=s[i];
+                    }
+                }
+                t=tempt;
+                s=temp;
+            }
+            else if(act[1]=='O')
+            {
+                cin>>act[2]>>act[3];
+                cin>>a>>b;
+                for(int i=a; i<=b; i++)
+                {
+                    tempt+=s[i];
+                }
+                t=tempt;
+            }
+        }
+        else if(act[0]=='P')
+        {
+            cin>>act[1]>>act[2]>>act[3]>>act[4];
+            cin>>a;
+            for(int i=0; i<s.length(); i++)
+            {
+                if(i==a+1)
+                {
+                    for(int j=0; j<t.length(); j++)
+                    {
+                        temp+=t[j];
+                    }
+                    temp+=s[i];
+                }
+                else if(i!=a+1)
+                {
+                    temp+=s[i];
+                }
+            }
+            s=temp;
+        }
+        cout<<s<<endl;
+    }
+    return 0;
+}

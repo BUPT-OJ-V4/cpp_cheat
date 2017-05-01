@@ -1,0 +1,48 @@
+/*
+USER_ID: bupt#100136111311325
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 14:42:20
+*/
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+	int n,i,j,x,y;
+	string s,mov,t;
+	cin>>s;
+	cin>>n;
+	t="";
+	while(n--!=0)
+	{
+		cin>>mov;
+		if(mov=="CUT")
+		{
+			t="";
+			cin>>x>>y;
+			for(i=x;i<=y;i++)
+			{
+				t=t+s[i];
+			}
+			s.erase(x,y-x+1);
+			cout<<s<<endl;
+		}
+		else if(mov=="PASTE")
+		{
+			cin>>x;
+			s.insert(x+1,t);
+			cout<<s<<endl;
+		}
+		else if(mov=="COPY")
+		{
+		    t="";
+			cin>>x>>y;
+			for(i=x;i<=y;i++)
+			{
+				t=t+s[i];
+			}
+			cout<<s<<endl;
+		}
+	}
+	return 0;
+}

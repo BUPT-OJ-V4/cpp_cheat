@@ -1,0 +1,43 @@
+/*
+USER_ID: bupt#100136035030242
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:09:45
+*/
+import java.util.Scanner;
+public class Main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner s=new Scanner(System.in);
+		while(s.hasNextInt())
+		{
+			int num =s.nextInt();
+			for(int i =0;i<num;i++)
+			{
+				int n=s.nextInt();
+				int b[]=new int [n];
+				for(int f =0;f<n;f++)
+				{
+					b[f]=s.nextInt();
+				}
+				int sum=0;
+				for(int z =0;z<n;z++)
+				{
+					for(int x =0;x<n;x++)
+					{
+						for(int c =0;c<n;c++)
+						{
+							if(b[z]+b[x]==b[c])
+								sum++;
+						}
+					}
+				}
+				System.out.println(sum);
+			}
+		}
+	}
+
+}

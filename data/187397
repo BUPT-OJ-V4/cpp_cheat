@@ -1,0 +1,68 @@
+/*
+USER_ID: bupt#100136149030708
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:49:38
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(void){
+    char str[200];
+    int num = 0;
+    scanf("%s", str);
+    scanf("%d", &num);
+    for(int i = 0; i < num; i++){
+            char buff[200];
+            char str2[200];
+            char op[100];
+            int n = 0, start = 0, end = 0;
+                    scanf("%s %d", op, &start);
+                    if(strcmp(op, "COPY")==0){
+                                  scanf("%d", &end);
+                                  int index = 0;
+                                  for(int k = start; k <= end; k++){
+                                          buff[index++] = str[k];
+                                  }
+                                  buff[index] = '\0';
+                                  puts(str);
+                    }
+                    else if(strcmp(op, "PASTE") == 0){
+                                  int index = 0;
+                                  for(int k = 0; k <= start; k++){
+                                          str2[index++] = str[k];
+                                          printf("%c", str[k]);
+                                  }
+                                  int len = strlen(buff);
+                                  for(int k = 0; k < len; k++){
+                                          str2[index++] = buff[k];
+                                          printf("%c", buff[k]);
+                                  }
+                                  int len1 = strlen(str);
+                                  for(int k = start+1; k < len1; k++){
+                                          str2[index++] = str[k];
+                                          printf("%c", str[k]);
+                                  }
+				printf("\n");
+                                  str2[index] = '\0';
+                                  strcpy(str, str2);
+                    }
+                    else if(strcmp(op, "CUT") == 0){
+                         scanf("%d", &end);
+                         int diff = end - start;
+                         int index = 0;
+                         int len = strlen(str);
+                         for(int k = start; k <= end; k++){
+                                 buff[index++] = str[k];
+                         }
+                         buff[index] = '\0';
+                         int m = 0;
+                         for(m = end+1; m < len; m++){
+                                 str[m-diff-1] = str[m];
+                         }
+                         str[m-diff-1] = '\0';
+                         puts(str);
+                    }
+           }
+    return 0;
+}

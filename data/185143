@@ -1,0 +1,33 @@
+/*
+USER_ID: bupt#100136111310847
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:15:54
+*/
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+    int t,i,n,j,a[50],k,p,d;
+    scanf("%d",&t);
+    for(i=0;i<t;i++)
+    {
+        d=0;
+        scanf("%d",&n);
+        for(j=0;j<n;j++)
+           scanf("%d",&a[j]);
+        for(j=0;j<n;j++)
+        {
+            for(k=0;k<n;k++)
+            {
+                for(p=0;p<n;p++)
+                {
+                    if(a[j]==a[p]+a[k])
+                        d++;
+                    }
+                }
+            }
+        printf("%d\n",d);
+    }
+    
+    return 0;    
+}

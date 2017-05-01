@@ -1,0 +1,27 @@
+/*
+USER_ID: bupt#100136170040214
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:31:25
+*/
+#include<stdio.h>
+int main(){
+    int t,n,a[20],b[50],i,j,k,p,q,r;
+    while(scanf("%d",&t)!=EOF){
+          for(i=0;i<t;i++){
+             scanf("%d",&a[i]);
+             int sum=0;               
+             for(j=0;j<a[i];j++){
+               scanf("%d",&b[j]); 
+               }
+             for(p=0;p<a[i];p++){
+                 for(q=0;q<a[i];q++){
+                    for(r=0;r<a[i];r++){
+                        if(b[p]+b[q]==b[r]) sum++;
+                         }
+                 } 
+             }
+             printf("%d\n",sum);
+           }
+    }
+    return 0;
+}

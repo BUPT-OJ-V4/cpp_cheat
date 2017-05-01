@@ -1,0 +1,33 @@
+/*
+USER_ID: bupt#100136136030552
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:09:12
+*/
+#include <stdio.h>
+#include <string.h>
+
+char byte[2000];
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        scanf("%s", byte);
+        int length = strlen(byte);
+        int h_info = 0;
+        for(int i = 0; i < length; i++){
+            printf("%c", byte[i]);
+            if(byte[i] == '0'){
+                h_info = 0;
+            }
+            else{
+                h_info++;
+                if(h_info == 5){
+                    i++;
+                    h_info = 0;
+                }
+            }
+        }
+        printf("\n");
+    }
+    return 0;
+}

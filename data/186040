@@ -1,0 +1,30 @@
+/*
+USER_ID: bupt#100136204030881
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:55:05
+*/
+#include<stdio.h>
+int main()
+{
+   int n,m,a[52],c;
+   while(scanf("%d",&n)!=EOF){
+    while(n--){
+            c=0;
+        scanf("%d",&m);
+        for(int i=0;i<m;i++)
+            scanf("%d",&a[i]);
+        for(int i=0;i<m;i++){
+            for(int j=0;j<m;j++){
+                for(int k=0;k<m;k++){
+                    if(a[i]+a[j]==a[k])
+                    c++;
+                }
+            }
+        }
+        printf("%d",c);
+    if(n!=0)
+        printf("\n");
+    }
+   }
+    return 0;
+}

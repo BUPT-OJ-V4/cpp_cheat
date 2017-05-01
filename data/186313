@@ -1,0 +1,26 @@
+/*
+USER_ID: bupt#100136149030708
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 15:05:34
+*/
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void){
+    int num = 0;
+    scanf("%d", &num);
+    for(int i = 0; i < num; i++){
+            int n = 0, m = 0;
+            scanf("%d %d", &n, &m);
+            int count = 0;
+            for(int j = 1; j <= n; j++){
+                    if(m % j == 0){
+                         if(m / j <= n){
+                         count++;
+			 }			
+                    }
+            }
+            printf("%d\n", count);
+    }
+    return 0;
+}          

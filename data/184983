@@ -1,0 +1,56 @@
+/*
+USER_ID: bupt#100136244030926
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:06:21
+*/
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
+#include <string.h>
+#include <string>
+#include <algorithm>
+#include <queue>
+#include <numeric>
+
+using namespace std;
+
+#define MAX_N 55
+
+int KK[MAX_N];
+
+int main()
+{
+    // freopen("in1.txt", "r", stdin);
+
+    int T;
+    scanf("%d", &T);
+
+    while(T--)
+    {
+        int n;
+        scanf("%d", &n);
+
+        for(int i=0; i<n; i++)
+        {
+            scanf("%d", &KK[i]);
+        }
+
+        int res = 0;
+
+        for(int i=0; i<n; i++)
+            for(int j=0; j<n; j++)
+                for(int k=0; k<n; k++)
+                {
+                    if(KK[i]+KK[j] == KK[k])
+                        res++;
+                }
+
+
+        printf("%d\n", res);
+
+    }
+
+    // printf("%d\n", T);
+    return 0;
+}

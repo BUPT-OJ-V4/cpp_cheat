@@ -1,0 +1,26 @@
+/*
+USER_ID: bupt#100136096030427
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 15:56:35
+*/
+#include <stdio.h>
+int main(){
+    
+    int n;
+    while(scanf("%d",&n)!=EOF){
+                          while(n--){
+                                    
+                            int a;int b;
+                            scanf("%d%d",&a,&b);
+                             int count=0;
+                            for(int i=1;i<=a;i++){
+                                   if((b/i<=a)&&b%i==0){
+                                        count++; 
+                                            
+                                              } 
+                                    }         
+                                     printf("%d\n",count);
+                                     }     
+                               
+                               }
+    }

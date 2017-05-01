@@ -1,0 +1,32 @@
+/*
+USER_ID: bupt#100136021030193
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 15:49:03
+*/
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		while(sc.hasNext()){
+			int n = sc.nextInt();
+			if(n<1||n>30){
+				System.out.println("请重新输入1~30之间的数");}
+			if(n>=1&&n<=30){
+			for(int i = 0;i<n;i++){
+				String s =sc.next();
+				if(s.length()<=5)
+					System.out.println(s);
+				if(s.length()>1000){
+					System.out.println("shuru<=1000zifuchuan");
+					break;
+				}
+				String str = s.replaceAll("111110", "11111");
+				System.out.println(str);
+			}
+	
+		}
+	}sc.close();
+ }
+}

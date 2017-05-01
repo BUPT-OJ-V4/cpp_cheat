@@ -1,0 +1,49 @@
+/*
+USER_ID: bupt#100136111310775
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:17:04
+*/
+#include<stdio.h>
+#include<stdlib.h>
+//#include<iostream>
+#include"math.h"
+#include<algorithm>
+
+using namespace std;
+
+int main()
+{
+    int i,j,n,k,l,p,a;
+    int m[50]={0};
+    int count[20] = {0};
+    while(scanf("%d",&n)!=EOF)
+    {
+         for(i=0;i<n;i++)
+         {
+              scanf("%d",&a);
+              for(j = 0;j < a;j ++)
+              {
+                    scanf("%d",&m[j]);
+              }
+              sort(m,m+j);
+              for(l=0;l<a;l++)
+              {
+                  for(k=0;k<a;k++)
+                  {
+                      for(p=0;p<a;p++)
+                      {
+                           if(m[l]+m[k]==m[p])
+                           {
+                               count[i]++;
+                           }
+                      }
+                  }
+              }
+         }
+         for(i=0;i<n;i++)
+         {
+                         printf("%d\n",count[i]);
+         }
+    }
+    return 0;
+}

@@ -1,0 +1,28 @@
+/*
+USER_ID: bupt#100136111310937
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 15:34:26
+*/
+#include<stdio.h>
+
+int main(){
+    int NumOfCases;
+    scanf("%d",&NumOfCases);
+
+    for(int cases = 0; cases < NumOfCases; cases++){
+        int N,M;
+        scanf("%d %d",&N,&M);
+
+        int counts = 0;
+
+        for(int i = 1; i <= N;i++){
+            if(M%i == 0)
+                if(M/i <= N){
+                    counts++;
+                }
+        }
+        printf("%d\n",counts);
+
+    }
+    return 0;
+}

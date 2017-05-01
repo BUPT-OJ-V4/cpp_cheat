@@ -1,0 +1,28 @@
+/*
+USER_ID: bupt#100136225030890
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:46:16
+*/
+#include <stdio.h>
+#include <string>
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int t;
+    scanf("%d",&t);
+    while(t--)
+    {
+        string str;
+        cin>>str;
+        int pos=str.find("111110",0);
+        while(pos!=string::npos)
+        {
+            str.erase(pos+5,1);
+            pos=str.find("111110",pos+5);
+        }
+        cout<<str<<endl;
+    }
+    return 0;
+}

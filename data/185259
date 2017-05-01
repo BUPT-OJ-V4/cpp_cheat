@@ -1,0 +1,48 @@
+/*
+USER_ID: bupt#100136111310758
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:22:21
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <vector>
+#include <string.h>
+using namespace std;
+
+int main()
+{
+    int n,t,i,j;
+    char str[1001];
+    while(scanf("%d",&t)!=EOF&&t>=1&&t<=30)
+    {
+        while(t--)
+        {
+            int count=0;
+            scanf("%s",str);
+            int len=strlen(str);
+            for(i=0;i<len;i++)
+            {
+                if(i!=len-1&&str[i]=='1')
+                {
+                    count++;
+                    if(count==5)
+                    {
+                        count=0;
+                        for(j=i+1;j<len-1;j++)
+                            str[j]=str[j+1];
+                        str[j]='\0';
+                        len--;
+                        continue;
+                    }
+                }
+                if(str[i]=='0')
+                {
+                    count=0;
+                }
+            }
+            printf("%s\n",str);
+        }
+    }
+    return 0;
+}

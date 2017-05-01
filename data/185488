@@ -1,0 +1,32 @@
+/*
+USER_ID: bupt#100136111310909
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:32:03
+*/
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+
+int main() {
+    int t;
+    while(scanf("%d",&t) != EOF) {
+        while(t--) {
+            string a="11111";
+            char s[1010];
+            scanf("%s",s);
+            string str=s;
+            //cout<<"111"<<str<<endl;
+            int x=str.find(a,0);
+            //cout<<x<<" xx"<<endl;
+            while( x != string::npos ) {
+                   //cout<<x<<" xx1"<<endl;
+                   str.erase(x+5,1);
+                   x=str.find(a,x+5);
+            }
+            cout<<str<<endl;
+        } 
+    }
+    
+    return 0;
+}

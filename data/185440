@@ -1,0 +1,27 @@
+/*
+USER_ID: bupt#100136022030202
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:30:13
+*/
+#include<iostream>
+#include<string.h>
+using namespace std;
+int main()
+{
+    int T;
+    string str;
+    cin>>T;
+    while(T--)
+    {
+      int Count=0;
+      cin>>str;
+      for(int i=0;i<str.size();i++)
+      {
+        if(Count==5&&str[i]=='0') {str.erase(i,1);Count=0;i--;}
+        else if(Count<=4&&str[i]=='0') {Count=0;}
+        else if(str[i]=='1') Count++;
+      }
+      cout<<str<<endl;
+    } 
+    return 0;
+}

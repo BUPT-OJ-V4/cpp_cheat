@@ -1,0 +1,45 @@
+/*
+USER_ID: bupt#100136111311143
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:46:46
+*/
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+int main(){
+    int group_num = 0;
+    std::cin>>group_num;
+    for(int group = 0; group < group_num; group++){
+        string str;
+        std::cin>>str;
+        int state = 0;
+        vector<char>result;
+        for(int index  = 0; index < str.length(); index ++){
+            if ((state == 0)&&(str[index] == '0')){
+                result.push_back(str[index]); 
+                // do nothing 
+            }else if ((state == 0)&&(str[index] == '1')){
+                state ++;
+                result.push_back(str[index]);
+            }
+            else if ((state > 0)&&(str[index] == '1')){
+                state ++;
+                 result.push_back(str[index]);
+                if (state == 5){
+                    index ++;
+                    state = 0;
+                }
+            }else if ((state > 0)&&(str[index] == '0')){
+                state = 0;
+                 result.push_back(str[index]);
+            }else{
+                std::cout<<"there is error"<<endl;
+            }
+        }
+        for(int i = 0; i < result.size(); i++){
+            std::cout<<result[i];
+        }
+        std::cout<<std::endl; 
+    }
+}

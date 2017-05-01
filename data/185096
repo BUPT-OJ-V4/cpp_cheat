@@ -1,0 +1,39 @@
+/*
+USER_ID: bupt#100136018030168
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:13:38
+*/
+#include <stdio.h>
+#include <algorithm>
+#include <string.h>
+                    
+using namespace std;
+
+int a[51];
+
+int main(int argc, char *argv[])
+{
+    int t,n;
+    while(scanf("%d",&t)!=EOF)
+    {
+     for(int i=0;i<t;i++)
+     {
+             scanf("%d",&n);
+             for(int j=0;j<n;j++)
+             {
+                    scanf("%d",&a[j]);
+             }
+             int x,y,z;
+             int count=0;
+             for(int x=0;x<n;x++)
+                     for(int y=0;y<n;y++)
+                             for(int z=0;z<n;z++)
+                             {
+                                     if(a[x]+a[y]==a[z])
+                                     count++;
+                             }
+             printf("%d\n",count);
+     }
+    }
+    return 0;
+}

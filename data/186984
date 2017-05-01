@@ -1,0 +1,35 @@
+/*
+USER_ID: bupt#100136111310155
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 15:33:21
+*/
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+  int testtime;
+  cin>>testtime;
+  for (int i=0;i<testtime;i++)
+  {
+        int size;
+        cin>>size;
+        int target;
+        cin>>target;
+        int count=0;
+        
+    //count part
+    for(int i=0;i<size;i++)
+    {
+       
+                if(target%(i+1)==0&&target/(i+1)<=size)
+                {
+                 count++;
+                }
+
+    }
+    cout<<count<<endl;
+    }   //testtime end
+    return 0;
+}

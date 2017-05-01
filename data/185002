@@ -1,0 +1,31 @@
+/*
+USER_ID: bupt#100136128030532
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:08:18
+*/
+#include <stdio.h>
+int main(){
+    int T;
+    int sum[51];
+    while(scanf("%d",&T)!=EOF){
+        while(T--){
+            int n;
+            scanf("%d",&n);
+            for(int i=0;i<n;i++){
+                scanf("%d",&sum[i]);        
+            }
+            int ans=0;
+            for(int x=0;x<n;x++){
+                for(int y=0;y<n;y++){
+                    for(int z=0;z<n;z++){
+                        if(sum[x]+sum[y]==sum[z]){
+                            ans++;                          
+                        }
+                    }
+                }        
+            }
+            printf("%d\n",ans);
+        }                                                                         
+    }
+    return 0;    
+}

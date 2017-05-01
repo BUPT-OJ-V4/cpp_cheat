@@ -1,0 +1,33 @@
+/*
+USER_ID: bupt#100136111310922
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:07:01
+*/
+import java.util.Scanner;
+
+
+public class Main {
+	public static void main(String args[]){
+		Scanner sc=new Scanner(System.in);
+		int caseCnt=sc.nextInt();
+		for(int c=0;c<caseCnt;c++){
+			int cnt=0;
+			int numCnt=sc.nextInt();
+			int[]numList=new int[numCnt];
+			for(int i=0;i<numCnt;i++){
+				numList[i]=sc.nextInt();
+			}
+			for(int i=0;i<numCnt;i++){
+				for(int j=0;j<numCnt;j++){
+					for(int k=0;k<numCnt;k++){
+						if(numList[i]+numList[j]==numList[k]){
+							cnt++;
+						}
+					}
+				}
+			}
+			System.out.println(cnt);
+		}
+		sc.close();
+	}
+}

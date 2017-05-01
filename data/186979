@@ -1,0 +1,53 @@
+/*
+USER_ID: bupt#100136137030641
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:32:57
+*/
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		String s = in.nextLine();
+		String t = "";
+		int T = in.nextInt();
+		in.nextLine();
+		while (T-- > 0)
+		{
+			String word = in.next();
+			int l = s.length();
+			int num1 = in.nextInt();
+			if (word.equals("COPY"))
+			{
+				int num2 = in.nextInt();
+				t = s.substring(num1, num2+1);
+			}
+			else if (word.equals("CUT"))
+			{
+				int num2 = in.nextInt();
+				String t1 = s.substring(0, num1);
+				t = s.substring(num1, num2+1);
+				
+				if (num2 == l-1)
+					s = t1;
+				else
+				{
+					String t3 = s.substring(num2+1);
+					s = t1+t3;
+				}
+			}
+			else
+			{
+				String t1 = s.substring(0, num1+1);
+				if (num1 == l - 1)
+					s+=t1;
+				else
+				{
+					String t3 = s.substring(num1+1);
+					s = t1 + t + t3;
+				}
+			}
+			System.out.println(s);
+		}
+	}
+}

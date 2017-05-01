@@ -1,0 +1,50 @@
+/*
+USER_ID: bupt#100136204030881
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:48:05
+*/
+#include<stdio.h>
+#include<string.h>
+//using namespace std;
+
+int main()
+{
+    char a[1002];
+    int n,cnt,m,j;
+    while(scanf("%d",&n)!=EOF){
+        for(int k=0;k<n;k++){
+                cnt=0;
+            scanf("%s",a);
+            m=strlen(a);
+            for(j=0;j<m;j++){
+            if(a[j]=='1'){
+                cnt++;
+                if(cnt==5){
+                        if(a[j+1]=='0'){
+                    a[j+1]='5';
+                    cnt=0;
+                    j++;
+                        }
+                }
+            }
+            else
+                cnt=0;
+            }
+            cnt=1;
+            for(int i=0,j=0;i<m;i++){
+                if(a[i]=='5'){
+                    a[j++]=a[i+1];
+                    i++;
+                    cnt++;
+                }
+                else
+                    a[j++]=a[i];
+            }
+            a[m-cnt+1]='\0';
+            printf("%s",a);
+            if(k!=n-1)
+                printf("\n");
+        }
+    }
+    return 0;
+}

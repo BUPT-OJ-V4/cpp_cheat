@@ -1,0 +1,29 @@
+/*
+USER_ID: bupt#100136022030198
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:20:43
+*/
+#include <stdio.h>
+
+int main(){
+int t;
+scanf("%d",&t);
+while(t--){
+int m;
+int a[55]={0};
+int cnt=0;
+scanf("%d",&m);
+for(int i=0;i<m;i++){
+scanf("%d",&a[i]);
+}
+for(int j=0;j<m;j++){
+for(int k=0;k<m;k++){
+for(int p=0;p<m;p++){
+if(a[j]+a[k]==a[p]) cnt++;
+}
+}
+}
+printf("%d\n",cnt);
+}
+return 0;
+}

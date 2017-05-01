@@ -1,0 +1,50 @@
+/*
+USER_ID: bupt#100136111310930
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 15:43:32
+*/
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+ 
+int main()
+{
+    char str[1000];
+    int m;
+    int i , j, len;
+    int count;
+    
+    while (scanf("%d",&m) != EOF)
+    {
+          for (i = 0; i < m; i++)
+          {
+              //gets(str);
+              scanf("%s",str);
+              len = strlen(str);
+               
+              /////去填充,并输出
+              count = 0;
+               
+              for (j = 0; j < len; j++)
+              {
+                   
+                  if (str[j] == '0' && count >= 5 )
+                  {
+                     count = 0;
+                  }
+                  else if (str[j] == '1')
+                  {
+                      printf("%c",str[j]);
+                      count++;
+                  }
+                  else if(str[j] == '0')
+                  {
+                   printf("%c",str[j]);
+                      count = 0;
+                  }
+              }
+             printf("\n");
+          }
+    }
+    return 0;
+}

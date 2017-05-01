@@ -1,0 +1,121 @@
+/*
+USER_ID: bupt#100136031030236
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:47:30
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char s[202];
+char t[202];
+char tmp[20];
+
+
+int judge(char* c)
+{
+    if(c[0]=='C')
+    {
+        if(c[1]=='U')
+            return 2;
+        else
+            return 1;
+    }else
+        return 3;
+}
+
+void m_copy(char *c)
+{
+    int l=0,r=0;
+    int i=5;
+    for(;c[i]!=' ';i++)
+    {
+        l=l*10+c[i]-'0';
+    }
+    i++;
+    for(;c[i]!='\0';i++)
+    {
+        r=r*10+c[i]-'0';
+    }
+    //printf("l=%d r=%d\n",l,r);
+    i=0;
+    for(int j=l;j<=r;j++)
+    {
+        t[i++]=s[j];
+    }
+    t[i]='\0';
+    printf("%s\n",s);
+}
+
+void m_cut(char* c)
+{
+    int l=0,r=0;
+    int i=4;
+    for(;c[i]!=' ';i++)
+    {
+        l=l*10+c[i]-'0';
+    }
+    i++;
+    for(;c[i]!='\0';i++)
+    {
+        r=r*10+c[i]-'0';
+    }
+    //printf("l=%d r=%d\n",l,r);
+    i=0;
+    for(int j=l;j<=r;j++)
+    {
+        t[i++]=s[j];
+    }
+    t[i]='\0';
+    i=0;
+    while(s[r+1+i]!='\0')
+    {
+        s[l+i]=s[r+1+i];
+        i++;
+    }
+    s[l+i]='\0';
+    //printf("%s\n",t);
+    printf("%s\n",s);
+}
+
+void m_paste(char* c)
+{
+    int p=0;
+    int i=6;
+    for(;c[i]!='\0';i++)
+    {
+        p=p*10+c[i]-'0';
+    }
+    int t_len=strlen(t);
+    int s_len=strlen(s);
+
+    for(i=s_len-1;i>p;i--)
+    {
+        s[i+t_len]=s[i];
+    }
+    for(i=0;i<t_len;i++)
+    {
+        s[i+p+1]=t[i];
+    }
+    s[t_len+s_len]='\0';
+    printf("%s\n",s);
+}
+
+int main()
+{
+    //freopen("debug\\in4.txt","r",stdin);
+    int m;
+    gets(s);
+    scanf("%d\n",&m);
+    while(m--)
+    {
+        gets(tmp);
+        if(judge(tmp)==1)
+            m_copy(tmp);
+        else if(judge(tmp)==2)
+            m_cut(tmp);
+        else if(judge(tmp)==3)
+            m_paste(tmp);
+    }
+    return 0;
+}

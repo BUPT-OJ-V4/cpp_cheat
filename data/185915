@@ -1,0 +1,46 @@
+/*
+USER_ID: bupt#100136111311055
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:49:53
+*/
+#include<stdio.h>
+#include<stdlib.h>
+int main(){
+    int T;
+    scanf("%d",&T);
+    while(T>0){
+      char a[1001];
+        scanf("%s",a);
+       // printf("%s",a);
+       int length=0;
+       int i,j;
+       for(i=0;a[i]!='\0';i++){
+        length++;
+       }
+       //printf("%d",length);
+       i=0;
+       while(i<length-5){
+        if(a[i]=='1'&&a[i+1]=='1'&&a[i+2]=='1'&&a[i+3]=='1'&&a[i+4]=='1'&&a[i+5]=='0'){
+            j=i+5;
+            for(i=j;i<length-1;i++){
+                a[i]=a[i+1];
+            }
+            i=j;
+            length--;
+        }
+        else
+            i++;
+       }
+      // printf(" %d\n",length);
+       for(i=0;i<length;i++){
+        if(i==length-1)
+            printf("%d\n",a[i]-'0');
+        else
+            printf("%d",a[i]-'0');
+       }
+        T--;
+    }
+
+
+    return 0;
+}

@@ -1,0 +1,33 @@
+/*
+USER_ID: bupt#100136188030850
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 15:05:21
+*/
+#include <iostream>
+#include <fstream>
+#include <cstring>
+#include <string>
+#include <vector>
+#include <map>
+#include <cstdlib>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+int T,n,m;
+int main()
+{
+    //fstream in("sample.txt");
+    cin>>T;
+    for(int time=0;time!=T;++time){
+        cin>>n>>m;
+        int cnt=0;
+        vector<int> x,y;
+        for(int i=1;i<=n&&i<=m;++i){
+            if(m%i == 0 && m/i <=n){
+                cnt++;
+            }
+        }
+        cout<<cnt<<endl;
+    }
+    return 0;
+}

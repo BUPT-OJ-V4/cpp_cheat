@@ -1,0 +1,53 @@
+/*
+USER_ID: bupt#100136019030171
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:19:05
+*/
+#include "stdlib.h"
+#include "stdio.h"
+
+
+int main()
+{
+    int num = 0; 
+    scanf("%d", &num);
+    
+    for(int i = 0; i < num; i++)
+    {
+            int szi = 0;
+            scanf("%d", &szi);
+            
+            int  thrnum = 0;
+            int  arrint[1024] = { 0 };
+            int  sumint[10240] = { 0 };
+            
+            for(int j = 0; j < szi; j++)
+            {
+                  scanf("%d", &arrint[j]);  
+            }        
+            
+            int sumsz = 0;
+            for(int m = 0; m < szi; m++)
+            {
+                    for(int n = 0; n < szi; n++)
+                    {
+                          sumint[sumsz++] = arrint[m] + arrint[n];     
+                    }        
+            }
+            
+            for(int m = 0; m < sumsz; m++)
+            {
+                    for(int n = 0; n < szi; n++)
+                    {
+                          if(sumint[m] == arrint[n])
+                          {
+                                thrnum++;
+                          }    
+                    }        
+            }
+            
+            printf("%d\n", thrnum);
+    }
+    
+    return 0;
+}

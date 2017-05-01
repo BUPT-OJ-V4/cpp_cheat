@@ -1,0 +1,37 @@
+/*
+USER_ID: bupt#100136009030101
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:18:08
+*/
+#include<stdlib.h>
+#include<stdio.h>
+int A[101];
+int main()
+{
+int n,m;
+while(scanf("%d",&n)!=EOF)
+{
+                          
+       while(n--){
+       scanf("%d",&m);
+       for(int i=0;i<101;i++)
+       {
+               A[i]=0;
+       }
+       for(int i=1;i<=m;i++)
+       {scanf("%d",&A[i]); }
+       int count=0;
+       for(int i=1;i<=m;i++)
+       {
+           for(int j=1;j<=m;j++){ 
+                for(int k=1;k<=m;k++)
+                 {if(A[i]+A[j]==A[k])
+                 count++;
+                 }
+           }
+       }
+       printf("%d\n",count);
+               
+               }                   
+}
+}

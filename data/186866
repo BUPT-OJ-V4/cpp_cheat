@@ -1,0 +1,15 @@
+import java.util.*;
+class Main {
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner(System.in);
+		int T = scanner.nextInt();
+		while((T--)>0) {
+			String s = new String(scanner.next());
+				s = s.replaceAll("01111110","");
+				s = s.replaceAll("111110", "11111");
+				System.out.println(s);
+				s=null;
+			
+		}
+	}
+}

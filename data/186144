@@ -1,0 +1,41 @@
+/*
+USER_ID: bupt#100136278031004
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:58:47
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(int argc, char *argv[])
+{
+  char str[1000];
+  int len;
+  int m=0,i,j;
+  
+  scanf("%d",&m);
+  for(j=0;j<m;j++)
+   {
+       int count=0;
+         scanf("%s",str);
+         len=strlen(str);
+         for(i=0;i<len;i++)
+         {
+                   if(count<5)
+                   {
+                           if(str[i]=='1')
+                            {
+                                          count++; 
+                                          printf("%c",str[i]);
+                            }
+                                          
+                           else if(str[i]=='0') { printf("%c",str[i]);count=0;}       
+                   }   
+                   else if(count==5) count=0;             
+         }
+         printf("\n");
+         
+             
+   }
+  return 0;
+}

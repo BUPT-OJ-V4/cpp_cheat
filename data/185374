@@ -1,0 +1,51 @@
+/*
+USER_ID: bupt#100136234030907
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:27:23
+*/
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+using namespace std;
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+              char str[1001];
+              cin>>str;
+              int len=strlen(str);
+              int sum=0;
+              int a[1001];
+              int size=0;
+              for(int i=0;i<len;i++)
+              {
+                     if(str[i]=='1')
+                     {
+                                    if(sum<5)
+                                    {
+                                           a[size++]=str[i]-'0';
+                                           sum++;
+                                           if(sum==5)
+                                           {
+                                                     i++;
+                                                     sum=0;
+                                                     }
+                                     }
+                                          
+                      }
+                      
+                           else if(str[i]=='0')
+                           {
+                                a[size++]=str[i]-'0';
+                                sum=0;
+                            }
+              }
+              for(int i=0;i<size;i++)
+              {
+                      cout<<a[i];
+                      }
+                      cout<<endl;
+                      }
+}

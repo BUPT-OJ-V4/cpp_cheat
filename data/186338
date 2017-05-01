@@ -1,0 +1,43 @@
+/*
+USER_ID: bupt#100136079030342
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 15:06:33
+*/
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		for (int i = 0; i < T; i++) {
+			String input = sc.next();
+
+			int count = 0;
+			int len = input.length();
+			int  q = 0;
+			String temp = input;
+			
+			for (int j = 0; j < len; j++) {
+
+				if (count < 5) {
+					if (temp.charAt(q) == '1') {
+						count++;
+						q++;
+					} else {
+						q++;
+						count = 0;
+					}
+				} else if(count==5){
+					temp = temp.substring(0, q)
+							+ temp.substring(q + 1, temp.length());
+					count=0;
+				}
+				
+			}
+			System.out.println(temp);
+		}
+
+		sc.close();
+	}
+}

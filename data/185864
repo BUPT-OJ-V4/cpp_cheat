@@ -1,0 +1,26 @@
+/*
+USER_ID: bupt#100136111310936
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 14:47:34
+*/
+#include<iostream>
+using namespace std;
+int main()
+{
+    int T;
+    cin >> T;
+    while(T--){
+        int n,m,group=0,b;
+        cin >> n>> m;
+        for(int i=1;i<=n;i++){
+            if(m%i==0){
+                b=m/i;
+                if(b<=n){
+                    group++;
+                }
+            }
+        }
+        cout<<group<<endl;
+    }
+    return 0;
+}

@@ -1,0 +1,38 @@
+/*
+USER_ID: bupt#100136111310972
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:52:52
+*/
+import java.util.*;
+
+public class Main {
+	public static void main(String args[]){
+		Scanner cin = new Scanner(System.in);
+		while(cin.hasNext()){
+			String s = cin.next();
+			String t = "";
+			int n = cin.nextInt();	//操作数
+			int arg1 = 0;
+			int arg2 = 0;
+			for(int i=0;i<n;i++){
+				String op = cin.next();
+				if(op.equals("COPY")){
+					arg1 = cin.nextInt();
+					arg2 = cin.nextInt();
+					t = s.substring(arg1, arg2+1);
+					System.out.println(s);
+				}else if(op.equals("CUT")){
+					arg1 = cin.nextInt();
+					arg2 = cin.nextInt();
+					t = s.substring(arg1, arg2+1);
+					s = s.substring(0,arg1) + s.substring(arg2+1,s.length());
+					System.out.println(s);
+				}else{
+					arg1 = cin.nextInt();
+					s = s.substring(0, arg1+1) + t + s.substring(arg1+1,s.length());
+					System.out.println(s);
+				}
+			}
+		}
+	}
+}

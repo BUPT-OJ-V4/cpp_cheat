@@ -1,0 +1,110 @@
+/*
+USER_ID: bupt#100136111310758
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:54:47
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <vector>
+#include <string.h>
+using namespace std;
+
+char str[210],t[210];
+void Cut(int StartIndex,int EndIndex)
+{
+    int i,j;
+    int len=strlen(str);
+    if(StartIndex>len||EndIndex>len||EndIndex<StartIndex)
+        return;
+    int size=0;
+    for(i=StartIndex;i<=EndIndex;i++)
+    {
+        t[size++]=str[i];
+    }
+    t[size]='\0';
+    for(i=StartIndex,j=EndIndex+1;j<=len;j++,i++)
+    {
+        str[i]=str[j];
+    }
+    str[i]='\0';
+    printf("%s\n",str);
+}
+void Paste(int Index)
+{
+    int i,j;
+    int len=strlen(str);
+    int len_t=strlen(t);
+    if(len+len_t<=200)
+    {
+        for(i=len;i>Index;i--)
+            str[i+len_t]=str[i];
+        int size=0;
+        for(i=Index+1;i<=Index+len_t;i++)
+            str[i]=t[size++];
+        //str[len_t+len]='\0';
+        printf("%s\n",str);
+    }
+}
+void Copy(int StartIndex,int EndIndex)
+{
+    int i,j;
+    int k=0;
+    int len=strlen(str);
+    int len_t=strlen(t);
+    if(len+len_t<=200)
+    {
+        for(i=StartIndex;i<=EndIndex;i++)
+        {
+            t[k++]=str[i];
+        }
+        t[k]='\0';
+            printf("%s\n",str);
+    }
+}
+
+int main()
+{
+    int i,j,n;
+    int startindex,endindex,type;
+    char cmd[20];
+    scanf("%s",str);
+    scanf("%d",&n);
+    if(n<=100)
+    {
+
+        for(i=0;i<n;i++)
+        {
+            scanf("%s %d",cmd,&startindex);
+            if(cmd[0]=='C')
+            {
+                scanf("%d",&endindex);
+                if(cmd[1]=='O')
+                    type=0;
+                else
+                    type=1;
+                if(startindex>endindex||endindex>200||startindex>200)
+                    break;
+            }
+            else
+            {
+                if(startindex>200)
+                    break;
+                type=2;
+            }
+            switch(type)
+            {
+            case 0:
+                Copy(startindex,endindex);
+                break;
+            case 1:
+                Cut(startindex,endindex);
+                break;
+            case 2:
+                Paste(startindex);
+                break;
+            }
+        }
+    }
+    return 0;
+}

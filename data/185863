@@ -1,0 +1,49 @@
+/*
+USER_ID: bupt#100136111310766
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:47:29
+*/
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+int main(){
+    int groupNum;
+    cin>>groupNum;
+    vector <string> result;
+    for(int i=0;i<groupNum;i++){
+            string a;
+            int count=0;
+            cin>>a;
+            int m[1000];
+            int k=0,x=0;
+            for(int j=0;j<a.length();j++){
+                  if(a[j]=='0'){
+                      if(count!=5){
+                         count=0;
+                      }
+                      if(count==5){
+                         count=0;
+                         m[k++]=j;
+                      }            
+                  }
+                  if(a[j]=='1'){
+                      count++;  
+                  }            
+            }
+            string b="";
+            for(int j=0;j<a.length();j++){
+                    if(j!=m[x]){
+                       b=b+a[j];
+                    }else{
+                          if(x<k-1){
+                                x++;
+                          }
+                    }      
+            }
+            result.push_back(b);   
+    }
+    for(int i=0;i<result.size();i++){
+            cout<<result[i]<<endl;
+    }
+}

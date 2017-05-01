@@ -1,0 +1,41 @@
+/*
+USER_ID: bupt#100136111310826
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:10:00
+*/
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    string s(""), t;
+    string op;
+    cin>>s;
+    int m;
+    cin>>m;
+    while(m--)
+    {
+        int a, b;
+        cin>>op;
+        if(op == "CUT")
+        {
+            cin>>a>>b;
+            t = s.substr(a, b - a + 1);
+            s.erase(a, b - a + 1);
+        }
+        else if (op == "PASTE")
+        {
+            cin>>a;
+            s.insert(a + 1, t);
+        }
+        else if (op == "COPY")
+        {
+            cin>>a>>b;
+            t = s.substr(a, b - a + 1);
+        }
+        cout<<s<<endl;
+    }
+    return 0;
+}

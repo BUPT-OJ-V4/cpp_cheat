@@ -1,0 +1,35 @@
+/*
+USER_ID: bupt#100136146030702
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:20:26
+*/
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[])
+{
+  int i,j,k,t,n;
+  scanf("%d", &t);
+  while(t--){
+     scanf("%d", &n);
+     int num=0;
+     int a[n];
+     for(i=0; i<n; i++){
+              scanf("%d", &a[i]);
+     } 
+    
+     
+     for(k=0; k<n; k++){
+              for(i=0; i<n; i++){
+                       for(j=0; j<n; j++){
+                           if(a[i]+a[j]==a[k]){
+                                   num++;
+                           }           
+                       }
+              }         
+     }
+     printf("%d\n", num);              
+  }
+ 	
+  return 0;
+}

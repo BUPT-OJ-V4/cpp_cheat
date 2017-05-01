@@ -1,0 +1,33 @@
+/*
+USER_ID: bupt#100136111310972
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:16:13
+*/
+import java.util.*;
+
+public class Main {
+	public static void main(String args[]){
+		Scanner cin = new Scanner(System.in);
+		while(cin.hasNext()){
+			int maxexmp = cin.nextInt();
+			for(int i=0;i<maxexmp;i++)
+			{
+				int n = cin.nextInt();
+				int[] a = new int[n];
+				for(int j=0;j<n;j++){	//输入数组
+					a[j]=cin.nextInt();
+				}
+				int counter = 0;
+				for(int x=0;x<n;x++){
+					for(int y=0;y<n;y++){
+						for(int z=0;z<n;z++)
+						{
+							if(a[x]+a[y]==a[z]){counter++;}
+						}
+					}
+				}
+				System.out.println(counter);
+			}
+		}
+	}
+}

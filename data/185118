@@ -1,0 +1,33 @@
+/*
+USER_ID: bupt#100136111311143
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:14:52
+*/
+#include <iostream>
+#include <vector>
+using namespace std;
+int main(){
+    int group_num = 0;
+    std::cin>>group_num;
+    for(int group = 0; group < group_num; group++){
+        vector<int>nums;
+        int num = 0;
+        std::cin>>num;
+        for(int i = 0; i < num; i++){
+            int tmp = 0;
+            std::cin>>tmp;
+            nums.push_back(tmp); 
+        }
+        int count = 0;
+        for(int i = 0; i  < num; i++){
+            for(int j = 0; j < num; j++){
+                int total = nums[i]+nums[j];
+                for(int k = 0; k < num; k++){
+                    if (total == nums[k])
+                        count++;
+                }
+            }
+        }  
+        std::cout<<count<<endl; 
+    }
+}

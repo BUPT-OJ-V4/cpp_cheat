@@ -1,0 +1,38 @@
+/*
+USER_ID: bupt#100136111310985
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:35:23
+*/
+#include <stdio.h>
+#include <string.h>
+int main(){
+    int num;
+    int buf[51];
+    while(scanf("%d",&num)!=EOF){
+    for(int i=0;i<num;i++)
+    {
+       int outNum=0;
+       int eachNum;
+       scanf("%d",&eachNum);
+       for(int j=1;j<=eachNum;j++){
+       // chu  li
+           scanf("%d",&buf[j]);
+       }
+       for(int m1=1;m1<=eachNum;m1++){
+           int a =buf[m1];
+           for(int m2=1;m2<=eachNum;m2++){
+              int b =buf[m2];
+              for(int m3=1;m3<=eachNum;m3++){
+                int c =buf[m3];
+                int d =a+b;
+                if(d==c){
+                  outNum++;
+                }
+              }
+           }
+       }
+       printf("%d\n",outNum); 
+    }
+    }
+    return 0;    
+}

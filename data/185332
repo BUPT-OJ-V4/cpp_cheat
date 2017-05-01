@@ -1,0 +1,35 @@
+/*
+USER_ID: bupt#100136188030852
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:25:51
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#define MAX	 1024
+char bite[MAX];
+
+int main(){
+	int t;
+	int temp;
+	scanf("%d",&t);
+	while(t--){
+		temp=0;
+		scanf("%s",bite);
+		int strl=strlen(bite);
+		for(int i=0;i<strl;i++){
+			if(bite[i]=='1')	temp++;
+			else if(bite[i]=='0'&&temp==5){
+				bite[i]='a';
+				temp=0;
+			}
+			else temp=0;
+		}
+		for(int i=0;i<strl;i++){
+			if(bite[i]!='a')	printf("%c",bite[i]);
+			if(i==strl-1)		printf("\n");
+		}
+	}
+	return 0;
+}

@@ -1,0 +1,39 @@
+/*
+USER_ID: bupt#100136111311089
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 15:54:10
+*/
+#include <stdio.h>
+#include <algorithm>
+#include <string.h>
+
+int main()
+{
+    int n;
+    scanf("%d",&n);
+    for (int x=0;x<n;x++) 
+    {
+        char str[1005];
+        scanf("%s",str);
+        int t=strlen(str);
+        int count=0;
+        for(int m=0;m<strlen(str);m++)
+        {
+                if (str[m]=='1') count++;
+                else count=0;
+                if (count==5)
+                {
+                    for (int j=m+1;j<t;j++)
+                    {
+                        str[j]=str[j+1];
+                    }
+                    count=0;
+                    t--;
+                }
+        }
+        puts(str);
+    }
+    printf("\n");
+    //system ("pause");
+    return 0;
+}

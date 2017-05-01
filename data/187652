@@ -1,0 +1,35 @@
+/*
+USER_ID: bupt#100136111310958
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:56:24
+*/
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner inScanner = new Scanner(System.in);
+		StringBuilder aString = new StringBuilder(inScanner.next());
+		int m = inScanner.nextInt();
+		inScanner.nextLine();
+		String tString = "";
+		
+		for (int i = 0; i < m; i++) {
+			String order = inScanner.nextLine();
+			String[] arr = order.split(" ");
+			if ("COPY".equals(arr[0])) {
+				tString = aString.substring(Integer.parseInt(arr[1]),Integer.parseInt(arr[2])+1);
+				System.out.println(aString);
+			}
+			if ("CUT".equals(arr[0])) {
+				tString= aString.substring(Integer.parseInt(arr[1]),Integer.parseInt(arr[2])+1);
+				aString.delete(Integer.parseInt(arr[1]),Integer.parseInt(arr[2])+1);
+				System.out.println(aString);
+			}
+			if ("PASTE".equals(arr[0])) {
+				int index = Integer.parseInt(arr[1]);
+				aString.insert(index+1, tString);
+				System.out.println(aString);
+			}
+		}
+	}
+}

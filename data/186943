@@ -1,0 +1,79 @@
+/*
+USER_ID: bupt#100136137030590
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:31:24
+*/
+#include<iostream>
+#include<cstdio>
+#include<cstdlib>
+#include<algorithm>
+#include<cstring>
+using namespace std;
+int main()
+{
+    char s[201],t[201],temp[201],op[20],c1,c2;
+    int m,l,r,i,j,cases;
+    scanf("%s",s);
+    cin>>m;
+    while(m--)
+    {
+              getchar( );
+              c1=getchar();
+              c2=getchar();
+              if(c1=='C'&&c2=='U')
+              {
+                                        cases=1;
+                                        scanf("%s %d %d",op,&l,&r);
+              }
+              
+              if(c1=='P'&&c2=='A')
+              {
+                                        cases=2;
+                                        scanf("%s %d",op,&l);
+              }
+              if(c1=='C'&&c2=='O')
+              {
+                                        cases=3;
+                                        scanf("%s %d %d",op,&l,&r);
+              }
+              switch(cases)
+              {
+                           case 1:
+                                {
+                                        j=0;
+                                        for(i=l;i<=r;i++)
+                                        t[j++]=s[i];
+                                        t[j]='\0';
+                                        j=0;
+                                        for(i=0;i<l;i++)
+                                        temp[j++]=s[i];
+                                        for(i=r+1;s[i];i++)
+                                        temp[j++]=s[i];
+                                        temp[j]='\0';
+                                        strcpy(s,temp);
+                                        printf("%s\n",s);
+                                }break;
+                           case 2:
+                                {
+                                       strcpy(temp,s);
+                                       for(i=l+1,j=0;t[j];j++,i++)
+                                       s[i]=t[j];
+                                       for(j=l+1;temp[j];j++,i++)
+                                       s[i]=temp[j];
+                                       s[i]='\0';
+                                       printf("%s\n",s);
+                                }break;
+                           case 3:
+                                {
+                                       j=0;
+                                       for(i=l;i<=r;i++)
+                                       t[j++]=s[i];
+                                       t[j]='\0';
+                                       printf("%s\n",s);
+                                }break;
+              }
+              
+    }
+    //system("pause");
+    return 0;
+}

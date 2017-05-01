@@ -1,0 +1,29 @@
+/*
+USER_ID: bupt#100136106030454
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:38:25
+*/
+#include<stdio.h>
+int main(){
+    int t,n,i,j,k,l,count;
+    int a[100];
+    scanf("%d",&t);
+    while(t--){
+        count=0;
+        scanf("%d",&n);
+        for(i=1;i<=n;i++){
+            scanf("%d",&a[i]);
+        }
+        for(j=1;j<=n;j++){
+            for(k=1;k<=n;k++){
+                for(l=1;l<=n;l++){
+                    if(a[j]+a[k]==a[l]){
+                        count++;
+                    }
+                }
+            }
+        }
+        printf("%d\n",count);
+    }
+    return 0;
+}

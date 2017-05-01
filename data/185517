@@ -1,0 +1,36 @@
+/*
+USER_ID: bupt#100136111311135
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:33:06
+*/
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    int t;
+    char s[1000];
+    char result[1000];
+    while(scanf("%d",&t)!=EOF){
+        while(t--){
+            scanf("%s",s);
+            int len = strlen(s);
+            int count=0;
+            int j=0;
+            for(int i=0;i<len;i++){
+                if(s[i]=='1'){
+                    count++;
+                }else
+                    count=0;
+                if(count==5){
+                    result[j++]=s[i];
+                    count=0;
+                    i++;
+                }else
+                    result[j++]=s[i];
+            }
+            result[j]='\0';
+            printf("%s\n",result);
+        }
+    }
+    return 0;
+}

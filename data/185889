@@ -1,0 +1,38 @@
+/*
+USER_ID: bupt#100136111311294
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:48:43
+*/
+#include<stdio.h>
+#include<stdlib.h>
+int main(){
+	int i=0;
+	int j=0;
+	int k=0;
+	int q=0;
+	int p=0;
+	int a[100];
+	int r;
+	scanf("%d",&i);
+	int sum[50];
+	for(r=0;r<i;r++){
+		sum[r]=0;
+		scanf("%d",&j);
+		for(k=0;k<j;k++){
+			scanf("%d",&a[k]);
+		}
+		for(k=0;k<j;k++){
+			for(q=0;q<j;q++){
+				for(p=0;p<j;p++){
+					if(a[k]+a[q]==a[p]){
+						sum[r]=sum[r]+1;
+						}
+					}
+				}	
+			}
+	}
+	for(r=0;r<i;r++){
+		printf("%d\n",sum[r]);
+	}
+	return 0;	
+}

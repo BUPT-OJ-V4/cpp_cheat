@@ -1,0 +1,45 @@
+/*
+USER_ID: bupt#100136111311019
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:04:32
+*/
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+#include <map>
+#include <set>
+#include <algorithm>
+#include <queue>
+#include <stack>
+using namespace std;
+
+const int imax_n = 100005;
+
+int a[imax_n];
+
+int n;
+
+
+int main()
+{
+    int T;
+    scanf("%d",&T);
+    while (T--)
+    {
+        scanf("%d",&n);
+        for (int i=0;i<n;i++)
+            scanf("%d",&a[i]);
+        long long ans=0;
+        for (int i=0;i<n;i++)
+        {
+            for (int j=0;j<n;j++)
+            {
+                for (int k=0;k<n;k++)
+                    if (a[i]+a[j]==a[k])
+                    ans++;
+            }
+        }
+        printf("%lld\n",ans);
+    }
+    return 0;
+}

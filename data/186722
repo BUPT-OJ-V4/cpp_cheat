@@ -1,0 +1,41 @@
+/*
+USER_ID: bupt#100136021030193
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 15:21:50
+*/
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		while(sc.hasNext()){
+			int n = sc.nextInt();
+			if(n<1||n>20)
+				System.out.println("请输入1~20之间的数");
+			if(n>=1&&n<=20){
+				for(int i =0;i<n;i++){
+					int a = sc.nextInt();
+					if(a>=1&&a<=50){
+						int[] arr = new int[a];
+						for(int j = 0;j<a;j++){
+							arr[j] = sc.nextInt();
+						}
+						int cout = 0;
+						for(int k = 0;k<arr.length;k++){
+							for(int x = 0;x<arr.length;x++){
+								for(int y = 0;y<arr.length;y++){
+									if(arr[y]+arr[x]==arr[k]){
+										cout++;
+									}
+								}
+							}
+						}
+						System.out.println(cout);
+					}
+				}
+			}
+		}sc.close();
+
+	}
+
+}

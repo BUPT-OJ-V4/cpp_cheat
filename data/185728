@@ -1,0 +1,47 @@
+/*
+USER_ID: bupt#100136274030979
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:41:26
+*/
+#include<stdio.h>
+int main()
+{
+    int T;
+    while(scanf("%d",&T)!=EOF&&T>=1&&T<=20)
+    {
+        for(int i=0;i<T;i++)
+        {
+            
+            int n;
+            scanf("%d",&n);
+            if(n<=50&&n>=1)
+            {
+            int a[n];
+            
+            for(int j=0;j<n;j++)
+            {
+                scanf("%d",&a[j]);
+            }
+            int ans=0;
+            for(int k=0;k<n;k++)
+            {
+                
+                for(int p=0;p<n;p++)
+                {
+                    for(int q=0;q<n;q++)
+                    {
+                        if(a[k]+a[p]==a[q])
+                        {
+                            ans++;
+                        }
+                        
+                    }
+                }
+                
+            }
+            printf("%d\n",ans);
+            }
+        }
+    }
+    return 0;
+}

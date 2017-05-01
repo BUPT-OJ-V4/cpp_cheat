@@ -1,0 +1,31 @@
+/*
+USER_ID: bupt#100136225030890
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 15:32:50
+*/
+#include <stdio.h>
+#include <string>
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int t;
+    scanf("%d",&t);
+    while(t--)
+    {
+        int n,m,ans=0;
+        scanf("%d %d",&n,&m);
+        for(int i=1;i<=n;i++)
+        {
+            if(m/i>n) continue;
+            if(m%i==0)
+            {
+                ans++;
+            }
+        }
+        printf("%d\n",ans);
+
+    }
+    return 0;
+}

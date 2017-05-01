@@ -1,0 +1,33 @@
+/*
+USER_ID: bupt#100136111310793
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:31:35
+*/
+#include<stdio.h>
+#include<algorithm>
+using namespace std;
+int main()
+{
+    int t=0;
+    scanf("%d",&t);
+    while(t--){
+        char a[1001]={'\0'},b[1001]={'\0'};
+        scanf("%s",a);
+        int num=0,j=0;
+        for(int i=0;a[i]!='\0';i++){
+            if(a[i]=='1'&&num<5){
+               num++; 
+               b[j++]=a[i];          
+            }
+            else if(num==5){
+               num=0;  
+            }
+            else {
+               num=0; 
+               b[j++]=a[i];  
+            }    
+        }
+        printf("%s\n",b);       
+    }
+    return 0;
+}

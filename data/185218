@@ -1,0 +1,40 @@
+/*
+USER_ID: bupt#100136111310861
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:20:19
+*/
+#include<stdio.h>
+
+
+main()
+{
+    int T;
+    scanf("%d", &T);
+    int result[T];
+
+    int r,n,a[50],i,j,k;
+    for(r = 0; r<T;r++)
+    {
+        int z = 0;
+        scanf("%d", &n);
+        for(i = 0;i<n;i++)
+        {
+            scanf("%d", &a[i]);
+        }
+        for(i = 0;i<n;i++)
+        {
+            for(j = 0;j < n;j++)
+            {
+                for(k = 0;k<n;k++)
+                    if(a[i]==a[j]+a[k])
+                        z++;
+            }
+        }
+        result[r] = z;
+        //printf("**z%d\n", z)
+    }
+    for(i = 0;i<T;i++)
+        printf("%d\n",result[i]);
+
+    return 0;
+}

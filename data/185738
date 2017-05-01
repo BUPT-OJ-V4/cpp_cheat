@@ -1,0 +1,38 @@
+/*
+USER_ID: bupt#100136111311042
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:41:50
+*/
+#include<stdio.h>
+int main(){
+    int T = 0;
+    char res[30][1002] = {""};
+    scanf("%d",&T);
+    for(int i = 0; i < T; i++){
+            char a[1002] = "";
+            int length = 0, count = 0;
+            scanf("%s",a);
+            while(a[length]!='\0')length++;
+            for(int j = 0; j < length; j++){
+                      if(count >=5){
+                               for(int k = j+1; k <= length; k++){
+                                       a[k-1] = a[k];
+                                       }
+                               count = 0;
+                               }
+                      if(a[j] == '1')
+                      {count++;}
+                      else 
+                      {count = 0;}
+                      }
+            length = 0;
+            while(a[length]!='\0')length++;
+            for(int j = 0;j < length+1; j++){
+                    res[i][j] = a[j];
+                    }
+            }
+    for(int i = 0; i < T; i++){
+            printf("%s\n",res[i]);
+            }
+    return 0;
+}

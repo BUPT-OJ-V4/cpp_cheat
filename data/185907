@@ -1,0 +1,39 @@
+/*
+USER_ID: bupt#100136111311073
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:49:37
+*/
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 55;
+
+int a[N];
+
+int main()
+{
+    int t, n, m;
+    cin >> t;
+    while (t--) {
+        string a, b; cin >> a;
+        
+        int sum = 0;
+        for (int i = 0; i < a.size(); ++i) {
+            if (a[i] == '1') {
+                sum ++; b += a[i];
+            } else {
+                b += a[i]; sum = 0;
+            }
+            
+            if (sum == 5) {
+               sum = 0; i++;
+            }
+        }
+        cout << b << endl;
+    } 
+    return 0;    
+}

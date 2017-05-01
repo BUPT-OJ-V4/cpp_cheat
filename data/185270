@@ -1,0 +1,40 @@
+/*
+USER_ID: bupt#100136073030304
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:22:52
+*/
+#include <iostream>
+#include<stdio.h>
+#include<cstring>
+#define     N     1001
+using namespace std;
+
+void PrintS(char *s)
+{
+    int i,num=0;
+    for(i=0;i<strlen(s);i++)
+    {
+        if(s[i]=='1')
+            {cout<<s[i];num++;}
+        if(s[i]=='0'&&num!=5)
+            {num=0;cout<<s[i];}
+        if(s[i]=='0'&&num==5)
+            {num=0;}
+    }
+}
+int main()
+{
+    int n;
+    while(cin>>n)
+    {
+        int i;
+        for(i=0;i<n;i++)
+        {
+            char s[N];
+            cin>>s;
+            PrintS(s);
+            cout<<endl;
+        }
+    }
+    return 0;
+}

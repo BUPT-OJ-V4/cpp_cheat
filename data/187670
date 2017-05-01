@@ -1,0 +1,28 @@
+/*
+USER_ID: bupt#100136111311186
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 15:56:59
+*/
+#include <iostream>
+#include <stdio.h>
+#include <map>
+using namespace std;
+
+int main()
+{
+    int n;
+    scanf("%d\n", &n);
+    while(n--) {
+        int count = 0;
+        int size, num;
+        scanf("%d%d", &size, &num);
+        for(int i=1; i<size+1; i++) {
+            int x;
+            if(num%i==0) x = num/i;
+            else continue;
+            if(x!=0 && x<=size) count++;
+        }
+        printf("%d\n", count);
+    }
+    return 0;
+}

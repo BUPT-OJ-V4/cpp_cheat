@@ -1,0 +1,48 @@
+/*
+USER_ID: bupt#100136239110014
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 15:06:23
+*/
+import java.util.*;
+public class Main {
+
+	public static int solve(int n,int[] a)
+	{
+		int sum = 0;
+		for(int i=0;i<n;i++)
+		{
+			for(int j = 0;j<n;j++)
+			{
+				int sum1 = a[i]+a[j];
+				for(int k = 0;k<n;k++)
+				{
+					if(sum1==a[k])
+						sum++;
+				}
+			}
+		}
+		return sum;
+	}
+	public static void main(String[] args)
+	{
+		Scanner shuru = new Scanner(System.in);
+		int zushu = shuru.nextInt();
+		int[] solve1 = new int[zushu];
+		for(int i = 0;i<zushu;i++)
+		{
+			int n = shuru.nextInt();
+			int[] a = new int[n];
+			for(int j = 0;j<n;j++)
+				a[j] = shuru.nextInt();
+			solve1[i] = solve(n, a);
+		} 
+		for(int i = 0;i<zushu;i++)
+		{
+			System.out.print(solve1[i]);
+			System.out.println();
+		}
+		shuru.close();
+
+	}
+
+}

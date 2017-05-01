@@ -1,0 +1,23 @@
+/*
+USER_ID: bupt#100136190030862
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 15:03:18
+*/
+#include<stdio.h>
+main(){
+       int n,m;
+       int a[60];
+       scanf("%d",&n);
+       while(n--!=0){
+                     int ans=0;
+                     scanf("%d",&m);
+                     for(int i=1;i<=m;i++)scanf("%d",&a[i]);
+                     
+                     for(int j=1;j<=m;j++)
+                     for(int k=1;k<=m;k++)
+                     for(int l=1;l<=m;l++)
+                     {if(a[j]+a[k]==a[l])ans++;}
+                     printf("%d\n",ans);
+                     }
+
+}

@@ -1,0 +1,38 @@
+/*
+USER_ID: bupt#100136090030405
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:24:12
+*/
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+int main()
+{
+    int t;
+    while(cin>>t){
+        for(int i=0;i<t;i++)
+        {
+            int n;
+            cin>>n;
+            int cnt=0;
+            int a[n];
+            for(int j=0;j<n;j++)
+            {
+               cin>>a[j]; 
+                }
+            for(int k=0;k<n;k++){
+                for(int p=0;p<n;p++){
+                    int tmp=a[p]+a[k];
+                    for(int q=0;q<n;q++){
+                        if(tmp==a[q])
+                        {
+                            cnt++;
+                            }
+                        }
+                    }
+                }
+                cout<<cnt<<endl;
+        }
+    }
+    return 0;
+}

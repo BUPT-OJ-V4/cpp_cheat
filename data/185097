@@ -1,0 +1,31 @@
+/*
+USER_ID: bupt#100136111310872
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:13:38
+*/
+#include <stdio.h>
+int main(){
+   int t;
+   while(scanf("%d",&t)!=EOF){
+      for(int i=0;i<t;i++){
+         int n;
+         scanf("%d",&n);
+         int a[51];
+         for(int j=1;j<=n;j++){
+             scanf("%d",&a[j]);
+         }
+         int num=0;
+         for(int k=1;k<=n;k++){
+             for(int l=1;l<=n;l++){
+                 for(int m=1;m<=n;m++){
+                     if(a[k]==a[l]+a[m]){
+                      num++;
+                     }
+                 }
+             }
+         }
+         printf("%d\n",num);
+      }
+   }
+   return 0;
+}

@@ -1,0 +1,85 @@
+/*
+USER_ID: bupt#100136144030687
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:22:48
+*/
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+int main()
+{
+    int T = 0;
+    
+   
+    string str;
+    
+    string t;
+    
+    string ins;
+    
+    cin>>str;
+    
+    
+    
+    while( cin>>T )
+    {
+        
+                 
+              for( int i = 0; i < T ;i++ )
+              {
+                    cin >> ins; 
+                    if( ins == "CUT" )
+                    {
+                        int a_cut; cin>>a_cut;
+                        int b_cut; cin>>b_cut;
+                        
+                        t = str.substr(a_cut,b_cut-a_cut+1);
+                        
+                        str.erase( a_cut,b_cut-a_cut+1 );
+                        
+                        cout<<str<<endl;
+                        //cout<<str<<"   "<<t<<endl;
+                        
+                        
+                        
+                        
+                    }//cut
+                    if( ins == "PASTE" )
+                    {
+                        int a_paste; cin>>a_paste;
+                        
+                        str.insert(a_paste+1,t);
+                        
+                        cout<<str<<endl;
+                        //cout<<str<<"   "<<t<<endl;
+                        
+                    }//cut
+                    if( ins == "COPY" )
+                    {
+                        int a_copy; cin>>a_copy;
+                        int b_copy; cin>>b_copy;
+                                        
+                        t = str.substr(a_copy,b_copy-a_copy+1);
+                        cout<<str<<endl;
+                        //cout<<str<<"   "<<t<<endl;
+                        
+                    }//cut
+                    
+                 
+              }   
+            
+                 
+                
+                 
+    }
+    
+    
+    
+    
+  
+    return 0;
+    
+    
+}

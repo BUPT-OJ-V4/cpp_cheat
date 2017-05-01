@@ -1,0 +1,47 @@
+/*
+USER_ID: bupt#100136013030141
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 15:50:19
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+int main()
+{
+    long long int m;
+    long long int i,j,k;
+
+int n;
+    int x;
+    long long int y;    
+    long long int count;
+    
+    scanf("%d", &n);
+
+    for(i=0;i<n;i++)
+    {
+                    
+                    scanf("%d", &x);
+                    y=0; 
+                    scanf("%lld", &y);
+                    count = 0;
+                    
+                    
+                    
+                    for(j=1;j<=x;j++){
+                                           
+                                                       
+                                      //if(y == j*j)count++;
+                                      //else
+                                      if(y%j == 0 && y/j<=x)count=count+1;
+                                      
+                    } 
+                    printf("%lld\n", count);                    
+    }
+    //system("PAUSE");
+    
+    
+    return 0;    
+}

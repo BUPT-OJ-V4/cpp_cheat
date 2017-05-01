@@ -1,0 +1,51 @@
+/*
+USER_ID: bupt#100136089030370
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:07:59
+*/
+#include <cstdlib>
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+    string aa;
+    cin >> aa;
+    int m;
+    cin >> m;
+    string t;
+    t.clear();
+    while(m--)
+    {
+              string cmd;
+              cin >> cmd;
+              if(cmd[0] == 'C' && cmd[1] == 'U')
+              {
+                        int a,b;
+                        cin >> a >>b;
+                        string tt = aa.substr(a,b-a+1);
+                        aa = aa.erase(a,b-a+1);
+                        t.clear();
+                        t = tt;
+                        cout << aa <<endl;
+              }
+              else if(cmd[0] == 'P')
+              {
+                   int a;
+                   cin >> a;
+                   aa.insert(a+1,t);
+                   cout << aa <<endl;
+              }
+              else if(cmd[0] == 'C'&&cmd[1] == 'O')
+              {
+                   int a,b;
+                   cin >> a >> b;
+                   t.clear();
+                   string tt = aa.substr(a,b-a+1);
+                   t = tt;
+                   cout << aa <<endl;
+              }     
+    }
+    //system("PAUSE");
+    return EXIT_SUCCESS;
+}

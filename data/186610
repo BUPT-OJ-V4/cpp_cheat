@@ -1,0 +1,29 @@
+/*
+USER_ID: bupt#100136204030881
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 15:17:11
+*/
+#include<stdio.h>
+int main()
+{
+    int n,m,t;
+    while(scanf("%d",&t)!=EOF){
+        while(t--){
+                int c=0;
+            scanf("%d %d",&n,&m);
+            for(int i=1;i<=n;i++){
+               int d=m%i;
+               if(d==0){
+               int f=m/i;
+               if(f<=n)
+               c++;
+               }
+            }
+        printf("%d",c);
+        if(t!=0)
+            printf("\n");
+        }
+
+    }
+    return 0;
+}

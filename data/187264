@@ -1,0 +1,80 @@
+/*
+USER_ID: bupt#100136111311159
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:44:35
+*/
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+char str[500];
+char buf[500];
+int str_len=0;
+int buf_len=0;
+void init(){
+    memset(str,0,sizeof(str));
+    memset(buf,0,sizeof(buf));
+    str_len = scanf("%s",str);
+    return;
+}
+
+void copy()
+{
+    int l,r;
+    scanf("%d %d",&l,&r);
+    buf_len = r-l+1;
+    strncpy(buf,str+l,buf_len);
+}
+void paste()
+{
+    int p;
+    scanf("%d",&p);
+    char temp[300];
+    strncpy(temp,str,p+1);
+    strncpy(temp+p+1,buf,buf_len);
+    strcpy(temp+p+1+buf_len,str+p+1);
+    strcpy(str,temp);
+    return;
+}
+
+void cut()
+{
+    int l,r;
+    scanf("%d %d",&l,&r);
+    strncpy(buf,str+l,r-l+1);
+    buf_len = r-l+1;
+    char temp[300];
+    strncpy(temp,str,l);
+    strcpy(temp+l,str+r+1);
+    strcpy(str,temp);
+}
+
+int main()
+{
+    init();
+    int T=0,t=0;
+    scanf("%d",&T);
+    char cmd[10];
+    
+    while(t++<T)
+    {
+        scanf("%s ",cmd);
+        if(cmd[1]=='O')
+        {
+            copy();
+            printf("%s\n",str);
+        }
+        if(cmd[1]=='A')
+        {
+            paste();
+            printf("%s\n",str);
+        }
+        if(cmd[1]=='U')
+        {
+            cut();
+            printf("%s\n",str);
+        }
+    }
+    
+    return 0;
+}

@@ -1,0 +1,53 @@
+/*
+USER_ID: bupt#100136111311115
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:15:15
+*/
+#include<stdio.h>
+
+int a[ 51 ];
+int flag[ 51 ][ 51 ][ 51 ];
+int main()
+{
+    int T;
+    scanf( "%d", &T );
+    while( T-- )
+    {
+           int N, n;
+           scanf( "%d", &N );
+           n = N;
+           int i = 1;
+           while( n-- )
+           {
+                scanf( "%d", &a[ i++ ] );          
+           }
+           for( int x = 0; x <= N; x++ )
+           {
+                for( int y = 0; y <= N;y++ )
+                {
+                     for( int z = 0; z <= N; z++ )
+                          flag[ x ][ y ][ z ] = 0;     
+                }
+           }
+           int count = 0;
+           for( int x = 1; x <= N; x++ )
+           {
+                for( int y = 1; y <= N;y++ )
+                {
+                     for( int z = 1; z <= N; z++ )
+                     {
+                          if( ( a[ x ] + a[ y ] ) == a[ z ] )
+                          {
+                              if( flag[ x ][ y ][ z ] == 0 )
+                              {
+                                  count++;
+                                  flag[ x ][ y ][ z ] = 1;
+                              }
+                          }
+                     }
+                }
+           }
+           printf( "%d\n", count );
+    }
+    return 0;
+}

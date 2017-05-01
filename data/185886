@@ -1,0 +1,40 @@
+/*
+USER_ID: bupt#100136137030637
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 14:48:32
+*/
+#include <iostream>
+#include <fstream>
+#include <cstring>
+#include <cmath>
+using namespace std;
+int main(void)
+{
+    //freopen("1.txt", "r", stdin);
+    //freopen("2.txt", "w", stdout);
+    int n;
+    cin>>n;
+    while(n--)
+    {
+        int a, b;
+        cin>>a>>b;
+        int sum = 0;
+        for(int i = 1; i <= b; i++)
+        {
+            int j = b/i;
+           //cout<<i<<" "<<j<<endl;
+            if(j < i)
+                break;
+
+            if(i*j == b && i <= a && j <= a)
+            {
+                if(i == j)
+                    ++sum;
+                if(i != j)
+                    sum+= 2;
+            }
+        }
+        cout<<sum<<endl;
+    }
+    return 0;
+}

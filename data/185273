@@ -1,0 +1,37 @@
+/*
+USER_ID: bupt#100136244030927
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 14:22:57
+*/
+#include<cstdio>
+#include<iostream>
+#include<cstdlib>
+#include<cstring>
+using namespace std;
+
+int T;
+int N,M;
+char lst[1001];
+
+int gcd(int x,int y)
+{
+    if(x%y==0) return y;
+    return gcd(y,x%y);
+}
+
+int main()
+{
+    scanf("%d",&T);
+    while(T--)
+    {
+              scanf("%d%d",&N,&M);
+              int ans=0;
+              for(int i=1;i<=N;i++)
+              {
+                      //int g=gcd(M,i);
+                      if(M%i==0 && M/i<=N) ans++;
+              }
+              printf("%d\n",ans);
+    }
+    return 0;    
+}

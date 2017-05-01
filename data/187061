@@ -1,0 +1,49 @@
+/*
+USER_ID: bupt#100136111311247
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 15:36:54
+*/
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+    int zsize = 0;
+    int i = 0;
+    int j = 0;
+    scanf("%d", &zsize);
+    char outbitstr[30][1000];
+    for(i = 0; i < zsize; i++)
+    {
+        char inbitstr[1000];
+        scanf("%s", inbitstr);
+        strcpy(outbitstr[i], "");
+        int len = strlen(inbitstr);
+        int onecount = 0;
+        int k = 0;
+        for(j = 0; j < len; j++)
+        {
+            if(onecount != 5)
+            {
+                outbitstr[i][k] = inbitstr[j];
+                k++;
+                if(inbitstr[j] == '0' && onecount < 5)
+                {
+                    onecount = 0;
+                }
+                else onecount++;
+
+            }
+            else
+            {
+                onecount = 0;
+                continue;
+            }
+        }
+
+    }
+    for(j = 0; j < zsize; j++)
+    {
+        printf("%s\n", outbitstr[j]);
+    }
+    return 0;
+}

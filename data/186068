@@ -1,0 +1,44 @@
+/*
+USER_ID: bupt#100136026030221
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:55:53
+*/
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+char num[1001];
+int main(){
+    int t;
+    while(scanf("%d",&t)!=EOF){
+    getchar();               
+       while(t--!=0){
+        
+        gets(num);
+        int len=strlen(num);
+        int count=0;  
+        bool flag=false;                     
+        for(int i=0;i<len;i++){
+              if(num[i]=='1')
+                count++;
+             if(num[i]=='0')
+                count=0;
+              
+              if(count==5){
+                 flag=true;
+                 count=0;          
+              }//if 
+              if(flag==true&&num[i]=='0'){
+                 for(int j=i;j<len;j++)
+                     num[j]=num[j+1]; 
+                      i--;
+                   flag=false;
+                   }
+               
+        }//for  
+          
+         puts(num);      
+        }//string                         
+    }//t
+    //system("pause");
+    return 0;
+    }

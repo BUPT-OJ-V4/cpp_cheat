@@ -1,0 +1,61 @@
+/*
+USER_ID: bupt#100136111310990
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:17:50
+*/
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include <algorithm>
+#include <map>
+#include <string.h>
+#include <vector>
+#include <math.h>
+using namespace std;
+int main(){
+    string s;
+    string t;
+    int m;
+    cin>>s;
+    cin>>m;
+    while(m--){
+           string command;
+           int op1, op2;
+           cin>>command;
+           if(command == "COPY"){
+                cin>>op1>>op2;
+                t.clear();
+                for(int i = op1; i <= op2; i++){
+                        t += s[i];   
+                }
+                cout<<s<<endl;
+           }
+           else if(command == "CUT"){
+                cin>>op1>>op2;
+                t.clear();
+                for(int i = op1; i <= op2; i++){
+                        t += s[i];   
+                }
+                for(int i = op1; i <= op2; i++){
+                        s.erase(s.begin() + op1);   
+                }
+                cout<<s<<endl;
+           }
+           else if(command == "PASTE"){
+                cin>>op1;
+                string temp;
+                string ini;
+                for(int i = 0; i <= op1; i++){
+                        ini += s[i];
+                }
+                for(int i = op1 + 1; i < s.size(); i++){
+                        temp += s[i];
+                }
+                s.clear();
+                s += ini;
+                s += t;
+                s += temp; 
+                cout<<s<<endl;
+           }
+    }
+}

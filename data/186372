@@ -1,0 +1,40 @@
+/*
+USER_ID: bupt#100136111311134
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 15:07:53
+*/
+#include <iostream>
+#include <string>
+#include <memory.h>
+using namespace std;
+
+int main()
+{
+    int t,num;
+    cin>>t;  //输入数据组数 
+
+      for(num=0;num<t;num++)
+      {
+        string str;
+        cin>>str;  //输入字符串 
+        int i,count=0,len=str.length();
+        int *flag=new int [len];
+        memset(flag,0,sizeof(int)*len);
+        if(len>5)
+        {
+           for(i=0;i<len;i++)
+           {
+             if(i+4<len&&str[i]=='1'&&str[i+1]=='1'&&str[i+2]=='1'&&str[i+3]=='1'&&str[i+4]=='1')
+             {
+                flag[i+5]=1;
+                i=i+4;
+              }
+            }
+         }
+        for(i=0;i<len;i++)
+           if(flag[i]==0)
+              cout<<str[i];
+        cout<<endl;
+      }
+    return 0;
+}

@@ -1,0 +1,29 @@
+/*
+USER_ID: bupt#100136111310789
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:30:14
+*/
+#include<stdio.h>
+
+int main(){
+    
+    int t;
+    scanf("%d",&t);
+    for(int i=0;i<t;i++){
+    int n,sum=0;
+    int buf[50];
+    scanf("%d",&n);
+    for(int j=0;j<n;j++){
+    scanf("%d",&buf[j]);}
+    for(int j=0;j<n;j++){
+        for(int m=0;m<n;m++){
+            for(int p=0;p<n;p++){
+                if( buf[j]+buf[m]==buf[p]) sum++;
+            }
+        }
+}
+    printf("%d\n",sum);
+    }
+
+    return 0;
+}

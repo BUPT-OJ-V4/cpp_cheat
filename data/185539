@@ -1,0 +1,48 @@
+/*
+USER_ID: bupt#100136111310992
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:33:59
+*/
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int i,j,k;    
+    char *str;
+    char *out;
+    int num;
+    int count;
+    out = (char *)malloc(sizeof(char)*1000);
+    str = (char *)malloc(sizeof(char)*1000);
+    
+    scanf("%d",&num);
+    
+    for(i=0;i<num;i++){
+        free(out); 
+        out = (char *)malloc(sizeof(char)*1000);
+        free(str); 
+        str = (char *)malloc(sizeof(char)*1000);
+        
+        scanf("%s",str);
+        //printf("%d",(str[6]=='\0'));
+        j=0;
+        k=0;
+        count=0;
+        while(str[j]!='\0'){
+            if(str[j]=='0'){
+                out[k]='0';k++;j++;count=0;   
+            }                  
+            else if(str[j]=='1'&&count<4){
+                out[k]='1';k++;j++;count++;     
+            }
+            else if(str[j]=='1'&&count==4){
+                out[k]='1';k++;j=j+2;count=0;     
+            }
+            //printf("%c\n",out[k-1]);   
+        } 
+        out[k]='\0';
+        printf("%s\n",out);                   
+    } 
+    //system("pause");    
+}

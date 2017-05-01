@@ -1,0 +1,36 @@
+/*
+USER_ID: bupt#100136111311143
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:35:47
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+int main(){
+    string s;
+    string t;
+    std::cin>>s;
+    int req_num = 0;
+    std::cin>>req_num;
+    for(int i = 0; i < req_num; i++){
+        string req;
+        int l = 0,r = 0;
+        std::cin>>req;
+        if (req == "CUT"){
+             std::cin>>l>>r;
+            t = s.substr(l,r+1-l);
+            s = s.erase(l,r+1-l);
+            std::cout<<s<<endl;
+        }else if(req == "PASTE"){
+               std::cin>>l;
+                s.insert(l+1,t);
+                 std::cout<<s<<endl;
+        }else if(req == "COPY"){
+            std::cin>>l>>r;
+            t = s.substr(l,r+1-l);
+            std::cout<<s<<endl;
+        }else{
+            std::cout<<"error request"<<endl;
+        }
+    }
+}

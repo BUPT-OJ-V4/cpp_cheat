@@ -1,0 +1,53 @@
+/*
+USER_ID: bupt#100136018030168
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:45:33
+*/
+#include <stdio.h>
+#include <algorithm>
+#include <string.h>
+                    
+using namespace std;
+
+char a[1010],b[1010];
+
+
+int main(int argc, char *argv[])
+{
+    int t;
+    while(scanf("%d",&t)!=EOF)
+    {
+     for(int i=0;i<t;i++)
+     {
+             scanf("%s",&a);
+             int len=strlen(a);
+             int count=0;
+             for(int j=0;j<len;j++)
+             {
+                     b[j]=0;
+             }
+             for(int j=0;j<len;j++)
+             {
+                     if(a[j]=='1')
+                     {
+                      count++;
+                     }
+                     if(a[j]=='0')
+                     {
+                      if(count==5)
+                      {
+                       b[j]=1;
+                      }
+                      count=0;
+                     }
+             }
+             for(int j=0;j<len;j++)
+             {
+                     if(b[j]==1) continue;
+                     printf("%c",a[j]);
+             }
+             printf("\n");
+     }
+    }
+    return 0;
+}

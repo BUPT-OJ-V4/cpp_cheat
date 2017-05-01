@@ -1,0 +1,55 @@
+/*
+USER_ID: bupt#100136111310742
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:26:46
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+string s;
+string t;
+void CUT(int v1,int v2)
+{
+    t = s.substr(v1,v2-v1+1);
+    s.erase(v1,v2-v1+1);
+    cout<<s<<endl;
+}
+
+void PASTE(int v1)
+{
+    s = s.substr(0,v1+1)+t+s.substr(v1+1,s.size()-v1-1);
+    cout<<s<<endl;
+}
+
+void COPY(int v1,int v2)
+{
+    t = s.substr(v1,v2-v1+1);
+    cout<<s<<endl;
+}
+
+int main()
+{
+    int m,v1,v2;
+    cin>>s;
+    cin>>m;
+    string op;
+    for(int i=0;i<m;i++)
+    {
+        cin>>op;
+        if(op=="CUT")
+        {
+            cin>>v1>>v2;
+            CUT(v1,v2);   
+        }
+        else if(op=="PASTE")
+        {
+            cin>>v1;
+            PASTE(v1); 
+        }
+        else if(op=="COPY")
+        {
+            cin>>v1>>v2;
+            COPY(v1,v2); 
+        }
+    } 
+}

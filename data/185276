@@ -1,0 +1,32 @@
+/*
+USER_ID: bupt#100136079030327
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:23:13
+*/
+//#include<iostream>
+#include<stdio.h>
+#include<string.h>
+int main(){
+    int t;
+    char a[1001];
+    scanf("%d",&t);
+    while(t--){
+        scanf("%s",a);
+        int len = strlen(a);
+        int i,temp;
+        temp = 0;
+        for(i = 5; i < len; i++){
+              if(a[i] =='0' &&a[i-1] =='1'&&a[i-2] =='1'&&a[i-3] =='1'&&a[i-4] =='1'&&a[i-5] =='1'){
+                      a[i] = '2';
+              }
+        }
+        for(i = 0; i < len; i++){
+              if(a[i] != '2'){
+                      printf("%c",a[i]);
+                      }
+              }           
+              printf("\n");
+    }
+    //system("pause");
+    return 0;
+    }

@@ -1,0 +1,32 @@
+/*
+USER_ID: bupt#100136111311002
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 14:59:21
+*/
+#include<stdio.h>
+int main()
+{
+int t,n,m;
+scanf("%d",&t);
+int k,i,j,c;
+for(k = 1;k<=t;k++){
+        c = 0;
+scanf("%d%d",&n,&m);
+    i = 1,j = n;
+while(i<j){
+    if(i*j == m){
+    c = c+2;
+    i++;
+    }
+    else if(i*j>m)
+    j--;
+    else
+    i++;
+}
+if(i==j&&i*j==m)
+c++;
+printf("%d",c);
+printf("\n");
+}
+return 0;
+}

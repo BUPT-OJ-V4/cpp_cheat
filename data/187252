@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    char str[1005];                             //输入数组
+    char s[1005];                               //输出数组
+    int i, j, k, t;
+    int flag, kase;
+
+    scanf("%d", &t);
+    for(i=0; i<t; i++){
+        scanf("%s", &str);
+
+        k=0, j=0, flag=0;                       //初始化条件
+        while(str[j] != 0){
+            if(flag == 0){                      //计数开始
+                if(str[j] == '1'){
+                    flag=1;
+                    kase=1;
+                    s[k++] = str[j];
+                }
+                else{
+                    s[k++] = str[j];
+                }
+            }
+            else if(flag == 1){
+                if(kase == 5){                  //已有5个1，则不复制后边紧随的0
+                    flag=0;
+                    kase=0;
+                }
+                else{
+                    if(str[j] == '1'){            //每逢1，复制，并且计数加1
+                        s[k++] = str[j];
+                        kase++;
+                    }
+                    else{
+                        s[k++] = str[j];
+                        kase=0;
+                        flag=0;
+                    }
+                }
+            }
+            j++;
+        }
+        s[k] = 0;
+
+        printf("%s\n", s);
+    }
+
+    return 0;
+}

@@ -1,0 +1,55 @@
+/*
+USER_ID: bupt#100136111311207
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 15:43:36
+*/
+#include<iostream>
+#include<stdlib.h>
+#include<vector>
+#include<stdio.h>
+ 
+using namespace std;
+ 
+int main(){
+    int n;
+    cin >> n;
+    char c = getchar();
+    while(n--){
+       vector<char> ivec;
+       char x;
+       int count =0;
+       int flag = 0;
+       vector<int> res;
+       vector<char> result;      
+       while( x = getchar()){
+          if(x == '\n') break;
+          ivec.push_back(x);
+       }
+       for(int i=0;i<ivec.size();i++){
+          if(ivec[i] == '1'){
+             count ++;
+          }else if(ivec[i] =='0'){
+             count = 0;     
+          }
+          if(count==5 && i!=ivec.size()-1 && ivec[i+1] == '0'){ 
+                res.push_back(i);     
+          }
+                
+           
+       }
+       int temp =0;
+       for(int i =0;i<ivec.size();i++){
+         if(i != res[temp]+1){
+              cout << ivec[i];                         
+          }else{
+             temp++;
+          }
+       }
+  
+       cout << endl;
+       ivec.clear();
+       res.clear();  
+    }  
+    //system("pause");
+    return 0;
+}

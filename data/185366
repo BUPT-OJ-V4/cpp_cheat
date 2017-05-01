@@ -1,0 +1,42 @@
+/*
+USER_ID: bupt#100136111310155
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:27:04
+*/
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+  int testtime;
+  cin>>testtime;
+  for (int i=0;i<testtime;i++)
+  {
+        int size;
+        int a[100];
+        cin>>size;
+        for(int i=0;i<size;i++)
+  {
+        cin>>a[i];
+    }   //size end
+    int count=0;
+    //count part
+    for(int i=0;i<size;i++)
+    {
+        for(int j=0;j<size;j++)
+        {
+            for(int k=0;k<size;k++)
+            {
+                if(a[i]+a[j]==a[k])
+                {
+                 count++;
+                }
+            }
+        }   
+    }
+    cout<<count<<endl;
+    }   //testtime end
+
+
+}

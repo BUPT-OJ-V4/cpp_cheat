@@ -1,0 +1,47 @@
+/*
+USER_ID: bupt#100136111311271
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 15:08:58
+*/
+import java.util.Scanner;
+
+
+public class Main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int n=0;
+		Scanner in =new Scanner(System.in);
+		n = in.nextInt();
+		int[] num = new int[n];
+		int[] result = new int[n];
+		for (int i = 0; i < n; i++) {
+			result[i]=0;
+		}
+		
+		for (int i = 0; i < n; i++) {
+			num[i] = in.nextInt();
+			int[] number=new int[num[i]];
+			for (int j = 0; j < num[i]; j++) {
+				number[j]=in.nextInt();
+			}
+			
+			for (int m = 0; m < num[i]; m++) {
+				for (int k = 0; k < num[i]; k++) {
+					for (int l = 0; l < num[i]; l++) {
+						if (number[m]==number[k]+number[l]) {
+							result[i]++;
+						}
+					}
+				}
+			}
+		}
+		
+		for (int i = 0; i < n; i++) {
+			System.out.println(result[i]);
+		}
+	}
+}

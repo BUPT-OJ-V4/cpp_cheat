@@ -1,0 +1,43 @@
+/*
+USER_ID: bupt#100136111311362
+PROBLEM: 999
+SUBMISSION_TIME: 2016-03-25 15:17:19
+*/
+import java.util.Scanner;
+
+
+public class Main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner scanner=new Scanner(System.in);
+		String Raw=scanner.nextLine();
+		String lString="";
+		int T=scanner.nextInt();
+		for (int i = 0; i < T; i++) {
+			String step= scanner.next();
+			if(step.contains("CUT")){
+				int a=scanner.nextInt();
+				int b=scanner.nextInt();
+				lString=Raw.substring(a,b+1);
+				String tmpString=Raw.substring(0,a)+Raw.substring(b+1);
+				Raw=tmpString;
+				System.out.println(Raw);
+			}else if (step.contains("PASTE")) {
+				int a=scanner.nextInt();
+				String tmpString=Raw.substring(0,a+1)+lString+Raw.substring(a+1);
+				Raw=tmpString;
+				System.out.println(Raw);
+			}else if(step.contains("COPY")){
+				int a=scanner.nextInt();
+				int b=scanner.nextInt();
+				lString=Raw.substring(a,b+1);
+				System.out.println(Raw);
+			}
+		}
+	}
+
+}

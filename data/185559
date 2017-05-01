@@ -1,0 +1,33 @@
+/*
+USER_ID: bupt#100136234030907
+PROBLEM: 998
+SUBMISSION_TIME: 2016-03-25 14:34:49
+*/
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+using namespace std;
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+             int n,m;
+              cin>>n>>m;
+              int sum=0;
+              for(int i=1;i<=n;i++)
+              {
+                      if(m%i==0)
+                      {
+                                int c=m/i;
+                                if(c<=n)
+                                {
+                                        sum++;
+                                }
+                       }
+                                        
+              }
+              cout<<sum<<endl;
+      }
+}

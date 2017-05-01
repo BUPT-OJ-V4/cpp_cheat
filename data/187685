@@ -1,0 +1,26 @@
+/*
+USER_ID: bupt#100136244030941
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 15:57:18
+*/
+#include<stdio.h>
+#include<string.h>
+int main(){
+    int i,t;
+    scanf("%d",&t);
+    for(i=0;i<t;i++){
+    char str[1001];
+    int j,n,k;
+    scanf("%s",str);
+    n=strlen(str);
+    for(j=0;j<n-5;j++){
+        if(str[j]+str[j+1]+str[j+2]+str[j+3]+str[j+4]==245){
+            for(k=j+5;k<=n;k++){
+                str[k]=str[k+1];
+            }
+            j=j+4;
+        }
+    }
+    printf("%s\n",str);
+    }
+}

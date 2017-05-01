@@ -1,0 +1,40 @@
+/*
+USER_ID: bupt#100136128030532
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:16:28
+*/
+#include <stdio.h>
+#include <string.h>
+int main(){
+    int T;
+    char str[1001];
+    while(scanf("%d",&T)!=EOF){
+    while(T--){
+        scanf("%s",str);
+        int flag[1001]={0};
+        int length=strlen(str);
+        if(length<=5){
+            printf("%s",str);
+        }else{
+            for(int i=4;i<length;i++){
+                if(str[i]=='1'&&
+                str[i-1]=='1'&&
+                str[i-2]=='1'&&
+                str[i-3]=='1'&&
+                str[i-4]=='1')
+                flag[i+1]=1;
+            }
+            for(int i=0;i<length;i++){
+                if(flag[i]==0){
+                    printf("%c",str[i]);    
+                }
+            }
+            printf("\n");
+        }
+       
+    }     
+    }
+   
+    //while(1);//注意删除 
+    return 0;    
+}

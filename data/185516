@@ -1,0 +1,53 @@
+/*
+USER_ID: bupt#100136111311070
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:33:05
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX 9999
+
+int n ;
+int len ;
+char data[MAX] ;
+char ans[MAX] ;
+
+void work() {
+     int ansPos = 0 ;
+     int curCount = 0 ;
+     for(int i=0; i<len; i++) {
+
+             if(i != 0 && data[i] == '1' && data[i-1]=='1') {
+                  curCount ++ ;
+                  //printf("i %d curCount %d\n", i, curCount) ;
+                  ans[ansPos++] = data[i] ;
+                  if(curCount == 5) {
+                              i++ ;
+                  } 
+             } else if(data[i] == '1') {
+                        curCount = 1 ;
+                        ans[ansPos++] = data[i] ;
+             }else if(data[i] == '0') {
+                  curCount = 0 ;
+                  ans[ansPos++] = data[i] ;
+             }
+     }
+     
+     ans[ansPos] = '\0' ;
+     printf("%s\n", ans) ;
+}
+
+int main()
+{
+    int T ;
+    scanf("%d", &T) ;
+    for(int t=0; t<T; t++) {
+            scanf("%s", data) ;
+            len = strlen(data) ;
+            
+            work() ;
+    }
+    //system("pause") ;
+    return 0 ;
+}

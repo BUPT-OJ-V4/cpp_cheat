@@ -1,0 +1,42 @@
+/*
+USER_ID: bupt#100136111311340
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:28:30
+*/
+#include<stdio.h>
+
+int main()
+{
+    int T,N[20];    //T组 ，每组N[i]个数 
+    int i,j,k,q;
+    int A[20][50];
+	int count;   //记三元组数   
+    scanf("%d",&T);
+	for(i=0;i<T;i++)   //为每组数赋值 
+	{
+		scanf("%d",&N[i]);
+		for(j=0;j<N[i];j++)
+		{
+			scanf("%d",&A[i][j]);
+		}
+	}
+	for(i=0;i<T;i++)
+	{
+		count=0;
+		for(j=0;j<N[i];j++)
+		{
+			for(k=0;k<N[i];k++)
+			{
+				for(q=0;q<N[i];q++)
+				{
+					if((A[i][j]+A[i][k])==A[i][q])
+					count++;
+				}
+			}
+		}
+		printf("%d\n",count);
+	} 
+	
+	
+	 
+}

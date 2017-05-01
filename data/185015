@@ -1,0 +1,35 @@
+/*
+USER_ID: bupt#100136111310866
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:09:18
+*/
+#include<stdio.h>
+
+int main()
+{
+    int i=0,T;
+    scanf("%d",&T);
+    while(i<T)
+    {
+        int n;
+        scanf("%d",&n);
+        int A[n];
+        int a;
+        for(a=0;a<n;a++)
+            scanf("%d",&A[a]);
+        
+        int  b,c,num=0;
+        for(a=0;a<n;a++)
+            for(b=0;b<n;b++)
+                for(c=0;c<n;c++)
+                {
+                    if(A[a]+A[b]==A[c])
+                        num++;
+                    }
+        printf("%d\n",num);
+        
+        i++;
+        }
+  
+    return 0;
+    }

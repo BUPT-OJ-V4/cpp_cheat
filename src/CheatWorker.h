@@ -8,22 +8,28 @@
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <queue>
+#include <deque>
 #include <stdexcept>
+#include <mysql_driver.h>
+#include <mysql_connection.h>
+#include <string>
+#include <cppconn/statement.h>
 
-
-typedef boost::function<void(void)> Task;
+typedef std::pair<std::pair<int, int>, double> Res;
+//typedef long long Res;
+typedef boost::function<Res(void)> Task;
 
 class TaskQueue : boost::noncopyable {
 private:
     std::queue<Task> _task_que;
-    boost::mutex _mutex;
+    boost::mutex _mutex1, _mutex2;
     boost::condition_variable_any _cond;
 public:
     TaskQueue() {
         closed = false;
     }
     void add_task(const Task& task);
-    Task pop_task();
+    Task* pop_task();
     int size();
     volatile bool closed;
 };

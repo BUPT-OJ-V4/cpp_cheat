@@ -1,0 +1,37 @@
+/*
+USER_ID: bupt#100136101030446
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 15:13:17
+*/
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int T;
+    scanf("%d",&T);
+    int a[20][50];//第一个数据代表是第几组，后一个代表着组中的数据
+    int geshu[20];
+    int sum[20]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+    int i,j,j1,j2,j3;
+    for(i=0;i<T;i++)
+    {
+        scanf("%d",&geshu[i]);
+        for(j=0;j<geshu[i];j++)
+        {
+            scanf("%d",&a[i][j]);
+        }
+        for(j1=0;j1<geshu[i];j1++)
+           for(j2=0;j2<geshu[i];j2++)
+              for(j3=0;j3<geshu[i];j3++)
+              {
+                  if(a[i][j1]+a[i][j2]==a[i][j3])
+                  sum[i]=sum[i]+1;
+              }
+    }
+    for(i=0;i<T;i++)
+    {
+        printf("%d\n",sum[i]);
+    }
+    return 0;
+}

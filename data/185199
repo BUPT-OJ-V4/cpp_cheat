@@ -1,0 +1,44 @@
+/*
+USER_ID: bupt#100136138030652
+PROBLEM: 993
+SUBMISSION_TIME: 2016-03-25 14:18:57
+*/
+#include<stdio.h>
+
+int main()
+{
+    int t;
+    while(scanf("%d",&t)!=EOF)
+    {
+        while(t--)
+        {
+            int buf[50];
+            int n;
+            scanf("%d",&n);
+            for(int i=0;i<n;i++)
+                buf[i]=0;
+
+            for(int i=0;i<n;i++)
+           {
+                scanf("%d",&buf[i]);
+            }
+           // for(int i=0;i<n;i++)
+                //printf("%d",buf[i]);
+            int ans=0;
+            for(int k=0;k<n;k++)
+            {
+                for(int i=0;i<n;i++)
+                {
+                     for(int j=0;j<n;j++)
+                     {
+                         if(buf[k]+buf[i]==buf[j])
+                            ans++;
+                     }
+                }
+
+            }
+            printf("%d\n",ans);
+
+        }
+    }
+}

@@ -1,0 +1,58 @@
+/*
+USER_ID: bupt#100136022030200
+PROBLEM: 997
+SUBMISSION_TIME: 2016-03-25 14:23:48
+*/
+#include <cstdlib>
+#include <iostream>
+#include<string>
+#include<vector>
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+    
+    int group_num=0;
+    cin>>group_num;
+    vector<string> vec_str;
+    string temp_string;
+    for(int i=0;i!=group_num;i++)
+    {
+            cin>>temp_string;
+            vec_str.push_back(temp_string);
+            
+    }
+    for(int i=0;i!=vec_str.size();i++)
+    {
+            int count=0;
+            for(int j=0;j!=vec_str[i].size();j++)
+            {
+                    if(vec_str[i][j]=='1')
+                    count++;
+                    else
+                    {
+                        count=0;
+                    }
+                    if(count==5 && (j+1)<vec_str[i].size())
+                    {
+                       vec_str[i].erase(j+1,1);
+                     
+                       count=0;
+                     }
+            }
+    
+    }
+    for(int i=0;i!=vec_str.size();i++)
+    {
+            cout<<vec_str[i]<<endl;
+    }
+    return 0;
+    
+    
+    
+    
+    
+    
+  
+}
