@@ -25,7 +25,7 @@ template <typename K, typename V>
 typedef std::map<K, V>::iterator map_ite;
 namespace cheat{
     static std::map<std::string, std::string> key_words;
-    static std::map<char, int> key_symbol;
+    static char key_symbol[300];
     static std::map<int, std::string> cache;
     static std::map<int, std::string> brackets;
     double lcs(const std::string& a, const std::string &b);

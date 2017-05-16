@@ -45,9 +45,6 @@ void CheatWorker::run() {
              Task* task = this->_task_queue.pop_task();
              if (task == nullptr) continue;
              Res t = (*task)();
-             if (idx % 1000 == 0) {
-                std::cout << idx << ": "<< t.first.first << ", " << t.first.second << ": " << t.second << std::endl;
-             }
         }
         std::cout << "end thread " << std::endl;
         delete state;
@@ -66,8 +63,6 @@ void CheatWorker::start(){
     is_run = true;
     for (int i = 0; i < _thread_num; i ++) {
         //boost::shared_ptr<boost::thread> t()
-        //boost::thread *t = new boost::thread(boost::bind(&CheatWorker::run, this));
-        //t->interrupt();
         _thread_group.add_thread(new boost::thread(boost::bind(&CheatWorker::run, this)));
     }
 }

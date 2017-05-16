@@ -22,7 +22,7 @@ typedef boost::function<Res(void)> Task;
 class TaskQueue : boost::noncopyable {
 private:
     std::queue<Task> _task_que;
-    boost::mutex _mutex1, _mutex2;
+    boost::mutex _mutex1;
     boost::condition_variable_any _cond;
 public:
     TaskQueue() {

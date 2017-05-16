@@ -12,19 +12,16 @@ void cheat::init() {
             map_pair<std::string, std::string>("false", "p"), map_pair<std::string, std::string>("true", "o"), map_pair<std::string, std::string>("class", "f"), map_pair<std::string, std::string>("if", "j")
     };
     cheat::key_words = std::map<std::string, std::string>(data, data + 21);
-    const static map_pair<char, int> data2[] = {
-            map_pair<char,int>('(', 66), map_pair<char,int>(',', 83), map_pair<char,int>('0', 52), map_pair<char,int>('4', 56), map_pair<char,int>('8', 60), map_pair<char,int>('<', 86), map_pair<char,int>('D', 29), map_pair<char,int>('H', 33), map_pair<char,int>('L', 37),
-            map_pair<char,int>('P', 41), map_pair<char,int>('T', 45), map_pair<char,int>('X', 49), map_pair<char,int>('\\', 89), map_pair<char,int>('d', 3), map_pair<char,int>('h', 7), map_pair<char,int>('l', 11), map_pair<char,int>('p', 15), map_pair<char,int>('t', 19),
-            map_pair<char,int>('x', 23), map_pair<char,int>('|', 69), map_pair<char,int>('#', 85), map_pair<char,int>('\'', 82), map_pair<char,int>('+', 72), map_pair<char,int>('/', 75), map_pair<char,int>('3', 55), map_pair<char,int>('7', 59), map_pair<char,int>(';', 77),
-            map_pair<char,int>('?', 78), map_pair<char,int>('C', 28), map_pair<char,int>('G', 32), map_pair<char,int>('K', 36), map_pair<char,int>('O', 40), map_pair<char,int>('S', 44), map_pair<char,int>('W', 48), map_pair<char,int>('[', 62), map_pair<char,int>('_', 88),
-            map_pair<char,int>('c', 2), map_pair<char,int>('g', 6), map_pair<char,int>('k', 10), map_pair<char,int>('o', 14), map_pair<char,int>('s', 18), map_pair<char,int>('w', 22), map_pair<char,int>('{', 64), map_pair<char,int>('"', 81), map_pair<char,int>('&', 68),
-            map_pair<char,int>('*', 74), map_pair<char,int>('.', 80), map_pair<char,int>('2', 54), map_pair<char,int>('6', 58), map_pair<char,int>(':', 76), map_pair<char,int>('>', 87), map_pair<char,int>('B', 27), map_pair<char,int>('F', 31), map_pair<char,int>('J', 35),
-            map_pair<char,int>('N', 39), map_pair<char,int>('R', 43), map_pair<char,int>('V', 47), map_pair<char,int>('Z', 51), map_pair<char,int>('^', 70), map_pair<char,int>('b', 1), map_pair<char,int>('f', 5), map_pair<char,int>('j', 9), map_pair<char,int>('n', 13),
-            map_pair<char,int>('r', 17), map_pair<char,int>('v', 21), map_pair<char,int>('z', 25), map_pair<char,int>('!', 79), map_pair<char,int>('%', 71), map_pair<char,int>(')', 67), map_pair<char,int>('-', 73), map_pair<char,int>('1', 53), map_pair<char,int>('5', 57),
-            map_pair<char,int>('9', 61), map_pair<char,int>('=', 84), map_pair<char,int>('A', 26), map_pair<char,int>('E', 30), map_pair<char,int>('I', 34), map_pair<char,int>('M', 38), map_pair<char,int>('Q', 42), map_pair<char,int>('U', 46), map_pair<char,int>('Y', 50),
-            map_pair<char,int>(']', 63), map_pair<char,int>('a', 0), map_pair<char,int>('e', 4), map_pair<char,int>('i', 8), map_pair<char,int>('m', 12), map_pair<char,int>('q', 16), map_pair<char,int>('u', 20), map_pair<char,int>('y', 24), map_pair<char,int>('}', 65)
-    };
-    cheat::key_symbol = std::map(data2, data2 + 90);
+    key_symbol['(']=66; key_symbol[',']=83; key_symbol['0']=52; key_symbol['4']=56; key_symbol['8']=60; key_symbol['<']=86; key_symbol['D']=29; key_symbol['H']=33; key_symbol['L']=37;
+    key_symbol['P']=41; key_symbol['T']=45; key_symbol['X']=49; key_symbol['\\']=89; key_symbol['d']=3; key_symbol['h']=7; key_symbol['l']=11; key_symbol['p']=15; key_symbol['t']=19;
+    key_symbol['x']=23; key_symbol['|']=69; key_symbol['#']=85; key_symbol['\'']=82; key_symbol['+']=72; key_symbol['/']=75; key_symbol['3']=55; key_symbol['7']=59; key_symbol[';']=77;
+    key_symbol['?']=78; key_symbol['C']=28; key_symbol['G']=32; key_symbol['K']=36; key_symbol['O']=40; key_symbol['S']=44; key_symbol['W']=48; key_symbol['[']=62; key_symbol['_']=88;
+    key_symbol['c']=2; key_symbol['g']=6; key_symbol['k']=10; key_symbol['o']=14; key_symbol['s']=18; key_symbol['w']=22; key_symbol['{']=64; key_symbol['"']=81; key_symbol['&']=68;
+    key_symbol['*']=74; key_symbol['.']=80; key_symbol['2']=54; key_symbol['6']=58; key_symbol[':']=76; key_symbol['>']=87; key_symbol['B']=27; key_symbol['F']=31; key_symbol['J']=35;
+    key_symbol['N']=39; key_symbol['R']=43; key_symbol['V']=47; key_symbol['Z']=51; key_symbol['^']=70; key_symbol['b']=1; key_symbol['f']=5; key_symbol['j']=9; key_symbol['n']=13;
+    key_symbol['r']=17; key_symbol['v']=21; key_symbol['z']=25; key_symbol['!']=79; key_symbol['%']=71; key_symbol[')']=67; key_symbol['-']=73; key_symbol['1']=53; key_symbol['5']=57;
+    key_symbol['9']=61; key_symbol['=']=84; key_symbol['A']=26; key_symbol['E']=30; key_symbol['I']=34; key_symbol['M']=38; key_symbol['Q']=42; key_symbol['U']=46; key_symbol['Y']=50;
+    key_symbol[']']=63; key_symbol['a']=0; key_symbol['e']=4; key_symbol['i']=8; key_symbol['m']=12; key_symbol['q']=16; key_symbol['u']=20; key_symbol['y']=24; key_symbol['}']=65)
 }
 
 void cheat::clear() {
@@ -36,9 +33,8 @@ long long cheat::frequency_statistic(const std::string a, const std::string b) {
     const std::string & ch[2] = {a, b};
     for(int i = 0; i < 2; i ++) {
         for(int j = 0; j < ch[i].length(); j ++) {
-            map_ite it = key_symbol.find(ch[i][j]);
-            if (it == key_symbol.end()) continue;
-            num[it->second] ++;
+            if ((int)ch[i][j] > 255) continue;
+            num[ch[i][j]] ++;
         }
     }
     long long up = 0, down1 = 0, down2 = 0;
