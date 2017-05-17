@@ -34,10 +34,11 @@ link_libraries(pthread)
 link_libraries(cpp_redis)
 link_libraries(tacopie)
 link_libraries(mysqlcppconn)
+link_libraries(boost_regex)
 
 set(CHEAT_SOURCES
         src/CheatWorker.cpp
-        src/cheat_algorithm.cpp src/cheat_algorithm.h)
+        src/cheat_algorithm.cpp)
 
 add_library(cheatlib STATIC ${CHEAT_SOURCES})
 

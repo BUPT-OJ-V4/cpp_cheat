@@ -21,20 +21,20 @@ void cheat::init() {
     key_symbol['N']=39; key_symbol['R']=43; key_symbol['V']=47; key_symbol['Z']=51; key_symbol['^']=70; key_symbol['b']=1; key_symbol['f']=5; key_symbol['j']=9; key_symbol['n']=13;
     key_symbol['r']=17; key_symbol['v']=21; key_symbol['z']=25; key_symbol['!']=79; key_symbol['%']=71; key_symbol[')']=67; key_symbol['-']=73; key_symbol['1']=53; key_symbol['5']=57;
     key_symbol['9']=61; key_symbol['=']=84; key_symbol['A']=26; key_symbol['E']=30; key_symbol['I']=34; key_symbol['M']=38; key_symbol['Q']=42; key_symbol['U']=46; key_symbol['Y']=50;
-    key_symbol[']']=63; key_symbol['a']=0; key_symbol['e']=4; key_symbol['i']=8; key_symbol['m']=12; key_symbol['q']=16; key_symbol['u']=20; key_symbol['y']=24; key_symbol['}']=65)
+    key_symbol[']']=63; key_symbol['a']=0; key_symbol['e']=4; key_symbol['i']=8; key_symbol['m']=12; key_symbol['q']=16; key_symbol['u']=20; key_symbol['y']=24; key_symbol['}']=65;
 }
 
 void cheat::clear() {
     cheat::cache.clear();
     cheat::brackets.clear();
 }
-long long cheat::frequency_statistic(const std::string a, const std::string b) {
+long long cheat::frequency_statistic(const std::string & a, const std::string & b) {
     int num[2][105]; memset(num, 0, sizeof num);
-    const std::string & ch[2] = {a, b};
+    const std::string ch[2] = {a, b};
     for(int i = 0; i < 2; i ++) {
         for(int j = 0; j < ch[i].length(); j ++) {
             if ((int)ch[i][j] > 255) continue;
-            num[ch[i][j]] ++;
+            num[i][ch[i][j]] ++;
         }
     }
     long long up = 0, down1 = 0, down2 = 0;
@@ -68,15 +68,20 @@ double cheat::lcs(const std::string& a, const std::string &b) {
 }
 
 void normalization(const int& idx, char* buffer, const int& length) {
-    boost::regex reg("(\\/\\*(\\s|.)*?\\*\\/)|(\\/\\/.*)|", boost::regex::icase);
+
+    std::string in("my is test ! &nbsp;...&nbsp;..&#39;");
+    boost::regex e1("&#39;");
+    std::string result = boost::regex_replace(in,e1,"\'", boost::match_default | boost::format_all);
+    /*
+    boost::regex reg("(\\/\\*(\\s|.)*?\\*\\/)|(\\/\\/.*)", boost::regex::icase);
     boost::regex expression("\\w+|{|}");
     boost::regex space("(\\s|\\r\\n)");
-    std::string res = boost::regex_replace(buffer, reg, "", boost::format_default | boost::format_all);
+    std::string res = boost::regex_replace(std::string(buffer), reg, "");
     boost::sregex_iterator it(res.begin(), res.end(), expression);
     boost::sregex_iterator end;
     std::string temp;
     for (; it != end; ++it) {
-        map_ite ite = cheat::key_words.find(it->str());
+        auto ite = cheat::key_words.find(it->str());
         if (ite != cheat::key_words.end()) {
             temp += ite->second;
         }
@@ -86,6 +91,7 @@ void normalization(const int& idx, char* buffer, const int& length) {
     }
     cheat::brackets[idx] = temp;
     cheat::cache[idx] = boost::regex_replace(res, space, "");
+     */
 }
 
 
@@ -109,7 +115,7 @@ void cheat::deal_code_file(const int &idx, const std::string &code_url) {
 }
 
 double cheat::cal_common_substring(const std::string &a, const std::string &b) {
-    const static MIN_TEXT_LENTH = 4;
+    const static int MIN_TEXT_LENTH = 4;
     int dp[2][b.length() + 1];
     memset(dp, 0, sizeof dp);
     std::vector<std::pair<int, std::pair<int, int>>> vs;
@@ -127,7 +133,7 @@ double cheat::cal_common_substring(const std::string &a, const std::string &b) {
     while(!vs.empty() && vs.back().first > MIN_TEXT_LENTH){
         std::pair<int, std::pair<int, int>>& now = vs.back();
         bool validate = true;
-        pair_ite ite = segment_1.upper_bound(std::pair(now.second.first, -1));
+        auto ite = segment_1.upper_bound(std::make_pair(now.second.first, -1));
         if (ite != segment_1.end() && ite->first == now.second.first) {
             validate = false;
         }
@@ -141,7 +147,7 @@ double cheat::cal_common_substring(const std::string &a, const std::string &b) {
             vs.pop_back();
             continue;
         }
-        pair_ite ite2 = segment_2.upper_bound(std::pair(now.second.second, -1));
+        auto ite2 = segment_2.upper_bound(std::make_pair(now.second.second, -1));
         if (ite2 != segment_2.end() && ite2->first == now.second.second) {
             validate = false;
         }
