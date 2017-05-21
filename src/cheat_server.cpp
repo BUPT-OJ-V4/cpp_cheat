@@ -18,8 +18,8 @@ Res compare_code(const int & a, const int & b)
     double res = cheat::lcs(cheat::brackets[a], cheat::brackets[b]);
     res += cheat::cal_common_substring(cheat::cache[a], cheat::cache[b]);
     res *= 0.5;
-    long long third = cheat::frequency_statistic(cheat::cache[a], cheat::cache[b]);
-    if (third >= 98) return Res(std::make_pair(a, b), 100.0);
+    double third = cheat::frequency_statistic(cheat::cache[a], cheat::cache[b]);
+    if (third >= 99) return Res(std::make_pair(a, b), 100.0);
     return Res(std::make_pair(a, b), res);
 }
 

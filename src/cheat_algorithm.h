@@ -32,9 +32,9 @@ namespace cheat{
     static std::map<int, std::string> cache;
     static std::map<int, std::string> brackets;
     double lcs(const std::string& a, const std::string &b);
-    long long frequency_statistic(const std::string &a, const std::string &b);
+    double frequency_statistic(const std::string &a, const std::string &b);
     void deal_code_file(const int& idx, const std::string &x);
     void init();
-    double cal_common_substring(const std::string &a, const std::string &b);
+    double cal_common_substring(std::string const & a, std::string const & b);
     void clear();
 }
