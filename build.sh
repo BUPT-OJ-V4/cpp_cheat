@@ -8,9 +8,7 @@
 
 rm -rf build
 mkdir build
-cd build
-
-/home/liuwei/Downloads/clion-2017.1.1/bin/cmake/bin/cmake ..
+cd build && cmake ..
 make clean
 make -j8
 

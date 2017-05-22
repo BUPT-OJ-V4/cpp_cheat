@@ -4,29 +4,34 @@
 
 #include "CheatWorker.h"
 
+std::string to_str(Res t) {
+    return "(" + std::to_string(t.first.first) + ", " + std::to_string(t.first.second) + ") = " + std::to_string(t.second);
+}
+
 void TaskQueue::add_task(const Task &task) {
     boost::unique_lock<boost::mutex> lock(this->_mutex1);
     this->_task_que.push(task);
     this->_cond.notify_one();
 }
 
-Task* TaskQueue::pop_task() {
+int TaskQueue::pop_task(Task & t) {
     boost::unique_lock<boost::mutex> lock(this->_mutex1);
     if (_task_que.empty()) {
-        if (this->closed) return nullptr;
-        _cond.wait(lock);
+        if (this->closed) return -1;
+        return 0;
     }
-    Task* task = new Task(_task_que.front());
+    t = _task_que.front();
     //boost::unique_lock<boost::mutex> lock2(this->_mutex2);
     this->_task_que.pop();
-    return task;
+    return 1;
 }
 
 int TaskQueue::size() {
     return (int)this->_task_que.size();
 }
 
-void CheatWorker::run() {
+void CheatWorker::run(int num) {
+    /*
     std::cout << "start a thread" << std::endl;
     sql::mysql::MySQL_Driver *driver;
     sql::Connection *con;
@@ -38,17 +43,27 @@ void CheatWorker::run() {
     con->setAutoCommit(false);
     state = con->createStatement();
     //std::cout << "commit mode: " << con->getAutoCommit() << std::endl;
-    state->execute("use oj");
+    */
     try{
-         for(int idx = 0; is_run; idx ++) {
-             if (_task_queue.closed && _task_queue.size() == 0) break;
-             Task* task = this->_task_queue.pop_task();
-             if (task == nullptr) continue;
-             Res t = (*task)();
+        int cnt = 0;
+        for(int idx = 0; is_run; idx ++) {
+            Task task;
+            int status = this->_task_queue.pop_task(task);
+            if (status == 0) {
+                boost::this_thread::sleep(boost::posix_time::seconds(1));
+                continue;
+            }
+            if (status == -1) break;
+            Res t = task();
+            if (cnt % 1000 == 0) {
+                std::cout << to_str(t) << std::endl;
+            }
+            cnt ++;
         }
-        std::cout << "end thread " << std::endl;
-        delete state;
-        delete con;
+        boost::this_thread::sleep(boost::posix_time::seconds(3 * num));
+        std::cout << "end thread:"<< num << cnt << std::endl;
+        //delete state;
+        //delete con;
     } catch (std::exception e) {
         std::cout << e.what() << std::endl;
     }
@@ -63,7 +78,7 @@ void CheatWorker::start(){
     is_run = true;
     for (int i = 0; i < _thread_num; i ++) {
         //boost::shared_ptr<boost::thread> t()
-        _thread_group.add_thread(new boost::thread(boost::bind(&CheatWorker::run, this)));
+        _thread_group.add_thread(new boost::thread(boost::bind(&CheatWorker::run, this, i)));
     }
 }
 

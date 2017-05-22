@@ -2,9 +2,12 @@
 #include <fstream>
 #include <cpp_redis/cpp_redis>
 #include <ctime>
+#include <boost/filesystem.hpp>
 
 #include "CheatWorker.h"
 #include "cheat_algorithm.h"
+
+namespace fs = boost::filesystem;
 
 
 volatile std::atomic<bool> should_exit = ATOMIC_VAR_INIT(false);
@@ -15,6 +18,7 @@ void sigint_handler(int) {
 
 Res compare_code(const int & a, const int & b)
 {
+
     double res = cheat::lcs(cheat::brackets[a], cheat::brackets[b]);
     res += cheat::cal_common_substring(cheat::cache[a], cheat::cache[b]);
     res *= 0.5;
@@ -54,24 +58,55 @@ void connect_to_mysql(CheatWorker* cheatWorker, std::string problem_id) {
     }
 }
 
-int main(int argc, char *argv[]) {
-    //cpp_redis::redis_subscriber client;
-    clock_t start = clock();
-    cheat::init();
-    CheatWorker cheatWorker(1);
-    cheatWorker.start();
-    for (int i = 2960; i < 2964; i ++) {
-        connect_to_mysql(&cheatWorker, std::to_string(i));
+void solve(std::string const & msg) {
+    std::cout << "start solve" << std::endl;
+    fs::path p("./data");
+    if (! fs::exists(p)) {
+        std::cout << "not exist" << std::endl;
+        return;
     }
+    fs::directory_iterator end_ite;
+    std::vector<int> vs;
+    for (fs::directory_iterator ite(p); ite != end_ite; ++ ite) {
+        if (fs::is_regular_file(ite->status())) {
+            std::string s = ite->path().string();
+            int ans = 0, l = s.length();
+            for(int i = 6; i > 0; i --) {
+                ans = ans * 10 + (int)(s[l - i] - '0');
+            }
+            cheat::deal_code_file(ans, s);
+            vs.push_back(ans);
+        }
+    }
+    CheatWorker cheatWorker(2);
+    std::cout << "==================" << vs.size() << std::endl;
+    for(int i = 0; i < vs.size(); i ++) {
+        for(int j = i + 1; j < vs.size(); j ++) {
+            auto t = boost::bind(&compare_code, vs[i], vs[j]);
+            cheatWorker.add_task(t);
+        }
+    }
+    cheatWorker.start();
     cheatWorker.close();
     cheatWorker.wait();
-    clock_t end = clock();
-    std::cout << "=========================cost time==============" << std::endl;
-    std::cout << (end - start) / CLOCKS_PER_SEC << std::endl;
-    /*client.connect();
+    std::cout << "===========================end " << std::endl;
+
+}
+
+int main(int argc, char *argv[]) {
+    cpp_redis::redis_subscriber client;
+    cheat::init();
+    solve("xxx");
+    /*
+    client.connect();
     client.subscribe("cheat", [](const std::string& chan, const std::string& msg) {
         std::cout << "Message (" << msg << ") from channel " << chan << std:: endl;
-        should_exit = true;
+        clock_t start = clock();
+        solve(msg);
+        clock_t end = clock();
+        std::cout << "=========================cost time==============" << std::endl;
+        std::cout << (end - start) / CLOCKS_PER_SEC << std::endl;
+
     });
     client.commit();
     signal(SIGINT, &sigint_handler);

@@ -7,6 +7,8 @@
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
+#include <boost/thread/thread_pool.hpp>
+#include <functional>
 #include <queue>
 #include <deque>
 #include <stdexcept>
@@ -19,6 +21,7 @@ typedef std::pair<std::pair<int, int>, double> Res;
 //typedef long long Res;
 typedef boost::function<Res(void)> Task;
 
+
 class TaskQueue : boost::noncopyable {
 private:
     std::queue<Task> _task_que;
@@ -29,7 +32,7 @@ public:
         closed = false;
     }
     void add_task(const Task& task);
-    Task* pop_task();
+    int pop_task(Task& task);
     int size();
     volatile bool closed;
 };
@@ -40,7 +43,7 @@ private:
     boost::thread_group _thread_group;
     int _thread_num;
     volatile bool is_run;
-    void run();
+    void run(int num);
 
 public:
     CheatWorker(int num) {

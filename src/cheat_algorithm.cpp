@@ -2,10 +2,18 @@
 // Created by liuwei on 4/30/17.
 //
 #include "cheat_algorithm.h"
+using namespace cheat;
+
+namespace cheat
+{
 
 typedef unsigned int uint;
+std::map<std::string, std::string> key_words;
+char key_symbol[300];
+std::map<int, std::string> cache;
+std::map<int, std::string> brackets;
 
-void cheat::init() {
+void init() {
     const static map_pair<std::string, std::string> data[] ={
             map_pair<std::string, std::string>("break", "l"), map_pair<std::string, std::string>("short", "c"), map_pair<std::string, std::string>("return", "n"), map_pair<std::string, std::string>("struct", "g"),
             map_pair<std::string, std::string>("for", "h"), map_pair<std::string, std::string>("do", "s"), map_pair<std::string, std::string>("int", "a"), map_pair<std::string, std::string>("double", "r"), map_pair<std::string, std::string>("float", "q"),
@@ -13,7 +21,7 @@ void cheat::init() {
             map_pair<std::string, std::string>("unsigned", "u"), map_pair<std::string, std::string>("switch", "d"), map_pair<std::string, std::string>("continue", "m"), map_pair<std::string, std::string>("signed", "t"),
             map_pair<std::string, std::string>("false", "p"), map_pair<std::string, std::string>("true", "o"), map_pair<std::string, std::string>("class", "f"), map_pair<std::string, std::string>("if", "j")
     };
-    cheat::key_words = std::map<std::string, std::string>(data, data + 21);
+    key_words = std::map<std::string, std::string>(data, data + 21);
     memset(key_symbol, -1, sizeof key_symbol);
     key_symbol['(']=66; key_symbol[',']=83; key_symbol['0']=52; key_symbol['4']=56; key_symbol['8']=60; key_symbol['<']=86; key_symbol['D']=29; key_symbol['H']=33; key_symbol['L']=37;
     key_symbol['P']=41; key_symbol['T']=45; key_symbol['X']=49; key_symbol['\\']=89; key_symbol['d']=3; key_symbol['h']=7; key_symbol['l']=11; key_symbol['p']=15; key_symbol['t']=19;
@@ -27,11 +35,11 @@ void cheat::init() {
     key_symbol[']']=63; key_symbol['a']=0; key_symbol['e']=4; key_symbol['i']=8; key_symbol['m']=12; key_symbol['q']=16; key_symbol['u']=20; key_symbol['y']=24; key_symbol['}']=65;
 }
 
-void cheat::clear() {
-    cheat::cache.clear();
-    cheat::brackets.clear();
+void clear() {
+    cache.clear();
+    brackets.clear();
 }
-double cheat::frequency_statistic(const std::string & a, const std::string & b) {
+double frequency_statistic(const std::string & a, const std::string & b) {
     uint num[2][105], len[2] = {(uint)a.length(), (uint)b.length()}; memset(num, 0, sizeof num);
     const char* ch[2];
     ch[0] = a.c_str();
@@ -54,7 +62,7 @@ double cheat::frequency_statistic(const std::string & a, const std::string & b) 
     return up * 100 / std::sqrt(down1 * down2);
 }
 
-double cheat::lcs(const std::string& a, const std::string &b) {
+double lcs(const std::string& a, const std::string &b) {
     int dp[2][b.length() + 2];
     memset(dp, 0, sizeof dp);
     int cur = 0;
@@ -82,39 +90,32 @@ void normalization(const int& idx, char* buffer, const int& length) {
     boost::sregex_iterator end;
     std::string temp;
     for (; it != end; ++it) {
-        auto ite = cheat::key_words.find(it->str());
-        if (ite != cheat::key_words.end()) {
+        auto ite = key_words.find(it->str());
+        if (ite != key_words.end()) {
             temp += ite->second;
         }
         else if(it->str() == "{" || it->str() == "}") {
             temp += it->str();
         }
     }
-    cheat::brackets[idx] = temp;
-    cheat::cache[idx] = boost::regex_replace(res, space, "");
+    brackets[idx] = temp;
+    cache[idx] = boost::regex_replace(res, space, "");
 }
 
-
-void cheat::deal_code_file(const int &idx, const std::string &code_url) {
-    unsigned long l = code_url.length();
-    std::string code_name ="data/";
-    char *buffer;
-    for (int i = (int)l - 6, j = 0; i < l; i ++, j ++) {
-        code_name += code_url[i];
-    }
+void deal_code_file(const int &idx, const std::string &code_name) {
     std::ifstream t;
     t.open(code_name.c_str());      // open input file
     t.seekg(0, std::ios::end);    // go to the end
     long long length = t.tellg();           // report location (this is the length)
     t.seekg(0, std::ios::beg);    // go back to the beginning
-    buffer = new char[length + 2];    // allocate memory for a buffer of appropriate dimension
+    char *buffer = new char[length + 2];    // allocate memory for a buffer of appropriate dimension
     t.read(buffer, length);       // read the whole file into the buffer
     t.close();                    // close file handle /* s//
     buffer[length] = '\0';
     normalization(idx, buffer, length);
 }
 
-double cheat::cal_common_substring(std::string const& a, std::string const& b) {
+double cal_common_substring(std::string const& a, std::string const& b) {
     const static int MIN_TEXT_LENTH = 4;
     int dp[2][b.length() + 2];
     char A[a.length() + 1], B[b.length() + 1];
@@ -175,8 +176,9 @@ double cheat::cal_common_substring(std::string const& a, std::string const& b) {
 
             len1 = _len1;
             len2 = _len2;
+            cnt = 0;
         }
-
     }
     return ans * 200.0 / (a.length() + b.length());
+}
 }

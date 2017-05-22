@@ -27,10 +27,10 @@ template <typename K, typename V>
 using pair_ite=typename std::set<typename std::pair<K, V>>::iterator;
 
 namespace cheat{
-    static std::map<std::string, std::string> key_words;
-    static char key_symbol[300];
-    static std::map<int, std::string> cache;
-    static std::map<int, std::string> brackets;
+    extern std::map<std::string, std::string> key_words;
+    extern char key_symbol[300];
+    extern std::map<int, std::string> cache;
+    extern std::map<int, std::string> brackets;
     double lcs(const std::string& a, const std::string &b);
     double frequency_statistic(const std::string &a, const std::string &b);
     void deal_code_file(const int& idx, const std::string &x);
