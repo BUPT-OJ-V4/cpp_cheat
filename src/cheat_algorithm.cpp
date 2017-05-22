@@ -82,7 +82,7 @@ double lcs(const std::string& a, const std::string &b) {
 
 void normalization(const int& idx, char* buffer, const int& length) {
 
-    boost::regex reg("(\\/\\*(\\s|.)*?\\*\\/)|(\\/\\/.*)", boost::regex::icase);
+    boost::regex reg("(\\/\\*(\\s|.)*?\\*\\/)|(\\/\\/.*?(\\r|\\n))", boost::regex::icase);
     boost::regex expression("\\w+|{|}");
     boost::regex space("(\\s|\\r\\n)");
     std::string res = boost::regex_replace(std::string(buffer), reg, "", boost::match_default | boost::format_all);
