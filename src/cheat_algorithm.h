@@ -8,6 +8,7 @@
 #endif //CHEAT_CHEAT_ALGORITHM_H
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <cstring>
 #include <fstream>
@@ -27,10 +28,11 @@ template <typename K, typename V>
 using pair_ite=typename std::set<typename std::pair<K, V>>::iterator;
 
 namespace cheat{
-    extern std::map<std::string, std::string> key_words;
-    extern char key_symbol[300];
+    extern std::map<std::string, char> key_words;
+    extern int key_symbol[300];
     extern std::map<int, std::string> cache;
     extern std::map<int, std::string> brackets;
+    extern std::map<int, std::string> allcode;
     double lcs(const std::string& a, const std::string &b);
     double frequency_statistic(const std::string &a, const std::string &b);
     void deal_code_file(const int& idx, const std::string &x);

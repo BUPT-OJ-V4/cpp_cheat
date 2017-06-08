@@ -7,7 +7,6 @@
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-#include <boost/thread/thread_pool.hpp>
 #include <functional>
 #include <queue>
 #include <deque>
@@ -35,20 +34,23 @@ public:
     int pop_task(Task& task);
     int size();
     volatile bool closed;
+    void close();
 };
 
 class CheatWorker : boost::noncopyable{
 private:
     TaskQueue _task_queue;
     boost::thread_group _thread_group;
+    std::string problem_id;
     int _thread_num;
     volatile bool is_run;
     void run(int num);
 
 public:
-    CheatWorker(int num) {
+    CheatWorker(int num, const std::string& problem_idx) {
         this->_thread_num = num;
         this->is_run = false;
+        this->problem_id = problem_idx;
     }
     void stop();
     ~CheatWorker() {

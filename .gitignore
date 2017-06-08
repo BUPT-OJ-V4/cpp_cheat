@@ -2,5 +2,5 @@ build
 cmake-build-debug
 release
 .idea
-
+data
 

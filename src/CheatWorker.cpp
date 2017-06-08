@@ -5,7 +5,7 @@
 #include "CheatWorker.h"
 
 std::string to_str(Res t) {
-    return "(" + std::to_string(t.first.first) + ", " + std::to_string(t.first.second) + ") = " + std::to_string(t.second);
+    return "(" + std::to_string(t.first.first) + ", " + std::to_string(t.first.second) + ") = " + std::to_string(t.second.first);
 }
 
 void TaskQueue::add_task(const Task &task) {
@@ -14,12 +14,18 @@ void TaskQueue::add_task(const Task &task) {
     this->_cond.notify_one();
 }
 
+void TaskQueue::close() {
+    this->closed = true;
+    this->_cond.notify_all();
+}
+
 int TaskQueue::pop_task(Task & t) {
     boost::unique_lock<boost::mutex> lock(this->_mutex1);
     if (_task_que.empty()) {
-        if (this->closed) return -1;
-        return 0;
+        if (this->closed) return 0;
+        this->_cond.wait(lock);
     }
+    if (this->_task_que.empty()) return 0;
     t = _task_que.front();
     //boost::unique_lock<boost::mutex> lock2(this->_mutex2);
     this->_task_que.pop();
@@ -31,45 +37,43 @@ int TaskQueue::size() {
 }
 
 void CheatWorker::run(int num) {
-    /*
     std::cout << "start a thread" << std::endl;
     sql::mysql::MySQL_Driver *driver;
     sql::Connection *con;
     sql::Statement *state;
-    // 初始化驱动
     driver = sql::mysql::get_mysql_driver_instance();
-    // 建立链接
     con = driver->connect("tcp://10.105.240.51:3306", "oj", "");
-    con->setAutoCommit(false);
     state = con->createStatement();
-    //std::cout << "commit mode: " << con->getAutoCommit() << std::endl;
-    */
-    try{
-        int cnt = 0;
-        for(int idx = 0; is_run; idx ++) {
-            Task task;
-            int status = this->_task_queue.pop_task(task);
-            if (status == 0) {
-                boost::this_thread::sleep(boost::posix_time::seconds(1));
-                continue;
-            }
-            if (status == -1) break;
-            Res t = task();
-            if (cnt % 1000 == 0) {
-                std::cout << to_str(t) << std::endl;
-            }
-            cnt ++;
-        }
-        boost::this_thread::sleep(boost::posix_time::seconds(3 * num));
-        std::cout << "end thread:"<< num << cnt << std::endl;
-        //delete state;
-        //delete con;
-    } catch (std::exception e) {
-        std::cout << e.what() << std::endl;
+    state->execute("use oj");
+    std::string sql = "INSERT INTO `Cheat_cheat` (`contest_problem_id`, `sub1_id`, `sub2_id`, `status`, `ratio`) VALUES";
+    int cnt = 0;
+    for(int idx = 0; is_run; idx ++) {
+        Task task;
+        int status = this->_task_queue.pop_task(task);
+        if (status == 0) break;
+        Res t = task();
+        if (cnt > 0) sql += ",";
+        sql += "(" + this->problem_id + ", " + std::to_string(t.first.first) + "," + std::to_string(t.first.second);
+        sql += ", 1," + std::to_string(t.second) + ")";
+        cnt ++;
     }
+    if (cnt > 0) {
+        sql += ";";
+        try{
+            bool ans = state->execute(sql);
+        } catch (sql::SQLException ex) {
+            std::cout << ex.getSQLState() << std::endl;
+        }
+        //if (!ans) {
+        //    std::cout <<"insert failed" << std::endl;
+        //}
+    }
+    delete state;
+    delete con;
 }
 
 void CheatWorker::close() {
+    _task_queue.close();
     _task_queue.closed = true;
 }
 
