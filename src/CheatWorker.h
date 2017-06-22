@@ -19,6 +19,7 @@
 typedef std::pair<std::pair<int, int>, double> Res;
 //typedef long long Res;
 typedef boost::function<Res(void)> Task;
+extern std::string username, password;
 
 
 class TaskQueue : boost::noncopyable {

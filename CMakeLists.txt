@@ -31,10 +31,11 @@ include_directories("/usr/local/include")
 include_directories(SYSTEM "${Boost_INCLUDE_DIRS}")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 link_libraries(pthread)
-link_libraries(cpp_redis)
 link_libraries(tacopie)
 link_libraries(mysqlcppconn)
 link_libraries(boost_regex)
+link_libraries(evpp)
+link_libraries(evnsq)
 
 set(CHEAT_SOURCES
         src/CheatWorker.cpp
@@ -46,7 +47,8 @@ add_executable(CheatServer src/cheat_server.cpp)
 
 target_link_libraries(CheatServer pthread)
 target_link_libraries(CheatServer tacopie)
-target_link_libraries(CheatServer cpp_redis)
+target_link_libraries(CheatServer evpp)
+target_link_libraries(CheatServer evnsq)
 target_link_libraries(CheatServer mysqlcppconn)
 target_link_libraries(CheatServer ${Boost_LIBRARIES})
 target_link_libraries(CheatServer cheatlib)

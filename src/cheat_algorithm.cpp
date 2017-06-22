@@ -108,9 +108,9 @@ void normalization(const int& idx, const std::string & buffer) {
     allcode[idx] = res;
 }
 
-void deal_code_file(const int &idx, const char* code_name) {
-    std::ifstream t(code_name);
-    std::string s(std::istreambuf_iterator<char>(t), std::istreambuf_iterator<char>());
+void deal_code_file(const int &idx, const std::string& code_name) {
+    std::ifstream t(code_name.c_str());
+    std::string s(std::istreambuf_iterator<char>(t), (std::istreambuf_iterator<char>()));
     normalization(idx, s);
 }
 

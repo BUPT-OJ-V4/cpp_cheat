@@ -36,6 +36,7 @@ namespace cheat{
     double lcs(const std::string& a, const std::string &b);
     double frequency_statistic(const std::string &a, const std::string &b);
     void deal_code_file(const int& idx, const std::string &x);
+    void normalization(const int& idx, const std::string &x);
     void init();
     double cal_common_substring(std::string const & a, std::string const & b);
     void clear();

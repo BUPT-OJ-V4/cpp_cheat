@@ -4,8 +4,10 @@
 
 #include "CheatWorker.h"
 
+std::string username, password;
+
 std::string to_str(Res t) {
-    return "(" + std::to_string(t.first.first) + ", " + std::to_string(t.first.second) + ") = " + std::to_string(t.second.first);
+    return "(" + std::to_string(t.first.first) + ", " + std::to_string(t.first.second) + ") = " + std::to_string(t.second);
 }
 
 void TaskQueue::add_task(const Task &task) {
@@ -42,10 +44,11 @@ void CheatWorker::run(int num) {
     sql::Connection *con;
     sql::Statement *state;
     driver = sql::mysql::get_mysql_driver_instance();
-    con = driver->connect("tcp://10.105.240.51:3306", "oj", "");
+    std::cout << username << ", " << password << std::endl;
+    con = driver->connect("tcp://127.0.0.1:3306", username, password);
     state = con->createStatement();
     state->execute("use oj");
-    std::string sql = "INSERT INTO `Cheat_cheat` (`contest_problem_id`, `sub1_id`, `sub2_id`, `status`, `ratio`) VALUES";
+    std::string sql = "INSERT INTO `Cheat_cheat` (`problem_id`, `sub1_id`, `sub2_id`, `sub1_user`, `sub2_user`,`ratio`) VALUES";
     int cnt = 0;
     for(int idx = 0; is_run; idx ++) {
         Task task;
