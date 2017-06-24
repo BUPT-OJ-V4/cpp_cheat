@@ -14,7 +14,6 @@ namespace fs = boost::filesystem;
 volatile std::atomic<bool> should_exit = ATOMIC_VAR_INIT(false);
 int DEFAULT_THREAD_NUM = 1;
 std::string host="127.0.0.1";
-std::string username="oj", password="";
 
 void sigint_handler(int) {
     should_exit = true;
@@ -36,6 +35,9 @@ Res compare_code(const int & a, const int & b)
 
 int solve(const evnsq::Message* msg) {
     std::string problem_id = msg->body.ToString();
+    for(auto x: problem_id) {
+        if (x < '0' || x > '9') return 0;
+    }
     sql::mysql::MySQL_Driver *driver;
     sql::Connection *con;
     sql::Statement *state;
@@ -65,7 +67,9 @@ int solve(const evnsq::Message* msg) {
             }
         }
     }
+    return 0;
 }
+
 
 void solve1() {
     std::cout << "start solve" << std::endl;
@@ -129,8 +133,6 @@ int main(int argc, char *argv[]) {
         else if (std::strcmp(argv[i], "-p") == 0 && i + 1 < argc) {
             password = std::string(argv[i + 1]);
         }
-    }
-    if (argc > 1 && std::strcmp(argv[1], "-t") == 0) {
     }
     std::string nsqd_tcp_addr;
     std::string lookupd_http_url;

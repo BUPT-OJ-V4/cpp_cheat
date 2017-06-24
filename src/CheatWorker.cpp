@@ -4,7 +4,7 @@
 
 #include "CheatWorker.h"
 
-std::string username, password;
+std::string username="oj", password="";
 
 std::string to_str(Res t) {
     return "(" + std::to_string(t.first.first) + ", " + std::to_string(t.first.second) + ") = " + std::to_string(t.second);
