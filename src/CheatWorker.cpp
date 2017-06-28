@@ -3,6 +3,7 @@
 //
 
 #include "CheatWorker.h"
+#include "cheat_algorithm.h"
 
 std::string username="oj", password="";
 
@@ -44,11 +45,10 @@ void CheatWorker::run(int num) {
     sql::Connection *con;
     sql::Statement *state;
     driver = sql::mysql::get_mysql_driver_instance();
-    std::cout << username << ", " << password << std::endl;
     con = driver->connect("tcp://127.0.0.1:3306", username, password);
     state = con->createStatement();
     state->execute("use oj");
-    std::string sql = "INSERT INTO `Cheat_cheat` (`problem_id`, `sub1_id`, `sub2_id`, `sub1_user`, `sub2_user`,`ratio`) VALUES";
+    std::string sql = "INSERT INTO `cheat_record` (`problem_id`, `sub1_id`, `sub2_id`, `user1`, `user2`,`probability`) VALUES";
     int cnt = 0;
     for(int idx = 0; is_run; idx ++) {
         Task task;
@@ -57,16 +57,14 @@ void CheatWorker::run(int num) {
         Res t = task();
         if (cnt > 0) sql += ",";
         sql += "(" + this->problem_id + ", " + std::to_string(t.first.first) + "," + std::to_string(t.first.second);
-        sql += ", 1," + std::to_string(t.second) + ")";
+        sql += ", '" + cheat::userinfo[t.first.first] + "', '" + cheat::userinfo[t.first.second] + "', " + std::to_string(t.second) + ")";
         cnt ++;
     }
+    std::cout << sql << std::endl;
     if (cnt > 0) {
         sql += ";";
-        try{
-            bool ans = state->execute(sql);
-        } catch (sql::SQLException ex) {
-            std::cout << ex.getSQLState() << std::endl;
-        }
+        bool ans = state->execute(sql);
+        std::cout << ans << std::endl;
         //if (!ans) {
         //    std::cout <<"insert failed" << std::endl;
         //}

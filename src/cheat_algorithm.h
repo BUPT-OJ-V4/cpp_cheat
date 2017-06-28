@@ -33,10 +33,11 @@ namespace cheat{
     extern std::map<int, std::string> cache;
     extern std::map<int, std::string> brackets;
     extern std::map<int, std::string> allcode;
+    extern std::map<int, std::string> userinfo;
     double lcs(const std::string& a, const std::string &b);
     double frequency_statistic(const std::string &a, const std::string &b);
     void deal_code_file(const int& idx, const std::string &x);
-    void normalization(const int& idx, const std::string &x);
+    void normalization(const int& idx, const std::string &x, const std::string & username);
     void init();
     double cal_common_substring(std::string const & a, std::string const & b);
     void clear();

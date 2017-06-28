@@ -13,6 +13,7 @@ int key_symbol[300];
 std::map<int, std::string> cache;
 std::map<int, std::string> brackets;
 std::map<int, std::string> allcode;
+std::map<int, std::string> userinfo;
 
 void init() {
     std::vector<std::string> words = {"int","long","short","switch","char","class","struct","for","while","if","else","break","continue","return","true","false","float","double","do","signed","unsigned"};
@@ -41,6 +42,8 @@ void init() {
 void clear() {
     cache.clear();
     brackets.clear();
+    allcode.clear();
+    userinfo.clear();
 }
 
 double frequency_statistic(const std::string & a, const std::string & b) {
@@ -85,7 +88,7 @@ double lcs(const std::string& a, const std::string &b) {
     return dp[cur][b.length()] * 200.0 / (a.length() + b.length());
 }
 
-void normalization(const int& idx, const std::string & buffer) {
+void normalization(const int& idx, const std::string & buffer, const std::string & username) {
 
     boost::regex reg("(\\/\\*(\\s|.)*?\\*\\/)|(\\/\\/.*?(\\r|\\n))", boost::regex::icase);
     boost::regex expression("\\w+|{|}");
@@ -106,12 +109,13 @@ void normalization(const int& idx, const std::string & buffer) {
     brackets[idx] = temp;
     cache[idx] = boost::regex_replace(res, space, "");
     allcode[idx] = res;
+    userinfo[idx] = username;
 }
 
 void deal_code_file(const int &idx, const std::string& code_name) {
     std::ifstream t(code_name.c_str());
     std::string s(std::istreambuf_iterator<char>(t), (std::istreambuf_iterator<char>()));
-    normalization(idx, s);
+    //normalization(idx, s);
 }
 
 double cal_common_substring(std::string const& a, std::string const& b) {
