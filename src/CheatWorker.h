@@ -2,29 +2,38 @@
 // Created by liuwei on 7/29/17.
 //
 
-#ifndef CHEAT_CHEATWORKER_H
 #define CHEAT_CHEATWORKER_H
+
 #include "WorkIterm.h"
 #include "AntiCheat.h"
 #include <string>
 
-typedef std::pair<std::string,int> Ans;
+#include "SQLWriter.h"
 
 class CheatWorker : public WorkIterm {
 public:
-    CheatWorker(const int& a, const int& b)
-        : _sub1(a), _sub2(b), antiCheat(nullptr){
+    CheatWorker(const int& a,
+                const int& b,
+                SQLWriter* writer,
+                AntiCheat* antiCheat
+    )
+        : _sub1(a), _sub2(b), _writer(writer), _antiCheat(antiCheat){
     };
-    void run();
-    void callback();
-    static void calc(Ans &ans);
-    static void init(Ans &ans);
-    static std::string username, password, problem_id;
+    void run() override;
 private:
     int _sub1, _sub2;
-    double _ans;
-    AntiCheat* antiCheat;
+    AntiCheat* _antiCheat;
+    SQLWriter* _writer;
 };
 
+template <typename Writer>
+void CheatWorker<Writer>::run()
+{
+    double ans = _antiCheat->calc(_sub1, _sub2);
+    _writer->write(_sub1, _sub2,
+                   _antiCheat->_userinfo[_sub1],
+                   _antiCheat->_userinfo[_sub2],
+                   ans, _antiCheat->_problem_id);
+}
 
 #endif //CHEAT_CHEATWORKER_H

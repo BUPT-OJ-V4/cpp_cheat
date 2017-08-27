@@ -47,12 +47,12 @@ int solve(const evnsq::Message* msg) {
         antiCheat->normalization(idx, code, user_name);
         subs.emplace_back(idx, user_name);
     }
-    ThreadPool<std::pair<std::string, int>> threadPool(DEFAULT_THREAD_NUM);
+    ThreadPool threadPool(DEFAULT_THREAD_NUM);
     threadPool.start();
     for (int i = 0; i < subs.size(); i ++) {
         for(int j = i + 1; j < subs.size(); j ++) {
             if (subs[i].second != subs[j].second) {
-                std::shared_ptr<WorkIterm<Ans>> workItermPtr(new CheatWorker(subs[i].first, subs[j].first));
+                std::shared_ptr<WorkIterm> workItermPtr(new CheatWorker<Ans>(subs[i].first, subs[j].first));
                 threadPool.add_task(workItermPtr);
             }
         }

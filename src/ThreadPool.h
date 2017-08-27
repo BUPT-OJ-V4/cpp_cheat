@@ -2,8 +2,8 @@
 // Created by liuwei on 17/4/28.
 //
 
-#ifndef CHEAT_CHEATWORKER_H
-#define CHEAT_CHEATWORKER_H
+#ifndef CHEAT_THREAD_POOL_H
+#define CHEAT_THREAD_POOL_H
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -48,4 +48,4 @@ public:
     void wait();
 };
 
-#endif //CHEAT_CHEATWORKER_H
+#endif //CHEAT_THREAD_POOL_H

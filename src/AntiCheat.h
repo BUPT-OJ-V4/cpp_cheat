@@ -34,6 +34,7 @@ private:
 public:
     static CommonData commonData;
     std::map<int, std::string> _userinfo;
+    std::string _problem_id;
 private:
     std::map<int, std::string> _cache;
     std::map<int, std::string> _brackets;

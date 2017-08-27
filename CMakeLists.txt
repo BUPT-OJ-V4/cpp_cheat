@@ -39,7 +39,7 @@ link_libraries(evnsq)
 
 set(CHEAT_SOURCES
         src/ThreadPool.cpp
-        src/cheat_algorithm.cpp src/AntiCheat.cpp src/AntiCheat.h src/WorkIterm.h src/CheatWorker.cpp src/CheatWorker.h)
+        src/cheat_algorithm.cpp src/AntiCheat.cpp src/AntiCheat.h src/WorkIterm.h src/CheatWorker.h src/SQLWriter.cpp src/SQLWriter.h)
 
 add_library(cheatlib STATIC ${CHEAT_SOURCES})
 
