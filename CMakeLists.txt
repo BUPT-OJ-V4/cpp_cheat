@@ -38,8 +38,8 @@ link_libraries(evpp)
 link_libraries(evnsq)
 
 set(CHEAT_SOURCES
-        src/CheatWorker.cpp
-        src/cheat_algorithm.cpp)
+        src/ThreadPool.cpp
+        src/cheat_algorithm.cpp src/AntiCheat.cpp src/AntiCheat.h src/WorkIterm.h src/CheatWorker.cpp src/CheatWorker.h)
 
 add_library(cheatlib STATIC ${CHEAT_SOURCES})
 

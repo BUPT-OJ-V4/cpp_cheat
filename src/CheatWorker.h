@@ -1,66 +1,30 @@
 //
-// Created by liuwei on 17/4/28.
+// Created by liuwei on 7/29/17.
 //
 
 #ifndef CHEAT_CHEATWORKER_H
 #define CHEAT_CHEATWORKER_H
-#include <boost/thread.hpp>
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <functional>
-#include <queue>
-#include <deque>
-#include <stdexcept>
-#include <mysql_driver.h>
-#include <mysql_connection.h>
+#include "WorkIterm.h"
+#include "AntiCheat.h"
 #include <string>
-#include <cppconn/statement.h>
 
-typedef std::pair<std::pair<int, int>, double> Res;
-//typedef long long Res;
-typedef boost::function<Res(void)> Task;
-extern std::string username, password;
+typedef std::pair<std::string,int> Ans;
 
-
-class TaskQueue : boost::noncopyable {
-private:
-    std::queue<Task> _task_que;
-    boost::mutex _mutex1;
-    boost::condition_variable_any _cond;
+class CheatWorker : public WorkIterm {
 public:
-    TaskQueue() {
-        closed = false;
-    }
-    void add_task(const Task& task);
-    int pop_task(Task& task);
-    int size();
-    volatile bool closed;
-    void close();
+    CheatWorker(const int& a, const int& b)
+        : _sub1(a), _sub2(b), antiCheat(nullptr){
+    };
+    void run();
+    void callback();
+    static void calc(Ans &ans);
+    static void init(Ans &ans);
+    static std::string username, password, problem_id;
+private:
+    int _sub1, _sub2;
+    double _ans;
+    AntiCheat* antiCheat;
 };
 
-class CheatWorker : boost::noncopyable{
-private:
-    TaskQueue _task_queue;
-    boost::thread_group _thread_group;
-    std::string problem_id;
-    int _thread_num;
-    volatile bool is_run;
-    void run(int num);
-
-public:
-    CheatWorker(int num, const std::string& problem_idx) {
-        this->_thread_num = num;
-        this->is_run = false;
-        this->problem_id = problem_idx;
-    }
-    void stop();
-    ~CheatWorker() {
-        stop();
-    }
-    void start();
-    void close();
-    void add_task(const Task& task);
-    void wait();
-};
 
 #endif //CHEAT_CHEATWORKER_H

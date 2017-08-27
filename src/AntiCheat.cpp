@@ -1,21 +1,15 @@
 //
-// Created by liuwei on 4/30/17.
+// Created by liuwei on 7/29/17.
 //
-#include "cheat_algorithm.h"
-using namespace cheat;
 
-namespace cheat
-{
+#include "AntiCheat.h"
+#include <cstring>
+#include <iostream>
+#include <fstream>
 
-typedef unsigned int uint;
-std::map<std::string, char> key_words;
-int key_symbol[300];
-std::map<int, std::string> cache;
-std::map<int, std::string> brackets;
-std::map<int, std::string> allcode;
-std::map<int, std::string> userinfo;
+#include <boost/regex.hpp>
 
-void init() {
+CommonData::CommonData() {
     std::vector<std::string> words = {"int","long","short","switch","char","class","struct","for","while","if","else","break","continue","return","true","false","float","double","do","signed","unsigned"};
     char symbol[] = "[]{}()&|^%+-*/:;?!.\"\',=#<>_\\";
     memset(key_symbol, -1, sizeof key_symbol);
@@ -37,25 +31,18 @@ void init() {
     for(int i = 0; i < len2; i ++) {
         key_symbol[symbol[i]] = i + 62;
     }
-
 }
 
-void clear() {
-    cache.clear();
-    brackets.clear();
-    allcode.clear();
-    userinfo.clear();
-}
-
-double frequency_statistic(const std::string & a, const std::string & b) {
+double AntiCheat::frequencyStatistic(const std::string & a, const std::string & b)
+{
     uint num[2][105], len[2] = {(uint)a.length(), (uint)b.length()}; memset(num, 0, sizeof num);
     const char* ch[2];
     ch[0] = a.c_str();
     ch[1] = b.c_str();
     for(int i = 0; i < 2; i ++) {
         for(int j = 0; j < len[i]; j ++) {
-            if ((int)ch[i][j] > 255 || key_symbol[ch[i][j]] == -1) continue;
-            num[i][key_symbol[ch[i][j]]] ++;
+            if ((int)ch[i][j] > 255 || commonData.key_symbol[ch[i][j]] == -1) continue;
+            num[i][commonData.key_symbol[ch[i][j]]] ++;
         }
     }
     long long up = 0, down1 = 0, down2 = 0;
@@ -70,7 +57,8 @@ double frequency_statistic(const std::string & a, const std::string & b) {
     return up * 100 / std::sqrt(down1 * down2);
 }
 
-double lcs(const std::string& a, const std::string &b) {
+double AntiCheat::lcs(const std::string& a, const std::string &b)
+{
     int dp[2][b.length() + 2];
     memset(dp, 0, sizeof dp);
     int cur = 0;
@@ -89,8 +77,8 @@ double lcs(const std::string& a, const std::string &b) {
     return dp[cur][b.length()] * 200.0 / (a.length() + b.length());
 }
 
-void normalization(const int& idx, const std::string & buffer, const std::string & username) {
-
+void AntiCheat::normalization(const int& idx, const std::string & buffer, const std::string & username)
+{
     boost::regex reg("(\\/\\*(\\s|.)*?\\*\\/)|(\\/\\/.*?(\\r|\\n))", boost::regex::icase);
     boost::regex expression("\\w+|{|}");
     boost::regex space("(\\s|\\r\\n)");
@@ -99,27 +87,29 @@ void normalization(const int& idx, const std::string & buffer, const std::string
     boost::sregex_iterator end;
     std::string temp;
     for (; it != end; ++it) {
-        auto ite = key_words.find(it->str());
-        if (ite != key_words.end()) {
+        auto ite = commonData.key_words.find(it->str());
+        if (ite != commonData.key_words.end()) {
             temp += ite->second;
         }
         else if(it->str() == "{" || it->str() == "}") {
             temp += it->str();
         }
     }
-    brackets[idx] = temp;
-    cache[idx] = boost::regex_replace(res, space, "");
-    allcode[idx] = res;
-    userinfo[idx] = username;
+    _brackets[idx] = temp;
+    _cache[idx] = boost::regex_replace(res, space, "");
+    _allcode[idx] = res;
+    _userinfo[idx] = username;
 }
 
-void deal_code_file(const int &idx, const std::string& code_name) {
+void AntiCheat::dealCodeFile(const int &idx, const std::string& code_name)
+{
     std::ifstream t(code_name.c_str());
     std::string s(std::istreambuf_iterator<char>(t), (std::istreambuf_iterator<char>()));
     //normalization(idx, s);
 }
 
-double cal_common_substring(std::string const& a, std::string const& b) {
+double AntiCheat::calCommonSubstring(std::string const& a, std::string const& b)
+{
     const static int MIN_TEXT_LENTH = 4;
     int dp[2][b.length() + 2];
     char A[a.length() + 1], B[b.length() + 1];
@@ -168,4 +158,12 @@ double cal_common_substring(std::string const& a, std::string const& b) {
     }
     return ans * 200.0 / (a.length() + b.length());
 }
+
+double AntiCheat::calc(const int & a, const int & b)
+{
+    double res = lcs(_brackets[a], _brackets[b]) + calCommonSubstring(_cache[a], _cache[b]);
+    res *= 0.5;
+    double third = frequencyStatistic(_allcode[a], _allcode[b]);
+    if (third > 99.0) third;
+    return res;
 }

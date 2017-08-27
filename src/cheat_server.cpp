@@ -4,9 +4,11 @@
 #include <evpp/event_loop.h>
 #include <ctime>
 #include <boost/filesystem.hpp>
+#include <cppconn/statement.h>
 
+#include "ThreadPool.h"
+#include "AntiCheat.h"
 #include "CheatWorker.h"
-#include "cheat_algorithm.h"
 
 namespace fs = boost::filesystem;
 
@@ -19,17 +21,6 @@ void sigint_handler(int) {
     should_exit = true;
 }
 
-Res compare_code(const int & a, const int & b)
-{
-
-    double res = cheat::lcs(cheat::brackets[a], cheat::brackets[b]) +
-        cheat::cal_common_substring(cheat::cache[a], cheat::cache[b]);
-    res *= 0.5;
-    double third = cheat::frequency_statistic(cheat::allcode[a], cheat::allcode[b]);
-    if (third > 99.0) return Res(std::make_pair(a, b), third);
-    return Res(std::make_pair(a, b), res);
-}
-
 int solve(const evnsq::Message* msg) {
     std::cout << "start _" << std::endl;
     std::string problem_id = msg->body.ToString();
@@ -40,7 +31,7 @@ int solve(const evnsq::Message* msg) {
     sql::Connection *con;
     sql::Statement *state;
     driver = sql::mysql::get_mysql_driver_instance();
-    con = driver->connect("tcp://"+host+":3306", username, password);
+    con = driver->connect("tcp://127.0.0.1:3306", username, password);
     state = con->createStatement();
     state->execute("use oj");
     std::string query = "select t2.id, t3.username, t1.code from submission_submission t1, contest_contestsubmission t2, auth_user t3"
@@ -48,27 +39,27 @@ int solve(const evnsq::Message* msg) {
     " and t1.status='AC' and t1.id=t2.submission_id and t3.id=t1.user_id";
     sql::ResultSet* result = state->executeQuery(query);
     std::vector<std::pair<int, std::string>> subs;
+    AntiCheat* antiCheat = new AntiCheat;
     while (result->next()) {
         std::string user_name = result->getString("username");
         int idx = result->getInt("id");
         std::string code = result->getString("code");
-        cheat::normalization(idx, code, user_name);
+        antiCheat->normalization(idx, code, user_name);
         subs.emplace_back(idx, user_name);
-        std::cout << user_name << std::endl;
     }
-    CheatWorker cheatWorker(DEFAULT_THREAD_NUM, problem_id);
-    cheatWorker.start();
+    ThreadPool<std::pair<std::string, int>> threadPool(DEFAULT_THREAD_NUM);
+    threadPool.start();
     for (int i = 0; i < subs.size(); i ++) {
         for(int j = i + 1; j < subs.size(); j ++) {
             if (subs[i].second != subs[j].second) {
-                std::cout << "xxxx" << std::endl;
-                cheatWorker.add_task(boost::bind(compare_code, subs[i].first, subs[j].first));
+                std::shared_ptr<WorkIterm<Ans>> workItermPtr(new CheatWorker(subs[i].first, subs[j].first));
+                threadPool.add_task(workItermPtr);
             }
         }
     }
-    cheatWorker.close();
-    cheatWorker.wait();
-    cheat::clear();
+    threadPool.close();
+    threadPool.wait();
+    delete antiCheat;
     return 0;
 }
 
@@ -136,6 +127,7 @@ int main(int argc, char *argv[]) {
             password = std::string(argv[i + 1]);
         }
     }
+	cheat::init();
     std::string nsqd_tcp_addr;
     std::string lookupd_http_url;
     lookupd_http_url = "http://127.0.0.1:4161/lookup?topic=cheat";
