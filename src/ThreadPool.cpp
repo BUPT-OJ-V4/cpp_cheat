@@ -16,7 +16,7 @@ void ThreadPool::close() {
     _cond.notify_all();
 }
 
-int ThreadPool::popTask(WorkItermPtr& t) {
+int ThreadPool::Pop(WorkItermPtr& t) {
     boost::unique_lock<boost::mutex> lock(_mutex);
     if (_taskQue.empty()) {
         if (_closed) return 0;
@@ -28,39 +28,36 @@ int ThreadPool::popTask(WorkItermPtr& t) {
     return 1;
 }
 
-size_t ThreadPool::size() {
+size_t ThreadPool::Size() {
     boost::unique_lock<boost::mutex> lock(_mutex);
     return _taskQue.size();
 }
 
-void ThreadPool::run(int num) {
+void ThreadPool::Run(int num) {
     type ans;
-    WorkIterm::init(ans);
     for(int idx = 0; ; idx ++) {
         WorkItermPtr task;
-        int status = popTask(task);
+        int status = Pop(task);
         if (status == 0) break;
-        task->run();
-        task->callback(ans);
+        task->run(num);
     }
-    WorkIterm::calc(ans);
 }
 
-void ThreadPool::start(){
+void ThreadPool::Start(){
     if (_thread_num <= 0) return;
     for (int i = 0; i < _thread_num; i ++) {
         //boost::shared_ptr<boost::thread> t()
-        _threadGroup.add_thread(new boost::thread(boost::bind(&ThreadPool::run, this, i)));
+        mThreadGroup.push_back(new boost::thread(boost::bind(&ThreadPool::run, this, i)));
     }
 }
 
-void ThreadPool::add_task(WorkItermPtr task) {
+void ThreadPool::Push(WorkItermPtr task) {
     boost::unique_lock<boost::mutex> lock(_mutex);
     _taskQue.push(task);
     _cond.notify_one();
 }
 
-void ThreadPool::wait() {
+void ThreadPool::Wait() {
     _threadGroup.join_all();
 }
 

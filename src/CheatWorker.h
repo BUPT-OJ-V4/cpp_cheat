@@ -14,26 +14,22 @@ class CheatWorker : public WorkIterm {
 public:
     CheatWorker(const int& a,
                 const int& b,
-                SQLWriter* writer,
+                SQLWriterPtr writer,
                 AntiCheat* antiCheat
     )
-        : _sub1(a), _sub2(b), _writer(writer), _antiCheat(antiCheat){
+        : mSub1(a), mSub2(b), mWriter(mWriter), mAntiCheat(antiCheat){
     };
-    void run() override;
+    void run(int tid = 0) override;
 private:
-    int _sub1, _sub2;
-    AntiCheat* _antiCheat;
-    SQLWriter* _writer;
+    int mSub1, mSub2;
+    AntiCheat* mAntiCheat;
+    SQLWriterPtr mWriter;
 };
 
-template <typename Writer>
+
 void CheatWorker<Writer>::run()
 {
-    double ans = _antiCheat->calc(_sub1, _sub2);
-    _writer->write(_sub1, _sub2,
-                   _antiCheat->_userinfo[_sub1],
-                   _antiCheat->_userinfo[_sub2],
-                   ans, _antiCheat->_problem_id);
+
 }
 
 #endif //CHEAT_CHEATWORKER_H

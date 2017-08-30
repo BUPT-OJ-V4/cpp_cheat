@@ -6,7 +6,11 @@
 #include <mysql_driver.h>
 #include <mysql_connection.h>
 #include <cppconn/statement.h>
-void CheatWorker::run()
+void CheatWorker::run(int tid)
 {
-    _ans = antiCheat->calc(_sub1, _sub2);
+    double ans = mAntiCheat->calc(mSub1, mSub2);
+    mWriter->write(tid, mSub1, mSub2,
+                   mAntiCheat->GetUserInfo(mSub1),
+                   mAntiCheat->GetUserInfo(mSub2),
+                   ans, mAntiCheat->GetProblemId());
 }

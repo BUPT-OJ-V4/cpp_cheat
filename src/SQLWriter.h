@@ -8,38 +8,63 @@
 #include <mysql_driver.h>
 #include <mysql_connection.h>
 #include <cppconn/statement.h>
-
+#include <memory>
+class SQLConnector{
+public:
+    SQLConnector(sql::Connection * conn) {
+        mConn = conn;
+        mCount = 0;
+        mSql.reserver(mLimit * 20);
+    }
+    ~SQLConnector() {
+        if (mCount) {
+            write();
+        }
+        delete mConn;
+    }
+    void write(const std::string& sql) {
+        if (mCount == 0) {
+            mSql = "INSERT INTO `cheat_record` (`problem_id`, `sub1_id`, `sub2_id`, `user1`, `user2`,`probability`) VALUES";
+        }
+        mSql += sql;
+        if (mCount > mLimit) {
+            sql::Statement state = mConn->createStatement();
+            state->execute(mSql);
+            delete state;
+            mCount = 0;
+        }
+    }
+    sql::Connection *mConn;
+    std::string mSql;
+    size_t mCount;
+    static size_t mLimit = 150;
+};
 class SQLWriter {
 public:
     SQLWriter(const std::string& username,
-              const std::string& password
-    ) : _username(username), _password(password), _count(0) {
+              const std::string& password,
+              const int connectSize)
+        : mUsername(username), mPassword(password)
+        , mConnectionSize(connectSize)
+    {
     }
     ~SQLWriter() {
-        if (_count) {
-            write();
+        for(SQLConnector* p: mConnectors) {
+            delete p;
         }
-        if (_state) {
-            delete _state;
-        }
-        if (_conn) {
-            delete _conn;
-        }
-
+        mConnectors.clear();
     }
-    bool write(const int& a, const int& b,
+    bool write(const int& tid, const int& a, const int& b,
                const std::string& user1, const std::string &user2,
                const double& ans, const std::string& problem_id);
     bool connect();
 private:
-    void write();
-    std::string _username, _password;
-    sql::Connection *_conn;
-    sql::Statement *_state;
-    std::string _sql;
-    int _count;
-
+    std::string mUsername, mPassword;
+    std::vector<SQLConnector*> mConnectors;
+    int mConnectionSize
 };
+
+typedef std::shared_ptr<SQLWriter> SQLWriterPtr;
 
 
 #endif //CHEAT_SQLWRITER_H

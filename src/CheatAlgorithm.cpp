@@ -4,58 +4,29 @@
 #include "cheat_algorithm.h"
 using namespace cheat;
 
-namespace cheat
-{
+
 
 typedef unsigned int uint;
-std::map<std::string, char> key_words;
-int key_symbol[300];
-std::map<int, std::string> cache;
-std::map<int, std::string> brackets;
-std::map<int, std::string> allcode;
-std::map<int, std::string> userinfo;
 
-void init() {
-    std::vector<std::string> words = {"int","long","short","switch","char","class","struct","for","while","if","else","break","continue","return","true","false","float","double","do","signed","unsigned"};
-    char symbol[] = "[]{}()&|^%+-*/:;?!.\"\',=#<>_\\";
-    memset(key_symbol, -1, sizeof key_symbol);
-    size_t len = words.size(), len2 = strlen(symbol);
-    for(size_t i = 0; i < len; i ++) {
-        key_words[words[i]] = (char)('a' + i);
-    }
-    std::string empty = "";
-    for(int i = 0; i < 26; i ++) {
-        int temp = i + 'a';
-        int temp2 = i + 'A';
-        key_symbol[temp] = i;
-        key_symbol[temp2] = i + 26;
-        if (i < 10) {
-            int temp3 = i + '0';
-            key_symbol[temp3] = i + 52;
-        }
-    }
-    for(int i = 0; i < len2; i ++) {
-        key_symbol[symbol[i]] = i + 62;
-    }
-
+CheatAlgorithm::CheatAlgorithm() {
 }
 
-void clear() {
-    cache.clear();
-    brackets.clear();
-    allcode.clear();
+CheatAlgorithm::~CheatAlgorithm() {
+    mMCache.clear();
+    mBracket.clear();
+    mAllcode.clear();
     userinfo.clear();
 }
 
-double frequency_statistic(const std::string & a, const std::string & b) {
+double CheatAlgorithm::FrequencyStatistic(const std::string & a, const std::string & b) {
     uint num[2][105], len[2] = {(uint)a.length(), (uint)b.length()}; memset(num, 0, sizeof num);
     const char* ch[2];
     ch[0] = a.c_str();
     ch[1] = b.c_str();
     for(int i = 0; i < 2; i ++) {
         for(int j = 0; j < len[i]; j ++) {
-            if ((int)ch[i][j] > 255 || key_symbol[ch[i][j]] == -1) continue;
-            num[i][key_symbol[ch[i][j]]] ++;
+            if ((int)ch[i][j] > 255 || mKeySymbol[ch[i][j]] == -1) continue;
+            num[i][mKeySymbol[ch[i][j]]] ++;
         }
     }
     long long up = 0, down1 = 0, down2 = 0;
@@ -70,7 +41,7 @@ double frequency_statistic(const std::string & a, const std::string & b) {
     return up * 100 / std::sqrt(down1 * down2);
 }
 
-double lcs(const std::string& a, const std::string &b) {
+double CheatAlgorithm::Lcs(const std::string& a, const std::string &b) {
     int dp[2][b.length() + 2];
     memset(dp, 0, sizeof dp);
     int cur = 0;
@@ -89,8 +60,7 @@ double lcs(const std::string& a, const std::string &b) {
     return dp[cur][b.length()] * 200.0 / (a.length() + b.length());
 }
 
-void normalization(const int& idx, const std::string & buffer, const std::string & username) {
-
+void CheatAlgorithm::AddSubmission(const int& idx, const std::string & buffer, const std::string & username) {
     boost::regex reg("(\\/\\*(\\s|.)*?\\*\\/)|(\\/\\/.*?(\\r|\\n))", boost::regex::icase);
     boost::regex expression("\\w+|{|}");
     boost::regex space("(\\s|\\r\\n)");
@@ -99,27 +69,22 @@ void normalization(const int& idx, const std::string & buffer, const std::string
     boost::sregex_iterator end;
     std::string temp;
     for (; it != end; ++it) {
-        auto ite = key_words.find(it->str());
-        if (ite != key_words.end()) {
+        auto ite = mKeyWord.find(it->str());
+        if (ite != mKeyWord.end()) {
             temp += ite->second;
         }
         else if(it->str() == "{" || it->str() == "}") {
             temp += it->str();
         }
     }
-    brackets[idx] = temp;
-    cache[idx] = boost::regex_replace(res, space, "");
-    allcode[idx] = res;
-    userinfo[idx] = username;
+    mBracket[idx] = temp;
+    mCache[idx] = boost::regex_replace(res, space, "");
+    mAllcode[idx] = res;
+    mUserinfo[idx] = username;
 }
 
-void deal_code_file(const int &idx, const std::string& code_name) {
-    std::ifstream t(code_name.c_str());
-    std::string s(std::istreambuf_iterator<char>(t), (std::istreambuf_iterator<char>()));
-    //normalization(idx, s);
-}
 
-double cal_common_substring(std::string const& a, std::string const& b) {
+double CheatAlgorithm::CalCommonSubstring(std::string const& a, std::string const& b) {
     const static int MIN_TEXT_LENTH = 4;
     int dp[2][b.length() + 2];
     char A[a.length() + 1], B[b.length() + 1];

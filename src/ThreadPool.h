@@ -22,30 +22,29 @@ typedef boost::function<Res(void)> Task;
 extern std::string username, password;
 
 class ThreadPool : boost::noncopyable{
-public:
-    typedef std::shared_ptr<WorkIterm> WorkItermPtr;
+
 private:
-    std::queue<WorkItermPtr> _taskQue;
-    boost::mutex _mutex;
-    boost::condition_variable_any _cond;
-    boost::thread_group _threadGroup;
-    int _thread_num;
-    volatile bool _closed;
+    std::queue<WorkItermPtr> mTaskQue;
+    boost::mutex mMutex;
+    boost::condition_variable_any mCond;
+    vector<boost::Thread> mThreadGroup;
+    int mThreadNum;
+    volatile bool mClosed;
 private:
-    void run(int num);
-    int popTask(WorkItermPtr& task);
+    void Run(int num);
+    int Pop(WorkItermPtr& task);
 public:
-    ThreadPool(int num) {
-        this->_thread_num = num;
+    ThreadPool(int num)
+        : mThreadNum(num){
     }
     ~ThreadPool() {
         wait();
     }
-    void start();
-    void close();
-    void add_task(WorkItermPtr task);
-    size_t size();
-    void wait();
+    void Start();
+    void Close();
+    void Push(WorkItermPtr task);
+    size_t Size();
+    void Wait();
 };
 
 #endif //CHEAT_THREAD_POOL_H
