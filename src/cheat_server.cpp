@@ -40,7 +40,6 @@ inline void getSubmission(const std::string& problem_id,
                         "t2, auth_user t3  where t2.problem_id=" + problem_id +
     " and t1.status='AC' and t1.id=t2.submission_id and t3.id=t1.user_id";
     sql::ResultSet* result = state->executeQuery(query);
-    std::vector<std::pair<int, std::string>> subs;
 
     while (result->next()) {
         std::string user_name = result->getString("username");
@@ -108,7 +107,6 @@ int main(int argc, char *argv[]) {
             password = std::string(argv[i + 1]);
         }
     }
-	cheat::init();
     std::string nsqd_tcp_addr;
     std::string lookupd_http_url;
     lookupd_http_url = "http://127.0.0.1:4161/lookup?topic=cheat";

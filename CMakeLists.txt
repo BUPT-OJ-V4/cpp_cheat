@@ -26,7 +26,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 link_directories("/usr/local/lib")
 include_directories("/usr/local/include")
-# include_directories("/usr/local/mysql/connector-c++-2.0/include")
+#include_directories("/usr/local/mysql/connector-c++-2.0/include")
 
 include_directories(SYSTEM "${Boost_INCLUDE_DIRS}")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
@@ -39,7 +39,7 @@ link_libraries(evnsq)
 
 set(CHEAT_SOURCES
         src/ThreadPool.cpp
-        src/cheat_algorithm.cpp src/AntiCheat.cpp src/AntiCheat.h src/WorkIterm.h src/CheatWorker.h src/SQLWriter.cpp src/SQLWriter.h)
+        src/AntiCheat.cpp src/AntiCheat.cpp src/CheatWorker.cpp src/SQLWriter.cpp)
 
 add_library(cheatlib STATIC ${CHEAT_SOURCES})
 
@@ -48,7 +48,7 @@ add_executable(CheatServer src/cheat_server.cpp)
 target_link_libraries(CheatServer pthread)
 target_link_libraries(CheatServer tacopie)
 target_link_libraries(CheatServer evpp)
-target_link_libraries(CheatServer evnsqt)
+target_link_libraries(CheatServer evnsq)
 target_link_libraries(CheatServer mysqlcppconn)
 target_link_libraries(CheatServer ${Boost_LIBRARIES})
 target_link_libraries(CheatServer cheatlib)

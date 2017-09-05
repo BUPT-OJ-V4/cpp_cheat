@@ -1,7 +1,7 @@
 //
 // Created by liuwei on 7/29/17.
 //
-
+#ifndef CHEAT_CHEATWORKER_H
 #define CHEAT_CHEATWORKER_H
 
 #include "WorkIterm.h"
@@ -25,11 +25,5 @@ private:
     AntiCheat* mAntiCheat;
     SQLWriterPtr mWriter;
 };
-
-
-void CheatWorker<Writer>::run()
-{
-
-}
 
 #endif //CHEAT_CHEATWORKER_H

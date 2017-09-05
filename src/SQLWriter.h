@@ -9,26 +9,33 @@
 #include <mysql_connection.h>
 #include <cppconn/statement.h>
 #include <memory>
-class SQLConnector{
+class SQLConnector
+{
 public:
-    SQLConnector(sql::Connection * conn) {
+    SQLConnector(sql::Connection * conn)
+    {
         mConn = conn;
         mCount = 0;
-        mSql.reserver(mLimit * 20);
+        mSql.reserve(mLimit * 20);
     }
-    ~SQLConnector() {
+    ~SQLConnector()
+    {
         if (mCount) {
-            write();
+            sql::Statement* state = mConn->createStatement();
+            state->execute(mSql);
+            delete state;
+            mCount = 0;            
         }
         delete mConn;
     }
-    void write(const std::string& sql) {
+    void write(const std::string& sql)
+    {
         if (mCount == 0) {
             mSql = "INSERT INTO `cheat_record` (`problem_id`, `sub1_id`, `sub2_id`, `user1`, `user2`,`probability`) VALUES";
         }
         mSql += sql;
         if (mCount > mLimit) {
-            sql::Statement state = mConn->createStatement();
+            sql::Statement* state = mConn->createStatement();
             state->execute(mSql);
             delete state;
             mCount = 0;
@@ -37,9 +44,10 @@ public:
     sql::Connection *mConn;
     std::string mSql;
     size_t mCount;
-    static size_t mLimit = 150;
+    static const size_t mLimit = 150;
 };
-class SQLWriter {
+class SQLWriter
+{
 public:
     SQLWriter(const std::string& username,
               const std::string& password,
@@ -49,7 +57,8 @@ public:
     {
     }
     ~SQLWriter() {
-        for(SQLConnector* p: mConnectors) {
+        for(SQLConnector* p: mConnectors)
+        {
             delete p;
         }
         mConnectors.clear();
@@ -61,7 +70,7 @@ public:
 private:
     std::string mUsername, mPassword;
     std::vector<SQLConnector*> mConnectors;
-    int mConnectionSize
+    int mConnectionSize;
 };
 
 typedef std::shared_ptr<SQLWriter> SQLWriterPtr;

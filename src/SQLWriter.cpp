@@ -18,8 +18,8 @@ bool SQLWriter::write(const int& tid, const int& sub1, const int& sub2,
 bool SQLWriter::connect()
 {
     sql::mysql::MySQL_Driver *driver = sql::mysql::get_mysql_driver_instance();
-    for (int i = 0; i < mConnectionSize) {
-        sql::Connection * conn = driver->connect("tcp://127.0.0.1:3306/oj", _username, _password);
+    for (size_t i = 0; i < mConnectionSize; i ++) {
+        sql::Connection* conn = driver->connect("tcp://127.0.0.1:3306/oj", mUsername, mPassword);
         if (!conn) {
             mConnectors.clear();
             return false;

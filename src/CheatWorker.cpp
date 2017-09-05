@@ -8,7 +8,7 @@
 #include <cppconn/statement.h>
 void CheatWorker::run(int tid)
 {
-    double ans = mAntiCheat->calc(mSub1, mSub2);
+    double ans = mAntiCheat->Calc(mSub1, mSub2);
     mWriter->write(tid, mSub1, mSub2,
                    mAntiCheat->GetUserInfo(mSub1),
                    mAntiCheat->GetUserInfo(mSub2),

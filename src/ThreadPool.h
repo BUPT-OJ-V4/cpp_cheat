@@ -16,35 +16,30 @@
 #include <string>
 #include "WorkIterm.h"
 
-typedef std::pair<std::pair<int, int>, double> Res;
-//typedef long long Res;
-typedef boost::function<Res(void)> Task;
-extern std::string username, password;
-
-class ThreadPool : boost::noncopyable{
-
-private:
-    std::queue<WorkItermPtr> mTaskQue;
-    boost::mutex mMutex;
-    boost::condition_variable_any mCond;
-    vector<boost::Thread> mThreadGroup;
-    int mThreadNum;
-    volatile bool mClosed;
-private:
-    void Run(int num);
-    int Pop(WorkItermPtr& task);
+class ThreadPool : boost::noncopyable
+{
 public:
     ThreadPool(int num)
-        : mThreadNum(num){
+        : mThreadCount(num){
     }
     ~ThreadPool() {
-        wait();
+        Wait();
     }
     void Start();
     void Close();
     void Push(WorkItermPtr task);
     size_t Size();
     void Wait();
+private:
+    void Run(int num);
+    int Pop(WorkItermPtr& task);
+private:
+    std::queue<WorkItermPtr> mTaskQue;
+    boost::mutex mMutex;
+    boost::condition_variable_any mCond;
+    std::vector<boost::thread> mThreadGroup;
+    int mThreadCount;
+    volatile bool mClosed;    
 };
 
 #endif //CHEAT_THREAD_POOL_H
