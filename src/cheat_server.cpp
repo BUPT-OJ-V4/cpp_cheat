@@ -6,7 +6,7 @@
 #include <boost/filesystem.hpp>
 #include <cppconn/statement.h>
 
-#include "ThreadPool.h"
+#include "SimpleThreadPool.h"
 #include "AntiCheat.h"
 #include "CheatWorker.h"
 #include "SQLWriter.h"
@@ -61,7 +61,7 @@ int solve(const evnsq::Message* msg) {
     AntiCheat antiCheat;
     std::vector<std::pair<int, std::string>> subs;
     getSubmission(problem_id, subs, &antiCheat);
-    ThreadPool threadPool(threadnum);
+    SimpleThreadPool threadPool(threadnum);
     SQLWriterPtr sqlWriter(new SQLWriter(username, password, threadnum));
     threadPool.Start();
     if (!sqlWriter->connect()) {

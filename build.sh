@@ -10,7 +10,7 @@ rm -rf build
 mkdir build
 cd build && cmake ..
 make clean
-make -j8
+make -j4
 
 mkdir release
 mkdir release/logs

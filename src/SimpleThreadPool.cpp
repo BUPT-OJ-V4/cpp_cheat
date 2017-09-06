@@ -2,17 +2,17 @@
 // Created by liuwei on 17/4/28.
 //
 
-#include "ThreadPool.h"
+#include "SimpleThreadPool.h"
 
 
 std::string username="oj", password="";
 
-void ThreadPool::Close() {
+void SimpleThreadPool::Close() {
     mClosed = true;
     mCond.notify_all();
 }
 
-int ThreadPool::Pop(WorkItermPtr& t) {
+int SimpleThreadPool::Pop(WorkItermPtr& t) {
     boost::unique_lock<boost::mutex> lock(mMutex);
     if (mTaskQue.empty()) {
         if (mClosed) return 0;
@@ -24,12 +24,12 @@ int ThreadPool::Pop(WorkItermPtr& t) {
     return 1;
 }
 
-size_t ThreadPool::Size() {
+size_t SimpleThreadPool::Size() {
     boost::unique_lock<boost::mutex> lock(mMutex);
     return mTaskQue.size();
 }
 
-void ThreadPool::Run(int num) {
+void SimpleThreadPool::Run(int num) {
     for(int idx = 0; ; idx ++) {
         WorkItermPtr task;
         int status = Pop(task);
@@ -38,23 +38,24 @@ void ThreadPool::Run(int num) {
     }
 }
 
-void ThreadPool::Start(){
+void SimpleThreadPool::Start(){
     if (mThreadCount <= 0) return;
     for (int i = 0; i < mThreadCount; i ++) {
         //boost::shared_ptr<boost::thread> t()
-        mThreadGroup.push_back(boost::thread(boost::bind(&ThreadPool::Run, this, i)));
+        mThreadGroup.push_back(new boost::thread(boost::bind(&SimpleThreadPool::Run, this, i)));
     }
 }
 
-void ThreadPool::Push(WorkItermPtr task) {
+void SimpleThreadPool::Push(WorkItermPtr task) {
     boost::unique_lock<boost::mutex> lock(mMutex);
     mTaskQue.push(task);
     mCond.notify_one();
 }
 
-void ThreadPool::Wait() {
-    for(auto &t: mThreadGroup) {
-        t.join();
+void SimpleThreadPool::Wait() {
+    for(size_t i = 0; i < mThreadGroup.size(); i ++) {
+        mThreadGroup[i]->join();
+        delete mThreadGroup[i];
     }
 }
 

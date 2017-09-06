@@ -2,8 +2,8 @@
 // Created by liuwei on 17/4/28.
 //
 
-#ifndef CHEAT_THREAD_POOL_H
-#define CHEAT_THREAD_POOL_H
+#ifndef CHEAT_SIMPLE_THREAD_POOL_H
+#define CHEAT_SIMPLE_THREAD_POOL_H
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -16,13 +16,13 @@
 #include <string>
 #include "WorkIterm.h"
 
-class ThreadPool : boost::noncopyable
+class SimpleThreadPool : public boost::noncopyable
 {
 public:
-    ThreadPool(int num)
+    SimpleThreadPool(int num)
         : mThreadCount(num){
     }
-    ~ThreadPool() {
+    ~SimpleThreadPool() {
         Wait();
     }
     void Start();
@@ -37,9 +37,9 @@ private:
     std::queue<WorkItermPtr> mTaskQue;
     boost::mutex mMutex;
     boost::condition_variable_any mCond;
-    std::vector<boost::thread> mThreadGroup;
+    std::vector<boost::thread*> mThreadGroup;
     int mThreadCount;
     volatile bool mClosed;    
 };
 
-#endif //CHEAT_THREAD_POOL_H
+#endif //CHEAT_SIMPLE_THREAD_POOL_H
