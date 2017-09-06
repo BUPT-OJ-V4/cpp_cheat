@@ -46,6 +46,9 @@ public:
     size_t mCount;
     static const size_t mLimit = 150;
 };
+
+typedef std::shared_ptr<SQLConnector> SQLConnectorPtr;
+
 class SQLWriter
 {
 public:
@@ -57,11 +60,6 @@ public:
     {
     }
     ~SQLWriter() {
-        for(SQLConnector* p: mConnectors)
-        {
-            delete p;
-        }
-        mConnectors.clear();
     }
     bool write(const int& tid, const int& a, const int& b,
                const std::string& user1, const std::string &user2,
@@ -69,7 +67,7 @@ public:
     bool connect();
 private:
     std::string mUsername, mPassword;
-    std::vector<SQLConnector*> mConnectors;
+    std::vector<SQLConnectorPtr> mConnectors;
     int mConnectionSize;
 };
 

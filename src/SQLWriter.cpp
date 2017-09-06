@@ -24,6 +24,6 @@ bool SQLWriter::connect()
             mConnectors.clear();
             return false;
         }
-        mConnectors.push_back(new SQLConnector(conn));
+        mConnectors.push_back(std::make_shared<SQLConnector>(conn));
     }
 }
