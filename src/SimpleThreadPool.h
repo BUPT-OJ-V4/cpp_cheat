@@ -11,23 +11,24 @@
 #include <queue>
 #include <deque>
 #include <stdexcept>
-#include <mysql_driver.h>
-#include <mysql_connection.h>
+
 #include <string>
 #include "WorkIterm.h"
 
-class SimpleThreadPool : public boost::noncopyable
+class SimpleThreadPool
 {
 public:
     SimpleThreadPool(int num)
-        : mThreadCount(num){
+        : mThreadCount(num)
+        , mClosed(false)
+    {
     }
     ~SimpleThreadPool() {
         Wait();
     }
     void Start();
     void Close();
-    void Push(WorkItermPtr task);
+    void Push(const WorkItermPtr& task);
     size_t Size();
     void Wait();
 private:
@@ -37,7 +38,7 @@ private:
     std::queue<WorkItermPtr> mTaskQue;
     boost::mutex mMutex;
     boost::condition_variable_any mCond;
-    std::vector<boost::thread*> mThreadGroup;
+    boost::thread_group mThreadGroup;
     int mThreadCount;
     volatile bool mClosed;    
 };

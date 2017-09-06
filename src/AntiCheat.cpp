@@ -9,6 +9,7 @@
 
 #include <boost/regex.hpp>
 
+CommonData AntiCheat::mData;
 
 double AntiCheat::FrequencyStatistic(const std::string & a, const std::string & b)
 {

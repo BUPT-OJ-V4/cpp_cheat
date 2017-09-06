@@ -5,7 +5,6 @@
 #include "SimpleThreadPool.h"
 
 
-std::string username="oj", password="";
 
 void SimpleThreadPool::Close() {
     mClosed = true;
@@ -41,21 +40,17 @@ void SimpleThreadPool::Run(int num) {
 void SimpleThreadPool::Start(){
     if (mThreadCount <= 0) return;
     for (int i = 0; i < mThreadCount; i ++) {
-        //boost::shared_ptr<boost::thread> t()
-        mThreadGroup.push_back(new boost::thread(boost::bind(&SimpleThreadPool::Run, this, i)));
+        mThreadGroup.create_thread(boost::bind(&SimpleThreadPool::Run, this, i));
     }
 }
 
-void SimpleThreadPool::Push(WorkItermPtr task) {
+void SimpleThreadPool::Push(const WorkItermPtr& task) {
     boost::unique_lock<boost::mutex> lock(mMutex);
     mTaskQue.push(task);
     mCond.notify_one();
 }
 
 void SimpleThreadPool::Wait() {
-    for(size_t i = 0; i < mThreadGroup.size(); i ++) {
-        mThreadGroup[i]->join();
-        delete mThreadGroup[i];
-    }
+    mThreadGroup.join_all();
 }
 

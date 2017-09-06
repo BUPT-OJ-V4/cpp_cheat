@@ -9,6 +9,7 @@
 class WorkIterm {
 public:
     WorkIterm() {};
+    virtual ~WorkIterm() {}
 public:
     virtual void run(int thread_id = -1) = 0;
 };

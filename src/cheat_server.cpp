@@ -72,8 +72,8 @@ int solve(const evnsq::Message* msg) {
     for (int i = 0; i < subs.size(); i ++) {
         for(int j = i + 1; j < subs.size(); j ++) {
             if (subs[i].second == subs[j].second) continue;
-            threadPool.Push(WorkItermPtr(new CheatWorker(subs[i].first,
-                            subs[j].first, sqlWriter, &antiCheat)));
+            threadPool.Push(std::make_shared<CheatWorker>(subs[i].first,
+                            subs[j].first, sqlWriter, &antiCheat));
         }
     }
     threadPool.Close();
