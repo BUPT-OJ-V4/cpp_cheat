@@ -22,26 +22,34 @@ public:
     }
     ~SQLWriter()
     {
-        if (mCount) {
+        if (mCount)
+        {
             sql::Statement* state = mConn->createStatement();
             state->execute(mSql);
             delete state;
-            mCount = 0;            
+            mCount = 0;
         }
         if (mConn) delete mConn;
     }
 
     void write(const std::string& sql)
     {
-        if (mCount == 0) {
+        if (mCount == 0)
+        {
             mSql = "INSERT INTO `cheat_record` (`problem_id`, `sub1_id`, `sub2_id`, `user1`, `user2`,`probability`) VALUES";
             mSql.reserve(mLimit * 20 + 100);
         }
+        else
+        {
+            mSql += ",";
+        }
         mSql += sql;
-        if (mCount > mLimit) {
+        mCount ++;
+        if (mCount >= mLimit) {
             sql::Statement* state = mConn->createStatement();
             state->execute(mSql);
             delete state;
+            mCount = 0;
         }
     }
 
@@ -49,6 +57,9 @@ public:
     {
         sql::mysql::MySQL_Driver *driver = sql::mysql::get_mysql_driver_instance();
         mConn = driver->connect("tcp://127.0.0.1:3306/oj", mUsername, mPassword);
+        if (mConn)
+            return true;
+        return false;
     }
 private:
     std::string mUsername, mPassword;

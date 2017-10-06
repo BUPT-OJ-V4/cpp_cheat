@@ -34,13 +34,12 @@ inline void getSubmission(const std::string& problem_id,
     sql::Connection *con;
     sql::Statement *state;
     driver = sql::mysql::get_mysql_driver_instance();
-    con = driver->connect("tcp://127.0.0.1:3306", username, password);
+    con = driver->connect("tcp://127.0.0.1:3306/oj", username, password);
     state = con->createStatement();
-    state->execute("use oj");
-    std::string query = "select t2.id, t3.username, t1.code from"
-                        "submission_submission t1, contest_contestsubmission"
+    std::string query = "select t2.id, t3.username, t1.code from "
+                        "submission_submission t1, contest_contestsubmission "
                         "t2, auth_user t3  where t2.problem_id=" + problem_id +
-    " and t1.status='AC' and t1.id=t2.submission_id and t3.id=t1.user_id";
+                        " and t1.status='AC' and t1.id=t2.submission_id and t3.id=t1.user_id";
     sql::ResultSet* result = state->executeQuery(query);
 
     while (result->next()) {
@@ -58,7 +57,10 @@ void Run(SQLWriterPtr sqlWriter, ThreadQueuePtr threadQueue, AntiCheat* antiChea
 {
     while(threadQueue->Size())
     {
-        P task = threadQueue->Pop();
+        P task;
+        int status = threadQueue->Pop(task);
+        if (status == 0)
+            break;
         std::string user1, user2;
         double ans = antiCheat->Calc(task.first, task.second, user1, user2);
         std::string sql = "(" + problem_id + ", " + std::to_string(task.first) + "," + std::to_string(task.second)
@@ -68,14 +70,16 @@ void Run(SQLWriterPtr sqlWriter, ThreadQueuePtr threadQueue, AntiCheat* antiChea
 }
 
 int Solve(const evnsq::Message* msg) {
-    std::cout << "start _" << std::endl;
+    std::cout << "start solve" << std::endl;
     std::string problem_id = msg->body.ToString();
     for(auto x: problem_id) {
         if (x < '0' || x > '9') return 0;
     }
+    std::cout << problem_id << std::endl;
 
     AntiCheat antiCheat;
     std::vector<std::pair<int, std::string>> subs;
+    std::cout << "Get submission" << std::endl;
     getSubmission(problem_id, subs, &antiCheat);
     boost::thread_group threadGroup;
     ThreadQueuePtr threadQueue(new ThreadQueue<P>);
@@ -87,7 +91,7 @@ int Solve(const evnsq::Message* msg) {
                             subs[j].first));
         }
     }
-
+    std::cout << "all calc pair: " << threadQueue->Size() << std::endl;
     for(size_t i = 0; i < threadnum; i ++)
     {
         SQLWriterPtr sqlWriter(new SQLWriter(username, password));
