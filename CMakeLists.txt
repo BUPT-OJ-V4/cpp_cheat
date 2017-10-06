@@ -4,7 +4,7 @@ project(cheat)
 
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.64.0 REQUIRED COMPONENTS filesystem system thread regex)
+find_package(Boost 1.58.0 REQUIRED COMPONENTS filesystem system thread regex)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads)
@@ -41,12 +41,12 @@ link_libraries(evpp)
 link_libraries(evnsq)
 
 set(CHEAT_SOURCES
-        src/SimpleThreadPool.cpp
-        src/AntiCheat.cpp src/CheatWorker.cpp src/SQLWriter.cpp)
+        src/ThreadQueue.h
+        src/AntiCheat.cpp src/SQLWriter.h)
 
 add_library(cheatlib STATIC ${CHEAT_SOURCES})
 
-add_executable(CheatServer src/cheat_server.cpp)
+add_executable(CheatServer src/main.cpp)
 
 target_link_libraries(CheatServer pthread)
 target_link_libraries(CheatServer tacopie)

@@ -5,15 +5,17 @@
 #include <ctime>
 #include <boost/filesystem.hpp>
 #include <cppconn/statement.h>
-
-#include "SimpleThreadPool.h"
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include "ThreadQueue.h"
 #include "AntiCheat.h"
-#include "CheatWorker.h"
 #include "SQLWriter.h"
 
 #define DEFAULT_THREAD_NUM 2
 namespace fs = boost::filesystem;
 
+typedef std::pair<int, int> P;
+typedef std::shared_ptr<ThreadQueue<P>> ThreadQueuePtr;
 
 volatile std::atomic<bool> should_exit = ATOMIC_VAR_INIT(false);
 
@@ -52,32 +54,50 @@ inline void getSubmission(const std::string& problem_id,
     delete con;
 }
 
-int solve(const evnsq::Message* msg) {
+void Run(SQLWriterPtr sqlWriter, ThreadQueuePtr threadQueue, AntiCheat* antiCheat, std::string problem_id)
+{
+    while(threadQueue->Size())
+    {
+        P task = threadQueue->Pop();
+        std::string user1, user2;
+        double ans = antiCheat->Calc(task.first, task.second, user1, user2);
+        std::string sql = "(" + problem_id + ", " + std::to_string(task.first) + "," + std::to_string(task.second)
+                    + ", '" + user1 + "', '" + user2 + "', " + std::to_string(ans) + ")";
+        sqlWriter->write(sql);
+    }
+}
+
+int Solve(const evnsq::Message* msg) {
     std::cout << "start _" << std::endl;
     std::string problem_id = msg->body.ToString();
     for(auto x: problem_id) {
         if (x < '0' || x > '9') return 0;
     }
+
     AntiCheat antiCheat;
     std::vector<std::pair<int, std::string>> subs;
     getSubmission(problem_id, subs, &antiCheat);
-    SimpleThreadPool threadPool(threadnum);
-    SQLWriterPtr sqlWriter(new SQLWriter(username, password, threadnum));
-    threadPool.Start();
-    if (!sqlWriter->connect()) {
-        std::cout << "failed to connect sql" << std::endl;
-        std::cerr << "failed to connect sql" << std::endl;
-        return -1;
-    }
-    for (int i = 0; i < subs.size(); i ++) {
+    boost::thread_group threadGroup;
+    ThreadQueuePtr threadQueue(new ThreadQueue<P>);
+
+    for(int i = 0; i < subs.size(); i ++) {
         for(int j = i + 1; j < subs.size(); j ++) {
             if (subs[i].second == subs[j].second) continue;
-            threadPool.Push(std::make_shared<CheatWorker>(subs[i].first,
-                            subs[j].first, sqlWriter, &antiCheat));
+            threadQueue->Push(std::make_pair(subs[i].first,
+                            subs[j].first));
         }
     }
-    threadPool.Close();
-    threadPool.Wait();
+
+    for(size_t i = 0; i < threadnum; i ++)
+    {
+        SQLWriterPtr sqlWriter(new SQLWriter(username, password));
+        if (!sqlWriter->connect()) {
+            std::cout << "failed to connect sql" << std::endl;
+            continue;
+        }
+        threadGroup.create_thread(boost::bind(Run, sqlWriter, threadQueue, &antiCheat, problem_id));
+    }
+    threadGroup.join_all();
     return 0;
 }
 
@@ -112,7 +132,7 @@ int main(int argc, char *argv[]) {
     lookupd_http_url = "http://127.0.0.1:4161/lookup?topic=cheat";
     evpp::EventLoop loop;
     evnsq::Consumer client(&loop, "cheat", "ch1", evnsq::Option());
-    client.SetMessageCallback(&solve);
+    client.SetMessageCallback(&Solve);
     client.ConnectToLookupds(lookupd_http_url);
     loop.Run();
     return 0;

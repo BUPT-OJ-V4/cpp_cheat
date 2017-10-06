@@ -51,7 +51,7 @@ public:
 
     AntiCheat() {}
     ~AntiCheat() {}
-    double Calc(const int & a, const int & b);
+    double Calc(const int & a, const int & b, std::string& user1, std::string& user2);
     const std::string& GetUserInfo(const int& sub)
     {
         return mUserinfo[sub];

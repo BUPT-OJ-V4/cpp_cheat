@@ -130,11 +130,13 @@ double AntiCheat::CalCommonSubstring(std::string const& a, std::string const& b)
     return ans * 200.0 / (a.length() + b.length());
 }
 
-double AntiCheat::Calc(const int & a, const int & b)
+double AntiCheat::Calc(const int & a, const int & b, std::string& user1, std::string& user2)
 {
     double res = Lcs(mBracket[a], mBracket[b]) + CalCommonSubstring(mCache[a], mCache[b]);
     res *= 0.5;
     double third = FrequencyStatistic(mAllcode[a], mAllcode[b]);
+    user1 = mUserinfo[a];
+    user2 = mUserinfo[b];
     if (third > 99.0) return third;
     return res;
 }
