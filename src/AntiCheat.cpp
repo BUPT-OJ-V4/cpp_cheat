@@ -82,38 +82,39 @@ void AntiCheat::AddSubmission(const int& idx, const std::string & buffer, const 
 double AntiCheat::CalCommonSubstring(std::string const& a, std::string const& b)
 {
     const static int MIN_TEXT_LENTH = 4;
-    int dp[2][b.length() + 2];
-    char A[a.length() + 1], B[b.length() + 1];
+    unsigned short dp[2][b.length() + 2];
     size_t ans = 0, len1 = a.length(), len2 = b.length();
+    char A[len1 + 1], B[len2 + 1];
     a.copy(A, len1);
     b.copy(B, len2);
     while(true){
-        memset(dp, 0, sizeof dp);
-        int cur = 0, res = 0, u = 0, v = 0;
-        for(int i = 0; i < len1; i ++) {
+        size_t cur = 0, res = 0, u = 0, v = 0;
+        std::vector<size_t> pos[256];
+        for(size_t i = 0; i < len2; i ++) {
+            pos[B[i]].push_back(i);
+        }
+        memset(dp[0], 0, sizeof(unsigned short) * (len2 + 1));
+        for(size_t i = 0; i < len1; i ++) {
             cur ^= 1;
-            for(int j = 0; j < len2; j ++) {
-                if (B[j] == '$' || A[i] == '$' || A[i] != B[j]) {
-                    dp[cur][j + 1] = 0;
-                }
-                else{
-                    dp[cur][j + 1] = 1 + dp[cur ^ 1][j];
-                    if (dp[cur][j + 1] > res) {
-                        res = dp[cur][j + 1];
-                        u = i;
-                        v = j;
-                    }
+            memset(dp[cur], 0, sizeof(unsigned short) * (len2 + 1));
+            if (A[i] == '$') continue;
+            for(auto j: pos[A[i]]) {
+                dp[cur][j + 1] = (unsigned short)1 + dp[cur ^ 1][j];
+                if (dp[cur][j + 1] > res) {
+                    res = dp[cur][j + 1];
+                    u = i;
+                    v = j;
                 }
             }
         }
 
         if (res <= MIN_TEXT_LENTH) break;
         ans += res;
-        int ret = res;
+        size_t ret = res;
 
         if (u + 1 < len1 && A[u + 1] != '$') A[u - res + 1] = '$';
         else res ++;
-        for(int i = u + 1; i < len1; i ++) {
+        for(size_t i = u + 1; i < len1; i ++) {
             A[i - res + 1] = A[i];
         }
         len1 -= res - 1;
@@ -121,7 +122,7 @@ double AntiCheat::CalCommonSubstring(std::string const& a, std::string const& b)
 
         if (v + 1 < len2 && B[v + 1] != '$') B[v - ret + 1] = '$';
         else ret ++;
-        for(int i = v + 1; i < len2; i ++) {
+        for(size_t i = v + 1; i < len2; i ++) {
             B[i - ret + 1] = B[i];
         }
         len2 -= ret - 1;

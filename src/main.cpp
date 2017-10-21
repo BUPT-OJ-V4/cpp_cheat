@@ -1,30 +1,22 @@
 #include <iostream>
 #include <fstream>
+#include <ctime>
 #include <evnsq/consumer.h>
 #include <evpp/event_loop.h>
-#include <ctime>
 #include <boost/filesystem.hpp>
-#include <cppconn/statement.h>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-#include "ThreadQueue.h"
+#include <boost/thread.hpp>
+
+#include "common.h"
 #include "AntiCheat.h"
 #include "SQLWriter.h"
 
 #define DEFAULT_THREAD_NUM 2
 namespace fs = boost::filesystem;
 
-typedef std::pair<int, int> P;
-typedef std::shared_ptr<ThreadQueue<P>> ThreadQueuePtr;
-
-volatile std::atomic<bool> should_exit = ATOMIC_VAR_INIT(false);
-
 std::string username, password;
 int threadnum = DEFAULT_THREAD_NUM;
-
-void sigint_handler(int) {
-    should_exit = true;
-}
 
 inline void getSubmission(const std::string& problem_id,
                           std::vector<std::pair<int, std::string>>& subs,
@@ -53,19 +45,30 @@ inline void getSubmission(const std::string& problem_id,
     delete con;
 }
 
-void Run(SQLWriterPtr sqlWriter, ThreadQueuePtr threadQueue, AntiCheat* antiCheat, std::string problem_id)
+inline void merge_sort(std::vector<Result> results[])
 {
-    while(threadQueue->Size())
+    int len = 0;
+    for(size_t i = 0; i < threadnum; i ++) {
+        len += results[i].size();
+    }
+    results[threadnum].reserve(len);
+    for(size_t i = 0; i < threadnum; i ++) {
+        for(size_t j = 0; j < results[i].size(); j ++) {
+            results[threadnum].push_back(results[i][j]);
+        }
+    }
+    std::sort(results[threadnum].begin(), results[threadnum].end());
+}
+
+void Run(const std::vector<P>& queue, AntiCheat* antiCheat, std::vector<Result>& results,std::string problem_id)
+{
+    size_t len = queue.size();
+    for(size_t i = 0; i < len; i ++)
     {
-        P task;
-        int status = threadQueue->Pop(task);
-        if (status == 0)
-            break;
+        const P& task = queue[i];
         std::string user1, user2;
         double ans = antiCheat->Calc(task.first, task.second, user1, user2);
-        std::string sql = "(" + problem_id + ", " + std::to_string(task.first) + "," + std::to_string(task.second)
-                    + ", '" + user1 + "', '" + user2 + "', " + std::to_string(ans) + ")";
-        sqlWriter->write(sql);
+        results.emplace_back(ans, task.first, task.second, user1, user2);
     }
 }
 
@@ -82,32 +85,40 @@ int Solve(const evnsq::Message* msg) {
     std::cout << "Get submission" << std::endl;
     getSubmission(problem_id, subs, &antiCheat);
     boost::thread_group threadGroup;
-    ThreadQueuePtr threadQueue(new ThreadQueue<P>);
-
-    for(int i = 0; i < subs.size(); i ++) {
+    assert(threadnum > 0);
+    std::vector<P> queue[threadnum];
+    std::vector<Result> results[threadnum + 1];
+    for(int i = 0, k = 0; i < subs.size(); i ++) {
         for(int j = i + 1; j < subs.size(); j ++) {
             if (subs[i].second == subs[j].second) continue;
-            threadQueue->Push(std::make_pair(subs[i].first,
+            queue[k].push_back(std::make_pair(subs[i].first,
                             subs[j].first));
+            k = (k + 1) % threadnum;
         }
     }
-    std::cout << "all calc pair: " << threadQueue->Size() << std::endl;
+    SQLWriterPtr sqlWriter(new SQLWriter(username, password));
+    if (!sqlWriter->connect()) {
+        std::cout << "failed to connect sql" << std::endl;
+        return 0;
+    }
     for(size_t i = 0; i < threadnum; i ++)
     {
-        SQLWriterPtr sqlWriter(new SQLWriter(username, password));
-        if (!sqlWriter->connect()) {
-            std::cout << "failed to connect sql" << std::endl;
-            continue;
-        }
-        threadGroup.create_thread(boost::bind(Run, sqlWriter, threadQueue, &antiCheat, problem_id));
+        results[i].reserve(queue[i].size() + 1);
+        threadGroup.create_thread(boost::bind(Run, queue[i], &antiCheat, results[i], problem_id));
     }
     threadGroup.join_all();
+    merge_sort(results);
+    for(auto& result: results[threadnum]) {
+        std::string sql = "(" + problem_id + ", " + std::to_string(result.sub1) + "," + std::to_string(result.sub2)
+                    + ", '" + result.user1 + "', '" + result.user2 + "', " + std::to_string(result.ans) + ")";
+        sqlWriter->write(sql);
+    }
     return 0;
 }
 
 int to_int(const char *str) {
     int ans = 0;
-    int len = strlen(str);
+    size_t len = strlen(str);
     if (str) {
         std::cout << len << std::endl;
         std::cout << "not none" << *str << std::endl;

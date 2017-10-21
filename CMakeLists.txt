@@ -41,8 +41,7 @@ link_libraries(evpp)
 link_libraries(evnsq)
 
 set(CHEAT_SOURCES
-        src/ThreadQueue.h
-        src/AntiCheat.cpp src/SQLWriter.h)
+        src/AntiCheat.cpp src/SQLWriter.h src/common.h)
 
 add_library(cheatlib STATIC ${CHEAT_SOURCES})
 

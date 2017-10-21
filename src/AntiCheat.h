@@ -4,18 +4,10 @@
 
 #ifndef CHEAT_ANTICHEAT_H
 #define CHEAT_ANTICHEAT_H
-#include <map>
-#include <set>
-#include <vector>
-#include <string>
-#include <cstring>
 
-template <typename K, typename V>
-using map_pair = typename std::map<K, V>::value_type;
-template <typename K, typename V>
-using map_ite = typename std::map<K, V>::iterator;
-template <typename K, typename V>
-using pair_ite=typename std::set<typename std::pair<K, V>>::iterator;
+#include <cstring>
+#include "common.h"
+
 class CommonData {
 public:
     std::map<std::string, char> mKeyWord;
