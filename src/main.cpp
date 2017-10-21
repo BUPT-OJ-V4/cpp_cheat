@@ -45,7 +45,7 @@ inline void getSubmission(const std::string& problem_id,
     delete con;
 }
 
-inline void merge_sort(std::vector<Result> results[])
+inline void merge_sort(std::vector<std::vector<Result>>& results)
 {
     int len = 0;
     for(size_t i = 0; i < threadnum; i ++) {
@@ -60,7 +60,7 @@ inline void merge_sort(std::vector<Result> results[])
     std::sort(results[threadnum].begin(), results[threadnum].end());
 }
 
-void Run(const std::vector<P>& queue, AntiCheat* antiCheat, std::vector<Result>& results,std::string problem_id)
+void Run(const std::vector<P>& queue, AntiCheat* antiCheat, std::vector<Result>* results,std::string problem_id)
 {
     size_t len = queue.size();
     for(size_t i = 0; i < len; i ++)
@@ -68,8 +68,9 @@ void Run(const std::vector<P>& queue, AntiCheat* antiCheat, std::vector<Result>&
         const P& task = queue[i];
         std::string user1, user2;
         double ans = antiCheat->Calc(task.first, task.second, user1, user2);
-        results.emplace_back(ans, task.first, task.second, user1, user2);
+        results->emplace_back(ans, task.first, task.second, user1, user2);
     }
+    std::cout << "result count : " << results->size() << std::endl;
 }
 
 int Solve(const evnsq::Message* msg) {
@@ -87,7 +88,7 @@ int Solve(const evnsq::Message* msg) {
     boost::thread_group threadGroup;
     assert(threadnum > 0);
     std::vector<P> queue[threadnum];
-    std::vector<Result> results[threadnum + 1];
+    std::vector<std::vector<Result>> results(threadnum + 1);
     for(int i = 0, k = 0; i < subs.size(); i ++) {
         for(int j = i + 1; j < subs.size(); j ++) {
             if (subs[i].second == subs[j].second) continue;
@@ -103,11 +104,13 @@ int Solve(const evnsq::Message* msg) {
     }
     for(size_t i = 0; i < threadnum; i ++)
     {
+        std::cout << "calc num: " << queue[i].size() << std::endl;
         results[i].reserve(queue[i].size() + 1);
-        threadGroup.create_thread(boost::bind(Run, queue[i], &antiCheat, results[i], problem_id));
+        threadGroup.create_thread(boost::bind(Run, queue[i], &antiCheat, &results[i], problem_id));
     }
     threadGroup.join_all();
     merge_sort(results);
+    std::cout << "all ans num: " << results[threadnum].size() << std::endl;
     for(auto& result: results[threadnum]) {
         std::string sql = "(" + problem_id + ", " + std::to_string(result.sub1) + "," + std::to_string(result.sub2)
                     + ", '" + result.user1 + "', '" + result.user2 + "', " + std::to_string(result.ans) + ")";
@@ -119,14 +122,9 @@ int Solve(const evnsq::Message* msg) {
 int to_int(const char *str) {
     int ans = 0;
     size_t len = strlen(str);
-    if (str) {
-        std::cout << len << std::endl;
-        std::cout << "not none" << *str << std::endl;
-    }
     for(int i = 0; i < len; i ++) {
         ans = ans * 10 + (int)(str[i] - '0');
     }
-    std::cout << ans << std::endl;
     return ans;
 }
 
