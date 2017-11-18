@@ -65,7 +65,7 @@ private:
     std::string mUsername, mPassword;
     sql::Connection *mConn;
     size_t mCount;
-    static const size_t mLimit = 100;
+    static const size_t mLimit = 1000;
     std::string mSql;
 };
 

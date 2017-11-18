@@ -15,7 +15,7 @@
 #define DEFAULT_THREAD_NUM 2
 namespace fs = boost::filesystem;
 
-std::string username, password;
+std::string username, password, rootpath;
 int threadnum = DEFAULT_THREAD_NUM;
 
 inline void getSubmission(const std::string& problem_id,
@@ -28,17 +28,20 @@ inline void getSubmission(const std::string& problem_id,
     driver = sql::mysql::get_mysql_driver_instance();
     con = driver->connect("tcp://127.0.0.1:3306/oj", username, password);
     state = con->createStatement();
-    std::string query = "select t2.id, t3.username, t1.code from "
-                        "submission_submission t1, contest_contestsubmission "
-                        "t2, auth_user t3  where t2.problem_id=" + problem_id +
-                        " and t1.status='AC' and t1.id=t2.submission_id and t3.id=t1.user_id";
+    std::string query = "select t1.id, t2.username, t1.code_file from "
+                        "contest_submission "
+                        "t1, auth_user t2  where t1.problem_id=" + problem_id +
+                        " and t1.status='AC' and t2.id=t1.user_id";
     sql::ResultSet* result = state->executeQuery(query);
 
     while (result->next()) {
         std::string user_name = result->getString("username");
         int idx = result->getInt("id");
-        std::string code = result->getString("code");
-        antiCheat->AddSubmission(idx, code, user_name);
+        std::string code_file = rootpath + result->getString("code_file");
+		std::ifstream t(code_file.c_str());
+        antiCheat->AddSubmission(idx, std::string(    
+			std::istreambuf_iterator<char>(t), (std::istreambuf_iterator<char>())
+			), user_name);
         subs.emplace_back(idx, user_name);
     }
     delete state;
@@ -139,6 +142,9 @@ int main(int argc, char *argv[]) {
         else if (std::strcmp(argv[i], "-p") == 0 && i + 1 < argc) {
             password = std::string(argv[i + 1]);
         }
+		else if (std::strcmp(argv[i], "-d") == 0 && i + 1 < argc) {
+			rootpath = std::string(argv[i + 1]);
+		}
     }
     std::string nsqd_tcp_addr;
     std::string lookupd_http_url;
