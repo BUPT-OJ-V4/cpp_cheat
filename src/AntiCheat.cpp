@@ -4,6 +4,7 @@
 
 #include "AntiCheat.h"
 #include <cstring>
+#include <cstdio>
 #include <iostream>
 #include <fstream>
 
@@ -19,7 +20,9 @@ double AntiCheat::FrequencyStatistic(const std::string & a, const std::string & 
     ch[1] = b.c_str();
     for(size_t i = 0; i < 2; i ++) {
         for(size_t j = 0; j < len[i]; j ++) {
-	  if ((int)ch[i][j] > 255 || (int)ch[i][j] < 0 || mData.mKeySymbol[ch[i][j]] == -1) continue;
+            if ((int)ch[i][j] > 255 ||
+                (int)ch[i][j] < 0 ||
+                mData.mKeySymbol[ch[i][j]] == -1) continue;
             num[i][mData.mKeySymbol[ch[i][j]]] ++;
         }
     }
@@ -138,11 +141,11 @@ double AntiCheat::CalCommonSubstring(std::string const& a, std::string const& b)
 
 double AntiCheat::Calc(const int & a, const int & b, std::string& user1, std::string& user2)
 {
-    double res = Lcs(mBracket[a], mBracket[b]) + CalCommonSubstring(mCache[a], mCache[b]);
-    res *= 0.5;
-    double third = FrequencyStatistic(mAllcode[a], mAllcode[b]);
     user1 = mUserinfo[a];
     user2 = mUserinfo[b];
-    if (third > 99.0) return third;
-    return res;
+    double third = FrequencyStatistic(mAllcode[a], mAllcode[b]);
+    if (third > 99.99) return third;
+    double res1 = Lcs(mBracket[a], mBracket[b]);
+    double res2 = CalCommonSubstring(mCache[a], mCache[b]);
+    return (res1 + res2) * 0.5;
 }

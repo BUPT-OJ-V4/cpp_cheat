@@ -13,7 +13,7 @@ public:
     std::map<std::string, char> mKeyWord;
     int mKeySymbol[300];
     CommonData() {
-        std::vector<std::string> words = {"int","long","short","switch","char","class","struct","for","while","if","else","break","continue","return","true","false","float","double","do","signed","unsigned"};
+        std::vector<std::string> words = {"int","long","short","switch","char","class","struct","for","while","if","else","break","continue","return","true","false","float","double","do","signed","unsigned", "scanf", "printf", "cin", "cout", "else if"};
         char symbol[] = "[]{}()&|^%+-*/:;?!.\"\',=#<>_\\";
         memset(mKeySymbol, -1, sizeof mKeySymbol);
         size_t len = words.size(), len2 = strlen(symbol);

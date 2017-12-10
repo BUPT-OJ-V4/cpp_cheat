@@ -12,7 +12,7 @@
 #include "AntiCheat.h"
 #include "SQLWriter.h"
 
-#define DEFAULT_THREAD_NUM 2
+#define DEFAULT_THREAD_NUM 1
 namespace fs = boost::filesystem;
 
 std::string username, password, rootpath;
@@ -43,16 +43,16 @@ inline void getSubmission(const std::string& problem_id,
         std::string user_name = result->getString("username");
         int idx = result->getInt("id");
         std::string code_file = rootpath + result->getString("code_file");
-	std::ifstream t(code_file.c_str());
-	std::string temp(std::istreambuf_iterator<char>(t), (std::istreambuf_iterator<char>()));
+        std::ifstream t(code_file.c_str());
+        std::string temp(std::istreambuf_iterator<char>(t), (std::istreambuf_iterator<char>()));
         antiCheat->AddSubmission(idx, temp, user_name);
         subs.emplace_back(idx, user_name);
-	if (debug_mode) {
-	  std::cout << temp << std::endl;
-	}
-	if (debug_mode && subs.size() > 5) {
-	    break;
-	}
+        if (debug_mode) {
+            std::cout << temp << std::endl;
+        }
+        if (debug_mode && subs.size() > 5) {
+            break;
+        }
     }
     delete state;
     delete con;
@@ -140,9 +140,33 @@ int to_int(const char *str) {
     return ans;
 }
 
+inline void test_function()
+{
+    auto code = (std::vector<std::string>){
+        "/home/elder/oj/BOJ-V4/site_media/media/code/contest-42633",
+        "/home/elder/oj/BOJ-V4/site_media/media/code/contest-42671"};
+    int cnt = 0;
+    int ids[2] = {42633, 42671};
+    AntiCheat antiCheat;
+    for (auto &code_file: code) {
+        std::ifstream t(code_file.c_str());
+        std::string temp(std::istreambuf_iterator<char>(t), (std::istreambuf_iterator<char>()));
+        std::cout << "=============code============" << "\n" << temp << std::endl;
+        antiCheat.AddSubmission(ids[cnt], temp, "xx");
+        cnt ++;
+    }
+    std::string user1, user2;
+    double ans = antiCheat.Calc(ids[0], ids[1], user1, user2);
+    std::cout << ans << std::endl;
+}
+
 int main(int argc, char *argv[]) {
     for (std::size_t i = 0; i < argc; i ++) {
-        if (std::strcmp(argv[i], "-t") == 0 && i + 1 < argc) {
+        if (std::strcmp(argv[i], "test") == 0) {
+            test_function();
+			return 0;
+		}
+		else if (std::strcmp(argv[i], "-t") == 0 && i + 1 < argc) {
             threadnum = to_int(argv[i + 1]);
         }
         else if (std::strcmp(argv[i], "-u") == 0 && i + 1 < argc) {
