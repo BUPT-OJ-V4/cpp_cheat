@@ -15,6 +15,5 @@ fi
 
 mkdir build
 cd build && cmake ..
-make clean
-make -j4
+make -j8
 

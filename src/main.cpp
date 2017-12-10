@@ -33,16 +33,26 @@ inline void getSubmission(const std::string& problem_id,
                         "t1, auth_user t2  where t1.problem_id=" + problem_id +
                         " and t1.status='AC' and t2.id=t1.user_id";
     sql::ResultSet* result = state->executeQuery(query);
-
+    char* debug = getenv("DEBUG");
+    bool debug_mode = false;
+    if (debug && strcmp(debug, "true") == 0) {
+      debug_mode = true;
+    }
+    std::cout << "=================debug_mode: " << debug_mode << std::endl;
     while (result->next()) {
         std::string user_name = result->getString("username");
         int idx = result->getInt("id");
         std::string code_file = rootpath + result->getString("code_file");
-		std::ifstream t(code_file.c_str());
-        antiCheat->AddSubmission(idx, std::string(    
-			std::istreambuf_iterator<char>(t), (std::istreambuf_iterator<char>())
-			), user_name);
+	std::ifstream t(code_file.c_str());
+	std::string temp(std::istreambuf_iterator<char>(t), (std::istreambuf_iterator<char>()));
+        antiCheat->AddSubmission(idx, temp, user_name);
         subs.emplace_back(idx, user_name);
+	if (debug_mode) {
+	  std::cout << temp << std::endl;
+	}
+	if (debug_mode && subs.size() > 5) {
+	    break;
+	}
     }
     delete state;
     delete con;
@@ -73,7 +83,6 @@ void Run(const std::vector<P>& queue, AntiCheat* antiCheat, std::vector<Result>*
         double ans = antiCheat->Calc(task.first, task.second, user1, user2);
         results->emplace_back(ans, task.first, task.second, user1, user2);
     }
-    std::cout << "result count : " << results->size() << std::endl;
 }
 
 int Solve(const evnsq::Message* msg) {
@@ -105,9 +114,9 @@ int Solve(const evnsq::Message* msg) {
         std::cout << "failed to connect sql" << std::endl;
         return 0;
     }
+    std::cout << "============================begin calc: "  << std::endl;
     for(size_t i = 0; i < threadnum; i ++)
     {
-        std::cout << "calc num: " << queue[i].size() << std::endl;
         results[i].reserve(queue[i].size() + 1);
         threadGroup.create_thread(boost::bind(Run, queue[i], &antiCheat, &results[i], problem_id));
     }

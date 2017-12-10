@@ -19,7 +19,7 @@ double AntiCheat::FrequencyStatistic(const std::string & a, const std::string & 
     ch[1] = b.c_str();
     for(size_t i = 0; i < 2; i ++) {
         for(size_t j = 0; j < len[i]; j ++) {
-            if ((int)ch[i][j] > 255 || mData.mKeySymbol[ch[i][j]] == -1) continue;
+	  if ((int)ch[i][j] > 255 || (int)ch[i][j] < 0 || mData.mKeySymbol[ch[i][j]] == -1) continue;
             num[i][mData.mKeySymbol[ch[i][j]]] ++;
         }
     }
@@ -32,7 +32,7 @@ double AntiCheat::FrequencyStatistic(const std::string & a, const std::string & 
     if (!down1 && !down2) {
         return 100;
     }
-    return up * 100 / std::sqrt(down1 * down2);
+    return up * 100 / std::sqrt(down1 * down2 * 1.0);
 }
 
 double AntiCheat::Lcs(const std::string& a, const std::string &b)
@@ -57,10 +57,15 @@ double AntiCheat::Lcs(const std::string& a, const std::string &b)
 
 void AntiCheat::AddSubmission(const int& idx, const std::string & buffer, const std::string & username)
 {
+    std::string validString;
+    for(auto &c: buffer) {
+      if ((int)c < 0 || (int)c > 255) continue;
+      validString += c;
+    }
     static boost::regex reg("(\\/\\*(\\s|.)*?\\*\\/)|(\\/\\/.*?(\\r|\\n))", boost::regex::icase);
     static boost::regex expression("\\w+|{|}");
     static boost::regex space("(\\s|\\r\\n)");
-    std::string res = boost::regex_replace(buffer, reg, "", boost::match_default | boost::format_all);
+    std::string res = boost::regex_replace(validString, reg, "", boost::match_default | boost::format_all);
     boost::sregex_iterator it(res.begin(), res.end(), expression);
     boost::sregex_iterator end;
     std::string temp;
@@ -128,7 +133,7 @@ double AntiCheat::CalCommonSubstring(std::string const& a, std::string const& b)
         len2 -= ret - 1;
         B[len2] = '\0';
     }
-    return ans * 200.0 / (a.length() + b.length());
+    return ans * 200.0 / (a.length() + b.length() + 1);
 }
 
 double AntiCheat::Calc(const int & a, const int & b, std::string& user1, std::string& user2)
